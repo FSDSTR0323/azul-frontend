@@ -1,12 +1,20 @@
-import './App.css';
-import { Catalog } from './Catalog';
+import "./App.css";
+import Inicio from "./Components/Home";
+import Nostros from "./Components/About";
+import Resumen from "./Components/Work";
+import Testimonios from "./Components/Testimonial";
+import Contactos from "./Components/Contact";
+import Footer from "./Components/Footer";
 
 function App() {
   return (
     <div className="App">
-        <>
-          <Catalog></Catalog>
-        </>
+      <Inicio />
+      <Nostros />
+      <Resumen />
+      <Testimonios />
+      <Contactos />
+      <Footer />
     </div>
   );
 }
