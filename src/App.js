@@ -1,19 +1,20 @@
 import "./App.css";
-import Inicio from "./Components/Home";
-import Nostros from "./Components/About";
-import Resumen from "./Components/Work";
-import Testimonios from "./Components/Testimonial";
-import Contactos from "./Components/Contact";
+import Home from "./Components/Home";
+import About from "./Components/About";
+import Work from "./Components/Work";
+import Testimonial from "./Components/Testimonial";
+import Contact from "./Components/Contact";
 import Footer from "./Components/Footer";
 
 function App() {
   return (
     <div className="App">
-      <Inicio />
-      <Nostros />
-      <Resumen />
-      <Testimonios />
-      <Contactos />
+      <Home />
+      {/* Aquí va el listado de cartas */}
+      <About />
+      <Work />
+      <Testimonial />
+      <Contact />
       <Footer />
     </div>
   );

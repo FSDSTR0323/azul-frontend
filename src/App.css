@@ -66,7 +66,6 @@ body {
 }
 
 nav {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 90px;
@@ -74,6 +73,14 @@ nav {
 .navbar-menu-container {
   display: none;
 }
+
+.navbar-links-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: end;
+}
+
 .navbar-links-container a {
   margin-right: 3rem;
   text-decoration: none;
