@@ -1,25 +1,31 @@
-import { useState, useEffect } from "react"
-import axios from 'axios'
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import RandomCards from './Components/RandomCards';
 
 export const Catalog = () => {
+  const [cards, setCards] = useState([]);
 
-    const [card, setCard] = useState([]);
-    
-    
-    const tasksGetter = async () => {
-        const {data} = await axios.get('http://localhost:5000/')
-        console.log(data.name);
-        setCard(data);
+  const getRandomCards = async () => {
+    try {
+        const response = await axios.get('http://localhost:5000/cards/random', {
+            params: {
+              count: 5
+            }
+          });
+          console.log("Response data: ", response.data);
+          setCards(response.data);   
+    } catch (error) {
+      console.error("Error fetching random cards:", error);
     }
+}
 
-    useEffect(() => {
-        tasksGetter()
-    }, [])
+  useEffect(() => {
+    getRandomCards();
+  }, []);
 
-
-    return (
-        <>
-            <button onClick={tasksGetter}>Carta</button>
-        </>
-    )
+  return (
+    <div>
+      <RandomCards cards={cards} />
+    </div>
+  );
 }
