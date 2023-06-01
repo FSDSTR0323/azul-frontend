@@ -1,13 +1,13 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import LoginForm from './LoginForm'
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
-  const handleClick = () => {
-    setAnchorEl(true);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -15,14 +15,15 @@ export default function BasicMenu() {
 
   return (
     <div>
-        <Button 
-            id="basic-button"
-            aria-controls={open ? 'basic-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-        >Hola</Button>
-        <Menu
+      <AccountCircleIcon
+        onClick={handleClick}
+        id="navbar-icon"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+      >
+      </AccountCircleIcon>
+      <Menu
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
@@ -31,9 +32,18 @@ export default function BasicMenu() {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <LoginForm></LoginForm>
+        <hr></hr>
+        <div className='login-form-box'>
+          <p>¿Aún no estás registrado?</p>
+          {/* //TODO: el botón tiene que linkar a la register page */}
+          <button 
+            className="secondary-button"
+            onClick={handleClose}
+          >
+            Crear una cuenta
+          </button>
+        </div>
       </Menu>
     </div>
   );

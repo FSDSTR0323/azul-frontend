@@ -16,7 +16,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import BasicMenu from "./LoginMenu"
+import LoginMenu from "./LoginMenu"
 
 const Navbar = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -57,9 +57,7 @@ const Navbar = () => {
         <a href="">
           <BsCart2 className="navbar-cart-icon" />
         </a>
-        <BasicMenu></BasicMenu>
-        {/* <button className="primary-button">Iniciar Sesion</button> */}
-        
+        <LoginMenu></LoginMenu>        
       </div>
       <div className="navbar-menu-container">
         <HiOutlineBars3 onClick={() => setOpenMenu(true)} />
