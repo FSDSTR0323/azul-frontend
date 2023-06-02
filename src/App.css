@@ -77,14 +77,22 @@ nav {
   flex-wrap: wrap;
   flex-direction: column;
   height: 15rem;
-  justify-content: center;
-  align-items: center;
+  width: 50%;
+}
+
+.register-form-box div {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 5px 5px;
+  justify-content: start;
 }
 
 .form-box {
   display: flex;
-  flex-wrap: nowrap;
-
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 
 .navbar-menu-container {

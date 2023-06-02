@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
-import Divider from '@mui/material/Divider';
+import BannerBackground from "../../../assets/home-banner-background.png";
 
 export const RegisterForm = () => {
     const { token, setToken } = useContext(UserContext)
@@ -26,94 +26,97 @@ export const RegisterForm = () => {
         }
     }
     return (
+        <>
+        <div className="home-bannerImage-container">
+          <img src={BannerBackground} alt="" />
+        </div>
         <Box onSubmit={handleSubmit(onSubmit)}
             className="form-box"
             component="form"
             sx={{
-                '& > :not(style)': { m: 1, width: '25ch' },
+                '& > :not(style)': { m: 1, width: '100%' },
             }}
             noValidate
             autoComplete="off"
         >
             <div className="register-form-box">
-            <div>
-            <label>Nombre</label>
-            <TextField
-                id="outlined-controlled"
-                label="Nombre"
-                {...register("userCredential")}
-            /> 
-            </div>
-            <div>
-            <label>Apellido</label>     
-            <TextField
-                id="outlined-controlled"
-                label="Apellido"
-                {...register("password")}
-            />
-            </div>
-            <div>
-            <label>Fecha de Nacimiento</label>
-            <TextField
-                id="outlined-controlled"
-                label="Fecha de Nacimiento"
-                {...register("userCredential")}
-            />   
-            </div>
-            <div>   
-            <label>Dirección</label>
-            <TextField
-                id="outlined-controlled"
-                label="Dirección"
-                {...register("userCredential")}
-            />   
-            </div>
-            <div>
-            <label>Email</label>
-            <TextField
-                id="outlined-controlled"
-                label="Email"
-                {...register("userCredential")}
-            /> 
-            </div>
-            <div>
-            <label>Teléfono</label>
-            <TextField
-                id="outlined-controlled"
-                label="Teléfono"
-                {...register("userCredential")}
-            /> 
-            </div> 
-            <div>
-            <label>Usuario</label>
-            <TextField
-                id="outlined-controlled"
-                label="Usuario"
-                {...register("userCredential")}
-            />
-            </div>
-            <div> 
-            <label>Contraseña</label>
-            <TextField
-                id="outlined-controlled"
-                label="Contraseña"
-                {...register("userCredential")}
-            /> 
-            </div>  
-            <div>
-            <label>Repite contraseña</label>
-            <TextField
-                id="outlined-controlled"
-                label="Repite contraseña"
-                {...register("userCredential")}
-            />
-            </div> 
-            </div>               
+                <div>
+                <label>Nombre</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Nombre"
+                    {...register("userCredential")}
+                /> 
+                </div>
+                <div>
+                <label>Apellido</label>     
+                <TextField
+                    id="outlined-controlled"
+                    label="Apellido"
+                    {...register("password")}
+                />
+                </div>
+                <div>
+                <label>Fecha de Nacimiento</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Fecha de Nacimiento"
+                    {...register("userCredential")}
+                />   
+                </div>
+                <div>   
+                <label>Dirección</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Dirección"
+                    {...register("userCredential")}
+                />   
+                </div>
+                <div>
+                <label>Email</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Email"
+                    {...register("userCredential")}
+                /> 
+                </div>
+                <div>
+                <label>Teléfono</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Teléfono"
+                    {...register("userCredential")}
+                /> 
+                </div> 
+                <div>
+                <label>Usuario</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Usuario"
+                    {...register("userCredential")}
+                />
+                </div>
+                <div> 
+                <label>Contraseña</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Contraseña"
+                    {...register("userCredential")}
+                /> 
+                </div>  
+                <div>
+                <label>Repite contraseña</label>
+                <TextField
+                    id="outlined-controlled"
+                    label="Repite contraseña"
+                    {...register("userCredential")}
+                />
+                </div> 
+            </div>   
+            <button className="secondary-button" id='login-form-box-button'>Registrarse</button>       
             {error && <p>{error}</p>}
-            <div>
-            <button className="secondary-button" id='login-form-box-button'>Conectarse</button>
-            </div>
         </Box>
+        </>
     )
 
 }
