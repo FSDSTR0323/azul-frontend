@@ -71,6 +71,22 @@ nav {
   min-height: 90px;
   padding-top: 20px;
 }
+
+.register-form-box{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 15rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-box {
+  display: flex;
+  flex-wrap: nowrap;
+
+}
+
 .navbar-menu-container {
   display: none;
 }
@@ -79,8 +95,8 @@ nav {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: end;
-  align-items: baseline;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .navbar-links-container a {
@@ -102,26 +118,34 @@ nav {
   transition: 0.2s;
 }
 
+#basic-menu {
+  margin-top: 0.8rem;
+}
+
 .login-form-box {
   display: flex;
   flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
+  margin-bottom: 1rem;
 }
 
 .login-form-box p {
-  margin-top: 0.8rem;
   padding: 0.8rem;
 }
 
-.login-form-box button {
+#login-form-box-button {
+  width: fit-content;
   padding: 0.8rem;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.5rem;
 }
-
 
 .navbar-cart-icon {
-  font-size: 1.15rem;
+  font-size: 2rem;
+}
+
+.navbar-user-icon {
+  font-size: 2rem;
 }
 .primary-button:hover {
   background-color: rgb(234, 234, 234);
@@ -169,7 +193,7 @@ nav {
   padding: 1rem 2.5rem;
   background-color: #fe9e0d;
   outline: none;
-  border: none;
+  border: 0.15rem solid transparent;
   border-radius: 5rem;
   font-size: 1.1rem;
   cursor: pointer;
@@ -186,6 +210,10 @@ nav {
 }
 .secondary-button:hover {
   background-color: #e48f0f;
+}
+
+.secondary-button:focus {
+  border: 0.15rem solid #484848
 }
 .about-section-container {
   margin-top: 20rem;

@@ -1,11 +1,15 @@
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
 import LoginForm from './LoginForm'
+import { CgProfile } from "react-icons/cg";
+import Divider from '@mui/material/Divider';
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -15,14 +19,13 @@ export default function BasicMenu() {
 
   return (
     <div>
-      <AccountCircleIcon
-        onClick={handleClick}
-        id="navbar-icon"
-        aria-controls={open ? 'basic-menu' : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? 'true' : undefined}
-      >
-      </AccountCircleIcon>
+      <CgProfile
+              onClick={handleClick}
+              className='navbar-user-icon'
+              aria-controls={open ? 'basic-menu' : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? 'true' : undefined}
+       />
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -33,12 +36,13 @@ export default function BasicMenu() {
         }}
       >
         <LoginForm></LoginForm>
-        <hr></hr>
+        <Divider variant="middle" />
         <div className='login-form-box'>
           <p>¿Aún no estás registrado?</p>
           {/* //TODO: el botón tiene que linkar a la register page */}
           <button 
             className="secondary-button"
+            id="login-form-box-button"
             onClick={handleClose}
           >
             Crear una cuenta

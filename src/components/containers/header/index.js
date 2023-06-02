@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
-import Logo from "../Assets/Logo.svg";
+// import Logo from "../../../assets/Logo.svg";
 import { BsCart2 } from "react-icons/bs";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import Box from "@mui/material/Box";
@@ -18,7 +18,7 @@ import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import LoginMenu from "./LoginMenu"
 
-const Navbar = () => {
+export const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const menuOptions = [
     {
@@ -86,4 +86,3 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
