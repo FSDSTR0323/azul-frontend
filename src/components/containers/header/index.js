@@ -17,6 +17,7 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import LoginMenu from "./LoginMenu"
+import BannerBackground from "../../../assets/home-banner-background.png";
 
 export const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -43,7 +44,13 @@ export const Header = () => {
     },
   ];
   return (
+   <>
+   <div className="home-bannerImage-container">
+          <img src={BannerBackground} alt="" />
+        </div>
+        
     <nav>
+       
       <div className="nav-logo-container">
         {/* <img src={} alt="" />
         <freakyworld/>
@@ -83,6 +90,7 @@ export const Header = () => {
         </Box>
       </Drawer>
     </nav>
+    </>
   );
 };
 
