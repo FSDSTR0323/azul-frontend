@@ -6,6 +6,7 @@ import { useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../../../contexts/UserContext';
 
+
 export default function LoginForm() {
     const { token, setToken } = useContext(UserContext)
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -51,12 +52,12 @@ export default function LoginForm() {
             />      
             <TextField
                 id="outlined-controlled"
-                label="Password"
+                label="Contraseña"
                 type='password'
                 {...register("password")}
             />
             {error && <p>{error}</p>}
-            <button className="secondary-button" id='login-form-box-button'>Conectarse</button>
+            <button className="secondary-button" id='login-form-box-button' href={'/register'}>Conectarse</button>
         </Box>
     // </form>
     );

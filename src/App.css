@@ -66,21 +66,51 @@ body {
 }
 
 nav {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 90px;
   padding-top: 20px;
 }
 
-.register-form-box{
+.registration-form-box{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  height: 15rem;
-  width: 50%;
+  justify-content: center;
+  align-items: center;
 }
 
-.register-form-box div {
+#details {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 50rem;
+  width: 80%;
+  margin-bottom: 2rem;
+}
+
+#details div {
+  width: 15rem;
+}
+
+#credentials {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 50rem;
+  height: 5rem;
+  width: 80%;
+}
+
+#credentials div {
+  width: 15rem;
+}
+
+.registration-form-box div {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -88,7 +118,13 @@ nav {
   justify-content: start;
 }
 
+.registration-form-box input {
+  box-sizing: border-box;
+  padding: 25px 10px;
+}
+
 .form-box {
+  margin-top: 4rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -169,7 +205,7 @@ nav {
 }
 .home-bannerImage-container {
   position: absolute;
-  top: -100px;
+  top: -170px;
   right: -170px;
   z-index: -2;
   max-width: 700px;

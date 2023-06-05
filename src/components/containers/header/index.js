@@ -17,13 +17,16 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import LoginMenu from "./LoginMenu"
+import Logo from "../../../assets/logo-Image.png"
+
+import { Link } from "react-router-dom"
 
 export const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const menuOptions = [
     {
       text: "Inicio",
-      icon: <HomeIcon />,
+      icon: <HomeIcon />
     },
     {
       text: "Nostros",
@@ -45,15 +48,15 @@ export const Header = () => {
   return (
     <nav>
       <div className="nav-logo-container">
-        {/* <img src={} alt="" />
-        <freakyworld/>
-        crear logo  */}
+        <Link to={"/"}>
+          <img src={Logo} alt="" style={{maxWidth:"100px"}}/>
+        </Link>
       </div>
       <div className="navbar-links-container">
-        <a href="">Home</a>
-        <a href="">About</a>
-        <a href="">Testimonials</a>
-        <a href="">Contact</a>
+        <a href="">Sobre nosotros</a>
+        <a href="">Noticias</a>
+        <a href="">Opiniones</a>
+        <a href="">Contracto</a>
         <a href="">
           <BsCart2 className="navbar-cart-icon" />
         </a>

@@ -1,8 +1,7 @@
 import React from "react";
-import BannerBackground from "../../../assets/home-banner-background.png";
 import { Header } from "../header";
 import Footer from "../footer"
-import { RegisterForm } from "./RegisterForm";
+import { RegistrationForm } from "./RegistrationForm";
 
 
 const handleSubmit = (e) => {
@@ -15,7 +14,7 @@ export const Register = () => {
     return (
     <>
         <Header />
-        <RegisterForm />
+        <RegistrationForm />
         <Footer />
     </>
     );

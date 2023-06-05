@@ -1,5 +1,5 @@
-import BannerBackground from "../../../assets/home-banner-background.png";
 import { FiArrowRight } from "react-icons/fi";
+import BannerBackground from "../../../assets/home-banner-background.png";
 
 export const AboutUs = () => {
     return (
