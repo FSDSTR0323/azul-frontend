@@ -28,7 +28,10 @@ export const Catalog = () => {
         {cards.map((data) => (
           <div className="randomcard-section-info" key={data.name}>
             <div className="info-boxes-img-container">
-            <img className="card-image" src={data.normalImageUrl} alt="" />
+              <a href={`http://localhost:3000/carddetail/${data._id}`}>
+                <img className="card-image" src={data.normalImageUrl} alt="" />
+              </a>  
+            {console.log("Response data: ", data)}
             </div>
             <h2>{data.name}</h2>
           </div>
