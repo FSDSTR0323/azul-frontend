@@ -6,32 +6,40 @@ import { useState, useContext } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
 import BannerBackground from "../../../assets/home-banner-background.png";
 import Divider from '@mui/material/Divider';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 
 export const RegistrationForm = () => {
     const { token, setToken } = useContext(UserContext)
+    const [ error, setError ] = useState("")
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const [ error, setError ] = useState({})
+    
 
-    const onSubmit = async (formData, e) =>  {
+    const onSubmit = async (formData) =>  {
+
+        setError(false);
         try {
             const res = await axios.post('http://localhost:5000/register', formData)
             setToken(res.data.token)
             console.log(res.data)
             window.localStorage.setItem('token', token)
         } catch(err) {
-            let mensajeError = {}
-            mensajeError = err.response.data
-            console.log("el mensaje de error es", mensajeError)
-            setError({
-                error: err.response.data.error,
-            })
-            console.log("el error asignado es", error)
+            console.log(err)
+            const mensajeError =  err.response.data.error
+            console.log(mensajeError)
+            setError(err.response.data.error)
+            console.log("El error es", error)
             setTimeout(() => {
-                setError({})
+                setError("")
+                console.log(error)
             }, 3000)
         }
     }
+
+
     return (
         <>
             <div className="home-bannerImage-container">
@@ -48,53 +56,66 @@ export const RegistrationForm = () => {
             >
                 <div className="registration-form-box">
                     <div id="details">
+                        <div>
                         <TextField
                             id="outlined-controlled"
-                            label="Nombre"
+                            label="Nombre*"
                             {...register("name")}
-
                         /> 
                         <TextField
                             id="outlined-controlled"
                             label="Apellido"
                             {...register("surname")}
-                        />
-                        <TextField
+                        /> 
+                        </div>
+                        <div>
+                            
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            {/* <DemoContainer components={['DatePicker']}> */}
+                            <DatePicker label="Basic date picker" />
+                            {/* </DemoContainer> */}
+                        </LocalizationProvider>
+                            
+                        
+                        {/* <TextField
                             id="outlined-controlled"
-                            label="Fecha de Nacimiento"
+                            label="Fecha de Nacimiento*"
                             {...register("birthdate")}
-                        />   
+                        />   */}
                         <TextField
                             id="outlined-controlled"
                             label="Dirección"
                             {...register("address")}
-                        />  
+                        /> 
+                        </div>
+                        <div>
                         <TextField
                             id="outlined-controlled"
-                            label="Email"
+                            label="Email*"
                             {...register("email")}
-                        /> 
+                        />  
                         <TextField
                             id="outlined-controlled"
                             label="Teléfono"
                             {...register("phone")}
                         /> 
+                        </div>
                     </div>
                     <Divider style={{width:'60%', maxWidth:"40rem"}} />
                     <div id="credentials">
                         <TextField
                             id="outlined-controlled"
-                            label="Usuario"
+                            label="Usuario*"
                             {...register("username")}
                         />
                         <TextField
                             id="outlined-controlled"
-                            label="Contraseña"
+                            label="Contraseña*"
                             type="password"
                         /> 
                         <TextField
                             id="outlined-controlled"
-                            label="Confirmación"
+                            label="Confirmación*"
                             {...register("password")}
                             type="password"
                         />
