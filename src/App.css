@@ -37,63 +37,153 @@
   }
 } */
 
-
-
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Reem Kufi", sans-serif !important;
 }
+
 img {
   max-width: 100%;
   height: auto;
+  
 }
+
+.nav-logo-container img {
+  display:block;
+  padding: 0.1rem 0;
+}
+
 .App {
   min-height: 100vh;
-  width: 85vw;
-  max-width: 1900px;
+  width: 100vw;
+  /* max-width: 1900px; */
   margin: 0rem auto;
 }
 body {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow: auto !important;
+  overflow-x: hidden !important;
 }
 
 body {
   background-color: #f6f6f6;
 }
 
-nav {
-  align-items: center;
-  justify-content: space-between;
-  min-height: 90px;
-  padding-top: 20px;
+.header {
+position: fixed;
+width: 100%;
+top: 0;
+overflow: hidden;
+background-color: #c3c1c1b3;
+padding-right: 4rem;
+padding-left: 4rem;
+z-index: 1;
 }
 
-.register-form-box{
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* min-height: 90px;
+  padding: .3rem 0; */
+}
+
+.registration-form-box{
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  height: 15rem;
-  width: 50%;
+  justify-content: center;
+  align-items: center;
 }
 
-.register-form-box div {
+#details {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 50rem;
+  width: 80%;
+  margin-bottom: 2rem;
+}
+
+#details-child {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   margin: 5px 5px;
   justify-content: start;
+  width: 250px;
+  gap: 2rem;
+}
+
+#credentials {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  max-width: 50rem;
+  width: 80%;
+}
+
+#credentials-child {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 5px 5px;
+  justify-content: start;
+  width: 250px;
+  gap: 2rem;
+}
+
+/* .registration-form-box div {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin: 5px 5px;
+  justify-content: start;
+} */
+
+.registration-form-box input {
+  box-sizing: border-box;
+  padding: 25px 10px;
 }
 
 .form-box {
+  margin-top: 6rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
 }
+
+.error-message{
+  padding-left: 10px;
+  position: absolute;
+  margin-top: 55px;
+}
+
+.card-detail-box {
+  display: flex;
+  max-width: 600px;
+  margin: 0 auto;
+  margin-top: 16px; 
+}
+
+.card-detail-image {
+  width: 300px;
+  height: 420px;
+  margin-right: 16px; 
+}
+
+.card-detail-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 
 .navbar-menu-container {
   display: none;
@@ -108,7 +198,7 @@ nav {
 }
 
 .navbar-links-container a {
-  margin-right: 3rem;
+  margin-right: 2rem;
   text-decoration: none;
   color: black;
   font-size: 1.1rem;
@@ -126,8 +216,13 @@ nav {
   transition: 0.2s;
 }
 
+#search-menu {
+  margin-top: 1.4rem;
+  width: 100%
+}
+
 #basic-menu {
-  margin-top: 0.8rem;
+  margin-top: 1.4rem;
 }
 
 .login-form-box {
@@ -148,13 +243,16 @@ nav {
   margin-bottom: 0.5rem;
 }
 
-.navbar-cart-icon {
-  font-size: 2rem;
+.navbar-icon {
+  font-size: 1.5rem;
+  margin-right: 2rem;
+  cursor: pointer;
 }
 
-.navbar-user-icon {
-  font-size: 2rem;
+.navbar-cart-icon{
+  font-size: 1.5rem;
 }
+
 .primary-button:hover {
   background-color: rgb(234, 234, 234);
 }
@@ -165,15 +263,20 @@ nav {
 .home-banner-container {
   position: relative;
   display: flex;
+  margin-top: 6rem;
   padding-top: 3rem;
+  padding-left: 4rem;
 }
 .home-bannerImage-container {
   position: absolute;
-  top: -100px;
+  top: -170px;
   right: -170px;
   z-index: -2;
   max-width: 700px;
+  line-height: 0;
 }
+
+
 .home-image-section {
   max-width: 600px;
   flex: 1;
@@ -305,6 +408,7 @@ nav {
   margin: 6rem 0rem;
   display: flex;
   margin-top: 10rem;
+  padding-left: 4rem;
 }
 .footer-logo-container {
   max-width: 110px;
@@ -468,7 +572,7 @@ nav {
     max-width: 600px;
   }
 }
-@media (max-width: 800px) {
+@media (max-width: 1015px) {
   .nav-logo-container {
     max-width: 140px;
   }

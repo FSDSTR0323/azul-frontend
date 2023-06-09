@@ -1,10 +1,9 @@
 import * as React from 'react';
 import Menu from '@mui/material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import DeleteIcon from '@mui/icons-material/Delete';
 import LoginForm from './LoginForm'
 import { CgProfile } from "react-icons/cg";
 import Divider from '@mui/material/Divider';
+import { Link } from "react-router-dom"
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,7 +20,7 @@ export default function BasicMenu() {
     <div>
       <CgProfile
               onClick={handleClick}
-              className='navbar-user-icon'
+              className='navbar-icon'
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}
@@ -40,13 +39,16 @@ export default function BasicMenu() {
         <div className='login-form-box'>
           <p>¿Aún no estás registrado?</p>
           {/* //TODO: el botón tiene que linkar a la register page */}
-          <button 
-            className="secondary-button"
-            id="login-form-box-button"
-            onClick={handleClose}
-          >
-            Crear una cuenta
-          </button>
+          <Link to={'/register'} style={{ textDecoration:"none" }}>
+            <button 
+              className="secondary-button"
+              id="login-form-box-button"
+              onClick={handleClose}
+            >
+              Crear una cuenta
+            </button>
+          </Link>
+
         </div>
       </Menu>
     </div>

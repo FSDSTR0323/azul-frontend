@@ -3,7 +3,7 @@ import React from "react";
 // import BannerImage from "../../../assets/home-banner-image.png";
 import { AboutUs } from "./AboutUs";
 
-import { Catalog } from "../../../Catalog";
+import { Catalog } from "./Catalog";
 import News from "./News";
 import Work from "./Work";
 import Testimonial from "./Testimonial";
