@@ -20,7 +20,7 @@ export default function BasicMenu() {
     <div>
       <CgProfile
               onClick={handleClick}
-              className='navbar-user-icon'
+              className='navbar-icon'
               aria-controls={open ? 'basic-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={open ? 'true' : undefined}

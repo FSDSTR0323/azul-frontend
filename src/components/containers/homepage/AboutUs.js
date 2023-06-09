@@ -4,9 +4,9 @@ import BannerBackground from "../../../assets/home-banner-background.png";
 export const AboutUs = () => {
     return (
     <div className="home-banner-container">
-        <div className="home-bannerImage-container">
+        {/* <div className="home-bannerImage-container">
             <img src={BannerBackground} alt="" />
-        </div>
+        </div> */}
         <div className="home-text-section">
             <h1 className="primary-heading">
                 El mejor marketplace en  Freakyworld

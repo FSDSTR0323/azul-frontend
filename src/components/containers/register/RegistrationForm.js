@@ -1,12 +1,10 @@
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { UserContext } from '../../../contexts/UserContext';
-import BannerBackground from "../../../assets/home-banner-background.png";
 import Divider from '@mui/material/Divider';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -14,8 +12,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export const RegistrationForm = () => {
     const { token, setToken } = useContext(UserContext)
-    const [ error, setError ] = useState("")
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [ error, setError ] = useState()
+    const { control, register, handleSubmit, formState: { errors } } = useForm();
     
 
     const onSubmit = async (formData) =>  {
@@ -27,13 +25,11 @@ export const RegistrationForm = () => {
             console.log(res.data)
             window.localStorage.setItem('token', token)
         } catch(err) {
-            console.log(err)
-            const mensajeError =  err.response.data.error
-            console.log(mensajeError)
+            console.log("error devuelto del back", err)
             setError(err.response.data.error)
-            console.log("El error es", error)
+            console.log("error del estado", error)
             setTimeout(() => {
-                setError("")
+                setError()
                 console.log(error)
             }, 3000)
         }
@@ -42,9 +38,6 @@ export const RegistrationForm = () => {
 
     return (
         <>
-            <div className="home-bannerImage-container">
-                <img src={BannerBackground} alt="" />
-            </div>
             <Box onSubmit={handleSubmit(onSubmit)}
                 className="form-box"
                 component="form"
@@ -56,44 +49,65 @@ export const RegistrationForm = () => {
             >
                 <div className="registration-form-box">
                     <div id="details">
-                        <div>
+                        <div id="details-child">
                         <TextField
                             id="outlined-controlled"
-                            label="Nombre*"
-                            {...register("name")}
+                            label="Nombre *"
+                            {...register("name",
+                            //  {
+                            //     required: true
+                            // }
+                            )}
                         /> 
+                        {errors.name && <span className="error-message">El nombre es requerido</span>}
                         <TextField
                             id="outlined-controlled"
                             label="Apellido"
                             {...register("surname")}
                         /> 
                         </div>
-                        <div>
-                            
-                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                            {/* <DemoContainer components={['DatePicker']}> */}
-                            <DatePicker label="Basic date picker" />
-                            {/* </DemoContainer> */}
-                        </LocalizationProvider>
-                            
-                        
-                        {/* <TextField
-                            id="outlined-controlled"
-                            label="Fecha de Nacimiento*"
-                            {...register("birthdate")}
-                        />   */}
+                        <div id="details-child"> 
+                        <Controller
+                            name="birthdate"
+                            control={control}
+                            render={({ field }) => <LocalizationProvider 
+                            dateAdapter={AdapterDayjs}>
+                            <DatePicker 
+                            label="Fecha de nacimiento *"
+                            {...field}
+                            slotProps={{
+                                textField: {
+                                    error:false,
+                                },
+                            }}
+                            />
+                            </LocalizationProvider>
+                            }
+                        />
+                        {errors.birthdate && <span className="error-message">La fecha de nacimiento es requerida</span>}
                         <TextField
                             id="outlined-controlled"
                             label="Dirección"
                             {...register("address")}
                         /> 
                         </div>
-                        <div>
+                        <div id="details-child">
                         <TextField
                             id="outlined-controlled"
                             label="Email*"
-                            {...register("email")}
-                        />  
+                            {...register("email", {
+                                // required: {
+                                //     value: true,
+                                //     message: "El email es requerido",
+                                // },
+                                // pattern: {
+                                //     value: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
+                                //     message: "Introduce un email válido"
+                                // }
+                            })}
+                        /> 
+                        {console.log(errors)}
+                        {errors.email && <span className="error-message">{errors.email.message}</span>} 
                         <TextField
                             id="outlined-controlled"
                             label="Teléfono"
@@ -103,29 +117,33 @@ export const RegistrationForm = () => {
                     </div>
                     <Divider style={{width:'60%', maxWidth:"40rem"}} />
                     <div id="credentials">
-                        <TextField
-                            id="outlined-controlled"
-                            label="Usuario*"
-                            {...register("username")}
-                        />
-                        <TextField
-                            id="outlined-controlled"
-                            label="Contraseña*"
-                            type="password"
-                        /> 
-                        <TextField
-                            id="outlined-controlled"
-                            label="Confirmación*"
-                            {...register("password")}
-                            type="password"
-                        />
+                        <div id ="credentials-child">
+                            <TextField
+                                id="outlined-controlled"
+                                label="Usuario*"
+                                {...register("username")}
+                            />
+                        </div>
+                        <div id ="credentials-child">
+                            <TextField
+                                id="outlined-controlled"
+                                label="Contraseña*"
+                                type="password"
+                            />
+                        </div>
+                        <div id ="credentials-child">
+                            <TextField
+                                id="outlined-controlled"
+                                label="Confirmación*"
+                                {...register("password")}
+                                type="password"
+                            />
+                        </div>
                     </div>
                 </div> 
-                
                 <button className="secondary-button" id='login-form-box-button'>Registrarse</button>       
-                 
-                {/* {error && <p>{error}</p>} */}
             </Box>
+            {error && <p style={{textAlign: "center", position: "relative"}}>{error}</p>}
         </>
     )
 }
