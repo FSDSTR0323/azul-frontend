@@ -148,7 +148,14 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
 }
+
+.card-detail-symbol-image {
+  width: 15px;
+  height: 15px;
+}
+
 
 
 .navbar-menu-container {
