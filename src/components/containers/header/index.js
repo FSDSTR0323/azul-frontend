@@ -62,7 +62,7 @@ export const Header = () => {
         <a href="">Sobre nosotros</a>
         <a href="">Noticias</a>
         <a href="">Opiniones</a>
-        <a href="">Contracto</a>
+        <a href="">Contacto</a>
         <a href="">
           <BsCart2 className="navbar-cart-icon" />
         </a>

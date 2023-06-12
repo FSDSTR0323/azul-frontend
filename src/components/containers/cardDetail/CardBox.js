@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { symbolImages } from "./symbolImages";
 
+
 export const CardBox = () => {
   const [card, setCard] = useState(null);
 
@@ -30,7 +31,7 @@ export const CardBox = () => {
 
 //Funcion para reemplazar los símbolos de texto por su correspondiente imagen
 const replaceSymbols = (text) => {
-  const symbolRegex = /\{0\}|\{1\}|\{2\}|\{3\}|\{4\}|\{5\}|\{6\}|\{7\}|\{8\}|\{9\}|\{10\}|\{11\}|\{12\}|\{13\}|\{14\}|\{15\}|\{16\}|\{17\}|\{18\}|\{19\}|\{20\}|\{U\}|\{T\}|\{B\}|\{UB\}|\{G\}/g;
+  const symbolRegex = /\{[^{}]+\}/g;
   const parts = text.split(symbolRegex); // dividimos el texto en varias partes, separado por los simbolos
   const matches = text.match(symbolRegex); // se utiliza match, para obtener los simbolos que haya en el texto
   console.log ('parts es:' , parts)
@@ -51,15 +52,53 @@ const replaceSymbols = (text) => {
 };
 
 
- 
+  // Función para determinar el color de fondo de la celda según la legalidad
+  const getLegalitiesCellStyle = (legalities) => {
+    if (legalities === "legal") {
+      return { backgroundColor: "green" };
+    } else {
+      return { backgroundColor: "gray" };
+    }
+  };
+
+    // Función para poner el símbolo según rareza
+    const getRarityColor = (rarity) => {
+      switch (rarity) {
+        case "common":
+          return <span className="rarity-common">Common</span>;
+        case "uncommon":
+          return <span className="rarity-uncommon">Uncommon</span>;
+        case "rare":
+          return <span className="rarity-rare">Rare</span>;
+        case "mythic":
+          return <span className="rarity-mythic">Mythic</span>;
+        default:
+          return null;
+      }
+    };
+
+//Función para obtener los colores de la carta
+    const renderColorSymbols = (colors) => {
+      return colors.map((color, index) => (
+        <img
+          className="card-detail-symbol-image"
+          key={index}
+          src={symbolImages[`{${color}}`]}
+          alt={color}
+        />
+      ));
+    };
+         
 
     return (
       <div className="card-detail-box">
-        <img
-          className="card-detail-image"
-          src={card.image_uris.normal}
-          alt={card.name}
-    />
+        <div className="card-detail-image-container">
+          <img
+            className="card-detail-image"
+            src={card.image_uris.normal}
+            alt={card.name}
+          />
+        </div>  
         <div className="card-detail-content">
           <Typography variant="h5" component="h2" gutterBottom>
             {card.name}
@@ -71,27 +110,39 @@ const replaceSymbols = (text) => {
             Collection: {card.set_name}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Rarity: {card.rarity}
+             Rarity: {getRarityColor(card.rarity)}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Colors: {card.colors.join(", ")}
+             Colors: {renderColorSymbols(card.colors)}
           </Typography>
           <Typography variant="body2" gutterBottom>
             Type: {card.type_line}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Legalities: <br/>
-              Standard: {card.legalities.standard}<br/>
-              Pioneer: {card.legalities.pioneer}<br/>
-              Modern: {card.legalities.modern}<br/>
-              Legacy: {card.legalities.legacy}<br/>
-              Pauper: {card.legalities.pauper}<br/>
-              Vintage: {card.legalities.vintage}<br/>
-              Commander: {card.legalities.commander}<br/>
-              Brawl: {card.legalities.brawl}<br/>
+          Legalities:
+          <table>
+            <tbody>
+              <tr>
+                <td style={getLegalitiesCellStyle(card.legalities.standard)}>Standard</td>
+                <td style={getLegalitiesCellStyle(card.legalities.pioneer)}>Pioneer</td>
+              </tr>
+              <tr>
+                <td style={getLegalitiesCellStyle(card.legalities.modern)}>Modern</td>
+                <td style={getLegalitiesCellStyle(card.legalities.legacy)}>Legacy</td>
+              </tr>
+              <tr>
+                <td style={getLegalitiesCellStyle(card.legalities.pauper)}>Pauper</td>
+                <td style={getLegalitiesCellStyle(card.legalities.vintage)}>Vintage</td>
+              </tr>
+              <tr>
+                <td style={getLegalitiesCellStyle(card.legalities.commander)}>Commander</td>
+                <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Commander</td>
+              </tr>
+            </tbody>
+          </table>
           </Typography>
         </div>
-      </div>
+    </div>
     );
   };
 

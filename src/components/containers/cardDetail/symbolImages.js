@@ -55,6 +55,9 @@ import UPImage from "../../../assets/symbols/UP.png";
 import TImage from "../../../assets/symbols/T.png";
 import EImage from "../../../assets/symbols/E.png";
 import MImage from "../../../assets/symbols/M.png";
+import CImage from "../../../assets/symbols/C.png";
+import XImage from "../../../assets/symbols/X.png";
+
 
 
 
@@ -96,11 +99,11 @@ export const symbolImages = {
 
   "{BG}": BGImage,
   "{BGP}": BGPImage,
-  "{BP}": BPImage,
+  "{B/P}": BPImage,
   "{BR}": BRImage,
   "{BRP}": BRPImage,
 
-  "{GP}": GPImage,
+  "{G/P}": GPImage,
   "{GU}": GUImage,
   "{GUP}": GUPImage,
   "{GW}": GWImage,
@@ -108,10 +111,13 @@ export const symbolImages = {
 
   "{UB}": UBImage,
   "{UBP}": UBPImage,
-  "{UP}": UPImage,
+  "{U/P}": UPImage,
 
 
   "{T}": TImage, 
   "{E}": EImage,
   "{M}": MImage,
+  "{C}": CImage,
+  "{X}": XImage,
+
   };
