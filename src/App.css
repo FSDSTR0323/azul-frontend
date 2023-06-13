@@ -167,22 +167,58 @@ nav {
 
 .card-detail-box {
   display: flex;
-  max-width: 600px;
   margin: 0 auto;
-  margin-top: 16px; 
+  align-items: flex-start; 
+  gap: 20px;
+  max-width: 700px;
+  justify-content: center;
 }
 
 .card-detail-image {
-  width: 300px;
+  /*width: 300px;
   height: 420px;
-  margin-right: 16px; 
+  margin-right: 16px; */
+  width: 300px;
+  height: auto;
+}
+
+.card-detail-image-container{
+  flex: 0 0 auto;
 }
 
 .card-detail-content {
-  display: flex;
+  /*display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: center;*/
+  flex: 1 1 auto;
+  
 }
+
+.card-detail-symbol-image {
+  width: 15px;
+  height: 15px;
+}
+
+.rarity-common {
+  background-color: #000;
+  color: #fff;
+}
+
+.rarity-uncommon {
+  background-color: #868686;
+  color: #ffffff;
+}
+
+.rarity-rare {
+  background-color: gold;
+  color: #000000;
+}
+
+.rarity-mythic {
+  background-color: orange;
+  color: #000000;
+}
+
 
 
 .navbar-menu-container {
@@ -357,6 +393,27 @@ nav {
   margin-top: 2rem;
   display: flex;
 }
+
+.sell-buttons-container {
+  display: flex;
+  justify-content: center;
+}
+
+.sell-button {
+  padding: 0.9rem 1.75rem;
+  background-color: #fe9e0d;
+  border: none;
+  border-radius: 5rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-inline: 10px;
+}
+
+.sell-button:hover {
+  background-color: rgb(234, 234, 234);
+}
+
 .watch-video-button {
   margin-left: 2rem;
   background-color: transparent;
