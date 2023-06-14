@@ -8,33 +8,41 @@ import Divider from '@mui/material/Divider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate } from "react-router-dom";
 
 
 export const RegistrationForm = () => {
     const { token, setToken } = useContext(UserContext)
     const [ error, setError ] = useState()
-    const { control, register, handleSubmit, formState: { errors } } = useForm();
+    const { control, register, handleSubmit, getValues, formState: { errors } } = useForm();
     
 
     const onSubmit = async (formData) =>  {
-
         setError(false);
         try {
             const res = await axios.post('http://localhost:5000/register', formData)
             setToken(res.data.token)
-            console.log(res.data)
             window.localStorage.setItem('token', token)
+            toast.success(`Te has registrado correctamente. ¡Bienvenido a FreakyWorld!`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
         } catch(err) {
-            console.log("error devuelto del back", err)
             setError(err.response.data.error)
-            console.log("error del estado", error)
             setTimeout(() => {
                 setError()
                 console.log(error)
             }, 3000)
         }
     }
-
 
     return (
         <>
@@ -53,13 +61,8 @@ export const RegistrationForm = () => {
                         <TextField
                             id="outlined-controlled"
                             label="Nombre *"
-                            {...register("name",
-                            //  {
-                            //     required: true
-                            // }
-                            )}
+                            {...register("name", { required: true })}
                         /> 
-                        {errors.name && <span className="error-message">El nombre es requerido</span>}
                         <TextField
                             id="outlined-controlled"
                             label="Apellido"
@@ -84,7 +87,7 @@ export const RegistrationForm = () => {
                             </LocalizationProvider>
                             }
                         />
-                        {errors.birthdate && <span className="error-message">La fecha de nacimiento es requerida</span>}
+                        {/* {errors.birthdate && <span className="details-error-message">La fecha de nacimiento es requerida</span>} */}
                         <TextField
                             id="outlined-controlled"
                             label="Dirección"
@@ -96,18 +99,14 @@ export const RegistrationForm = () => {
                             id="outlined-controlled"
                             label="Email*"
                             {...register("email", {
-                                // required: {
-                                //     value: true,
-                                //     message: "El email es requerido",
-                                // },
-                                // pattern: {
-                                //     value: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
-                                //     message: "Introduce un email válido"
-                                // }
+                                required: true,
+                                pattern: {
+                                    value: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
+                                    message: "Introduzca un email válido"
+                                }
                             })}
                         /> 
-                        {console.log(errors)}
-                        {errors.email && <span className="error-message">{errors.email.message}</span>} 
+                        {errors.email?.type === 'pattern' && <span className="details-error-message error-messages">{errors.email.message}</span>} 
                         <TextField
                             id="outlined-controlled"
                             label="Teléfono"
@@ -121,29 +120,37 @@ export const RegistrationForm = () => {
                             <TextField
                                 id="outlined-controlled"
                                 label="Usuario*"
-                                {...register("username")}
+                                {...register("username", { required: true})}
                             />
                         </div>
                         <div id ="credentials-child">
                             <TextField
                                 id="outlined-controlled"
                                 label="Contraseña*"
+                                {...register("password", { required: true})}
                                 type="password"
                             />
+                            {errors.passwordConfirmation?.type === 'validate' && <span className="details-error-message error-messages">Las contraseñas no coinciden</span>}
                         </div>
                         <div id ="credentials-child">
                             <TextField
                                 id="outlined-controlled"
                                 label="Confirmación*"
-                                {...register("password")}
+                                {...register("passwordConfirmation", { 
+                                    required: true,
+                                    validate: value => value === getValues('password')
+                                    }
+                                )}
                                 type="password"
                             />
                         </div>
                     </div>
                 </div> 
+                {(errors.email?.type === 'required' || errors.name?.type === 'required' || errors.username?.type === 'required' || errors.password?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
                 <button className="secondary-button" id='login-form-box-button'>Registrarse</button>       
             </Box>
-            {error && <p style={{textAlign: "center", position: "relative"}}>{error}</p>}
+            {error && <p className='error-messages' style={{textAlign: "center", position: "relative"}}>{error}</p>}
+            {token && <Navigate to='/'/>}
         </>
     )
 }

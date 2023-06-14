@@ -10,12 +10,13 @@ export const CardBox = () => {
   useEffect(() => {
     const url = window.location.href; // obtenemos la URL actual en la que estamos para posteriormente extraer el ID
     const cardId = url.substring(url.lastIndexOf("/") + 1); // con esto extraemos el ID
+    console.log(cardId)
+
     // Realizamos una solicitud al backend para obtener los detalles de la carta
     fetch(`http://localhost:5000/cards/${cardId}`)
       .then((response) => response.json())
       .then((data) => {
         setCard(data); // actualizamos el estado de la carta
-        console.log('data es:', data);
       })
             .catch((error) => {
         console.error("Error al obtener los detalles de la carta:", error);

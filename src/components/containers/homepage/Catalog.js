@@ -11,7 +11,6 @@ export const Catalog = () => {
               count: 5
             }
           });
-          console.log("Response data: ", response.data);
           setCards(response.data);   
     } catch (error) {
       console.error("Error fetching random cards:", error);
@@ -31,7 +30,6 @@ export const Catalog = () => {
               <a href={`http://localhost:3000/carddetail/${data._id}`}>
                 <img className="card-image" src={data.normalImageUrl} alt="" />
               </a>  
-            {console.log("Response data: ", data)}
             </div>
             <h2>{data.name}</h2>
           </div>
