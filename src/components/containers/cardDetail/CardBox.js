@@ -18,12 +18,13 @@ export const CardBox = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("La data es :---------------", data)
-        setCard(data); // actualizamos el estado de la carta
-        (async() => {
-          const allMatchedCards = await axios.get(`http://localhost:5000/cards/search?name=${data.name}`)
-          console.log(allMatchedCards)
-          setAllCards(allMatchedCards)
-          })()
+        setCard(data.selectedCard); // actualizamos el estado de la carta
+        setAllCards(data.sameCards)
+        // (async() => {
+        //   const allMatchedCards = await axios.get(`http://localhost:5000/cards/search?name=${data.name}`)
+        //   console.log(allMatchedCards)
+        //   setAllCards(allMatchedCards)
+        //   })()
       })
             .catch((error) => {
         console.error("Error al obtener los detalles de la carta:", error);
