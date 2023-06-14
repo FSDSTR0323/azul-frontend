@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { symbolImages } from "./symbolImages";
-
+import axios from 'axios'
 
 export const CardBox = () => {
   const [card, setCard] = useState(null);
-
+  const [allCards, setAllCards] = useState(null);
+  const [selectedCard, setSelectedCard]  = useState(null);
   ////OBTENER INFO DE LA CARTA ACTUAL
   useEffect(() => {
     const url = window.location.href; // obtenemos la URL actual en la que estamos para posteriormente extraer el ID
@@ -16,11 +17,18 @@ export const CardBox = () => {
     fetch(`http://localhost:5000/cards/${cardId}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("La data es :---------------", data)
         setCard(data); // actualizamos el estado de la carta
+        (async() => {
+          const allMatchedCards = await axios.get(`http://localhost:5000/cards/search?name=${data.name}`)
+          console.log(allMatchedCards)
+          setAllCards(allMatchedCards)
+          })()
       })
             .catch((error) => {
         console.error("Error al obtener los detalles de la carta:", error);
-      });
+      });     
+    
   }, []);
 
   if (!card) {
@@ -35,8 +43,6 @@ const replaceSymbols = (text) => {
   const symbolRegex = /\{[^{}]+\}/g;
   const parts = text.split(symbolRegex); // dividimos el texto en varias partes, separado por los simbolos
   const matches = text.match(symbolRegex); // se utiliza match, para obtener los simbolos que haya en el texto
-  console.log ('parts es:' , parts)
-  console.log ('matches es:',matches)
   //con reduce, construye un nuevo array con todas las nuevas partes
   return parts.reduce((acc, part, index) => { //acc: acumulador , part: parte actual, index: indice
     acc.push(<React.Fragment key={index}>{part}</React.Fragment>); //agrega la primera parte
