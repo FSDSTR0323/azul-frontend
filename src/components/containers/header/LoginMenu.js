@@ -38,7 +38,6 @@ export default function BasicMenu() {
         <Divider variant="middle" />
         <div className='login-form-box'>
           <p>¿Aún no estás registrado?</p>
-          {/* //TODO: el botón tiene que linkar a la register page */}
           <Link to={'/register'} style={{ textDecoration:"none" }}>
             <button 
               className="secondary-button"

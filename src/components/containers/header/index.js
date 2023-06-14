@@ -25,6 +25,7 @@ import SearchBar from "./SearchBar";
 
 export const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
+
   const menuOptions = [
     {
       text: "Inicio",
@@ -47,6 +48,7 @@ export const Header = () => {
       icon: <ShoppingCartRoundedIcon />,
     },
   ];
+
   return (
     <>
       <div className="home-bannerImage-container">
@@ -64,7 +66,7 @@ export const Header = () => {
             <a href="">Noticias</a>
             <a href="">Opiniones</a>
             <a href="">Contacto</a>
-            <SearchBar /> 
+            <SearchBar/>
             <a href="">
               <BsCart2 className="navbar-cart-icon" />
             </a>

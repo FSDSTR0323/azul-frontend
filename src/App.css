@@ -44,6 +44,28 @@
   font-family: "Reem Kufi", sans-serif !important;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: 0 0 0 #4c4c4c; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background:#c3c1c18d; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #c3c1c1; 
+}
+
 img {
   max-width: 100%;
   height: auto;
@@ -75,11 +97,12 @@ body {
 position: fixed;
 width: 100%;
 top: 0;
-overflow: hidden;
+overflow: visible;
 background-color: #c3c1c1b3;
 padding-right: 4rem;
 padding-left: 4rem;
 z-index: 1;
+height: 60px;
 }
 
 nav {
@@ -115,11 +138,12 @@ nav {
   margin: 5px 5px;
   justify-content: start;
   width: 250px;
-  gap: 2rem;
+  gap: 2.4rem;
 }
 
 #credentials {
   margin-top: 2rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -138,13 +162,54 @@ nav {
   gap: 2rem;
 }
 
-/* .registration-form-box div {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  margin: 5px 5px;
-  justify-content: start;
-} */
+.search-results {
+  position: absolute;
+  top: 51px;
+  z-index: 1;
+  max-height: 369px;
+  width: 255pX;
+  overflow-y: scroll;
+  -webkit-box-shadow: -16px 16px 15px -18px rgba(107,107,107,1);
+  -moz-box-shadow: -16px 16px 15px -18px rgba(107,107,107,1);
+  box-shadow: -16px 16px 15px -18px rgba(107,107,107,1);
+  border-radius: 2%;
+  background-color: white;
+}
+
+.search-results a {
+  display: block;
+}
+
+.search-result-item {
+  height: 30px;
+  font-size: 1rem;
+  font-weight: 100;
+  padding-top: 3px;
+  margin: 3px;
+  width: 235px;
+}
+
+.search-result-item:hover {
+  /* background-color: #c3c1c1; */
+  background-color: #fe9e0d69;
+  border-radius: 5px;
+}
+
+.search-result-background {
+  background-color: white;
+}
+
+.box {
+  background-color: transparent;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100vh;
+  width: 100vw;
+}
+
 
 .registration-form-box input {
   box-sizing: border-box;
@@ -159,10 +224,15 @@ nav {
   align-items: center;
 }
 
-.error-message{
-  padding-left: 10px;
+.details-error-message {
+  padding-left: 0;
   position: absolute;
   margin-top: 55px;
+}
+
+.error-messages {
+  color: red;
+  font-size: 0.8rem;
 }
 
 .card-detail-box {
@@ -241,6 +311,19 @@ nav {
   width: fit-content;
   padding: 0.8rem;
   margin-bottom: 0.5rem;
+}
+
+#login-form-box-button[disabled] {
+background-color: #6a6a6a;
+}
+
+#login-form-box-button:hover[disabled] {
+  background-color: #6a6a6a;
+  cursor: default;
+}
+
+#login-form-box-button:hover:not[disabled] {
+  background-color: #e48f0f;
 }
 
 .navbar-icon {
