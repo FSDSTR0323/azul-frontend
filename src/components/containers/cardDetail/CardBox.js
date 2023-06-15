@@ -142,7 +142,7 @@ const replaceSymbols = (text) => {
             {replaceSymbols(card.oracle_text)}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Collection: {card.set_name}
+          Collection: {allCards[currentIndex].set_name} {/* Mostrar el set_name de la carta actual */}
           </Typography>
           <Typography variant="body2" gutterBottom>
              Rarity: {getRarityColor(card.rarity)}
