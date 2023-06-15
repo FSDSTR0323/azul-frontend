@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { symbolImages } from "./symbolImages";
-import axios from 'axios'
+
 
 export const CardBox = () => {
-  const [card, setCard] = useState(null);
-  const [allCards, setAllCards] = useState(null);
-  const [selectedCard, setSelectedCard]  = useState(null);
+  const [card, setCard] = useState(null);  // carta actual
+  const [allCards, setAllCards] = useState(null); // todas las cartas con el mismo nombre
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState(0);
+
+  //const [selectedCard, setSelectedCard]  = useState(null);
   ////OBTENER INFO DE LA CARTA ACTUAL
   useEffect(() => {
     const url = window.location.href; // obtenemos la URL actual en la que estamos para posteriormente extraer el ID
@@ -17,14 +20,8 @@ export const CardBox = () => {
     fetch(`http://localhost:5000/cards/${cardId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("La data es :---------------", data)
-        setCard(data.selectedCard); // actualizamos el estado de la carta
-        setAllCards(data.sameCards)
-        // (async() => {
-        //   const allMatchedCards = await axios.get(`http://localhost:5000/cards/search?name=${data.name}`)
-        //   console.log(allMatchedCards)
-        //   setAllCards(allMatchedCards)
-        //   })()
+        setCard(data.selectedCardBack); // carta actual
+        setAllCards(data.sameCardsBack) // todas las cartas con ese nombre
       })
             .catch((error) => {
         console.error("Error al obtener los detalles de la carta:", error);
@@ -36,8 +33,42 @@ export const CardBox = () => {
     return <div>Cargando...</div>; // mostrara este mensaje mientras esperamos respuesta del backend
   }
 
+//console.log('Esta es la carta actual:', card.name, card.set_name)
+//console.log('Esta es otra carta con el mismo nombre:', allCards[0].name, allCards[0].set_name)
+//console.log('tamaño de allcards:', allCards.length)
 
+//Funcion para ver las cartas siguiente y anterior en diferente colecciones
+const cardInCollec = (allCards)=>{
+  if (allCards.length >= 2) {
+    const handleNextCard = () => {
+      const nextIndex = (currentIndex + 1) % allCards.length;
+      const prevIndex = (currentIndex - 1 + allCards.length) % allCards.length;
+      setCurrentIndex(nextIndex);
+      setPreviousIndex(prevIndex);
+    };
+    const handlePreviousCard = () => {
+      const prevIndex = (currentIndex - 1 + allCards.length) % allCards.length;
+      setCurrentIndex(prevIndex);
+    };    
+    const nextCard = allCards[currentIndex];
+    return (
+      <div>
+      <button className="arrow-button" onClick={handlePreviousCard}>←</button>
+      <img className="card-detail-image" src={nextCard.image_uris.normal} alt={nextCard.name} />
+      <button className="arrow-button" onClick={handleNextCard}>→</button> 
+      <div className="card-detail-counter">{`${currentIndex + 1}/${allCards.length}`}</div>
+           
+    </div>
+    );
+  }else{
+    return (
+      <div>
+      <img className="card-detail-image" src={card.image_uris.normal} alt={card.name} />
+    </div>
+    );
+  };
 
+};
 
 //Funcion para reemplazar los símbolos de texto por su correspondiente imagen
 const replaceSymbols = (text) => {
@@ -101,11 +132,7 @@ const replaceSymbols = (text) => {
     return (
       <div className="card-detail-box">
         <div className="card-detail-image-container">
-          <img
-            className="card-detail-image"
-            src={card.image_uris.normal}
-            alt={card.name}
-          />
+        {cardInCollec(allCards)}
         </div>  
         <div className="card-detail-content">
           <Typography variant="h5" component="h2" gutterBottom>

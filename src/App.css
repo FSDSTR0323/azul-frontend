@@ -237,7 +237,7 @@ nav {
 
 .card-detail-box {
   display: flex;
-  margin: 0 auto;
+  margin: 5rem auto;
   align-items: flex-start; 
   gap: 20px;
   max-width: 700px;
@@ -256,6 +256,11 @@ nav {
   flex: 0 0 auto;
 }
 
+.card-detail-counter{
+  display: flex;
+  justify-content: center;;
+}
+
 .card-detail-content {
   /*display: flex;
   flex-direction: column;
@@ -267,6 +272,22 @@ nav {
 .card-detail-symbol-image {
   width: 15px;
   height: 15px;
+}
+
+.arrow-button {
+  padding: 0.9rem 1.75rem;
+  background-color: #fe9e0d;
+  outline: none;
+  border: none;
+  border-radius: 5rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.arrow-button:hover {
+  background-color: rgb(234, 234, 234);
 }
 
 .rarity-common {
