@@ -98,11 +98,12 @@ position: fixed;
 width: 100%;
 top: 0;
 overflow: visible;
-background-color: #c3c1c1b3;
-padding-right: 4rem;
+padding-right: 2rem;
 padding-left: 4rem;
 z-index: 1;
 height: 60px;
+background-color: #f6f6f6;
+border-bottom: 1px solid black;
 }
 
 nav {
@@ -166,9 +167,8 @@ nav {
   position: absolute;
   top: 51px;
   z-index: 1;
-  max-height: 369px;
+  max-height: 400px;
   width: 255pX;
-  overflow-y: scroll;
   -webkit-box-shadow: -16px 16px 15px -18px rgba(107,107,107,1);
   -moz-box-shadow: -16px 16px 15px -18px rgba(107,107,107,1);
   box-shadow: -16px 16px 15px -18px rgba(107,107,107,1);
@@ -197,6 +197,29 @@ nav {
 
 .search-result-background {
   background-color: white;
+}
+
+.results-box {
+  max-height: 369px;
+  overflow-y: scroll;
+}
+
+#search-button {
+  margin: 0 auto;
+}
+
+#search-button {
+  font-weight: 100;
+  width: fit-content;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  font-size: 0.7rem;
+  color: blue;
+
+}
+
+#search-button:hover {
+  font-weight: 500;
 }
 
 .box {
@@ -391,6 +414,7 @@ background-color: #6a6a6a;
 
 .navbar-cart-icon{
   font-size: 1.5rem;
+  transform: translatey(-1px);
 }
 
 .primary-button:hover {

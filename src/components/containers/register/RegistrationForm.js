@@ -2,8 +2,7 @@ import { Controller, useForm } from "react-hook-form"
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import axios from 'axios';
-import { useState, useContext } from 'react';
-import { UserContext } from '../../../contexts/UserContext';
+import { useState } from 'react';
 import Divider from '@mui/material/Divider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -14,17 +13,14 @@ import { Navigate } from "react-router-dom";
 
 
 export const RegistrationForm = () => {
-    const { token, setToken } = useContext(UserContext)
     const [ error, setError ] = useState()
     const { control, register, handleSubmit, getValues, formState: { errors } } = useForm();
-    
 
     const onSubmit = async (formData) =>  {
         setError(false);
         try {
             const res = await axios.post('http://localhost:5000/register', formData)
-            setToken(res.data.token)
-            window.localStorage.setItem('token', token)
+            window.localStorage.setItem('token', res.data.token)
             toast.success(`Te has registrado correctamente. ¡Bienvenido a FreakyWorld!`, {
                 position: "top-right",
                 autoClose: 5000,
@@ -150,7 +146,7 @@ export const RegistrationForm = () => {
                 <button className="secondary-button" id='login-form-box-button'>Registrarse</button>       
             </Box>
             {error && <p className='error-messages' style={{textAlign: "center", position: "relative"}}>{error}</p>}
-            {token && <Navigate to='/'/>}
+            {window.localStorage.getItem("token") && <Navigate to='/'/>}
         </>
     )
 }

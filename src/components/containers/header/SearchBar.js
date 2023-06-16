@@ -95,30 +95,42 @@ export default function SearchBar() {
   return (
     <>
       <Search style={{position: 'relative', zIndex: 1}}>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
         onChange={handleChange}
         placeholder="Buscar carta..."
         inputProps={{ 'aria-label': 'search', id:'searching-input'}}
-      />   
-      <div className='search-results'>
-      {nameInput && showSuggestions &&
-        matchedCards.map(e =>  {
-          return (
-            <div key={e._id}>
-            <a href={`http://localhost:3000/carddetail/${e._id}`}>
-                <div className='search-result-background'>
-                  <div className='search-result-item'>{e.name}</div>
+        />  
+        <>
+        <div className='search-results'>
+          <div className='results-box'>
+          {nameInput && showSuggestions &&
+            matchedCards.map(e =>  {
+              return (
+                <div key={e._id}>
+                <a href={`http://localhost:3000/carddetail/${e._id}`}>
+                    <div className='search-result-background'>
+                      <div className='search-result-item'>{e.name}</div>
+                    </div>
+                </a>
+                <Divider />
                 </div>
-            </a>
-            <Divider />
+              )
+            })
+          }
+          </div>
+          {nameInput && showSuggestions &&
+          <>
+          <Divider style={{background:'black'}}/>
+            <div id='search-button-box'>
+              <a href='/register' id='search-button'>Búsqueda avanzada</a>
             </div>
-          )
-        })
-      }
-      </div>
+          </>
+          }
+        </div>
+        </> 
       </Search>
       {nameInput && showSuggestions && <div className='box' onClick={clearResultInput}></div> }
       </>
