@@ -37,6 +37,36 @@
   }
 } */
 
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Ajusta la altura según tus necesidades */
+}
+
+.box-container {
+  width: 400px; /* Ajusta el ancho según tus necesidades */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.registration-form-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+
+.box-item {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+
 * {
   margin: 0;
   padding: 0;
