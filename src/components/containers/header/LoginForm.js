@@ -4,19 +4,21 @@ import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
 import { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function LoginForm() {
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { isValid } } = useForm();
     const [ error, setError ] = useState('')
-   
+    
     const onSubmit = async (formData) =>  {
         try {
             const res = await axios.post('http://localhost:5000/login', formData)
             console.log("el token es", res.data.token)
             console.log("el mensaje es", res.data.message)
             window.localStorage.setItem('token', res.data.token)
+            navigate('/profile', { replace: true });
         } catch(err) {
             console.log("este es el error", err.response.data.error)
             setError(err.response.data.error)

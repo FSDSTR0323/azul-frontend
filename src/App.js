@@ -3,7 +3,7 @@ import { Homepage } from './components/containers/homepage'
 import { Register } from './components/containers/register';
 import { CardDetail } from './components/containers/cardDetail';
 import { SuccessAlert } from './utils/toaster';
-
+import { Profile } from './components/containers/perfil';
 
 import "./App.css";
 
@@ -17,6 +17,7 @@ function App() {
           <Route path='/' element={<Homepage />}/>
           <Route path='/register' element={<Register />}/>
           <Route path='/carddetail/:cardId' element={<CardDetail />}/>
+          <Route path='/profile' element={<Profile />}/>
         </Routes>
       </BrowserRouter>
     </div>
