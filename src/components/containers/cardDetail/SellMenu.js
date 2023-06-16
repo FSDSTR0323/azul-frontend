@@ -3,13 +3,17 @@ import sellimage from "../../../assets/sell.png";
 import bidimage from "../../../assets/bid.png";
 import Menu from "@mui/material/Menu";
 import axios from 'axios';
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import { CardBox } from "./CardBox";
+import Checkbox from '@mui/material/Checkbox';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 export default function SellMenu() {
   
   const [anchorElSell, setAnchorElSell] = useState(null);
+
   const handleClickSell = (event) => {
       setAnchorElSell(event.currentTarget);
     };  
@@ -25,14 +29,23 @@ export default function SellMenu() {
         setAnchorElBid(null);
       };
 
-  const { register, handleSubmit, formState: { isValid } } = useForm();
+  const { control, register, handleSubmit, formState: { errors } } = useForm();
+  // const label = { inputProps: { 'aria-label': 'foil' } };
+
+  // function CheckboxLabels({field, label}) {
+  //   return (
+  //     <FormGroup>
+  //       <FormControlLabel control={<Checkbox {...field} />} label={label}/>
+  //     </FormGroup>
+  //   );
+  // }
 
   const onSubmit = async (formData) =>  {  
     console.log('Estoy en el onSubmit') 
-    console.log('CardBox es: ', CardBox)
+    console.log('CardBox es: ', formData)
 
     try {
-      console.log('formdata es:',formData)
+      console.log('Entra al try')
       await axios.post('http://localhost:5000/cards/sellcard', formData)
     }catch{
       console.log('Estoy en el catch de OnSubmit')
@@ -60,13 +73,22 @@ return (
       anchorEl={anchorElSell}
       open={Boolean(anchorElSell)}
       onClose={handleCloseSell}>
-            
-      <label>Foil: </label>
+      <Controller
+        name="sellFoil"
+        control={control}
+        rules={{ required: true }}
+        render={({ field }) => <FormGroup>
+        <FormControlLabel control={<Checkbox {...field} />} label={"foil"}/>
+      </FormGroup>
+      }
+      />
+      
+      {/* <label>Foil: </label>
       <input 
           type="checkbox" 
           id="foil"
           {...register("foil", {required: false})}
-      />
+      /> */}
       <br/>
       <label>Idioma de la carta: </label>
        <select 
@@ -106,7 +128,7 @@ return (
           {...register("price", {required: true})}
           />
         <br/>
-        <button id='sellcard' type="submit" disabled={!isValid}>Poner en Venta</button>
+        <button id='sellcard' type="submit" /*disabled={!isValid}*/>Poner en Venta</button>
     </Menu>
 
     <Menu onSubmit={handleSubmit(onSubmit)}
@@ -171,7 +193,7 @@ return (
           {...register("end_of_bid", {required: true})}
           />
         <br/>
-        <button id='bidcard' type="submit" disabled={!isValid}>Poner en Subasta</button>
+        <button id='bidcard' type="submit" /*disabled={!isValid}*/>Poner en Subasta</button>
     </Menu>
 </div>
 );

@@ -20,6 +20,7 @@ export const CardBox = () => {
     fetch(`http://localhost:5000/cards/${cardId}`)
       .then((response) => response.json())
       .then((data) => {
+        console.log("Est ala info de la carta: ", data)
         setCard(data.selectedCardBack); // carta actual
         setAllCards(data.sameCardsBack) // todas las cartas con ese nombre
       })
