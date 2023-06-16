@@ -62,7 +62,7 @@ const cardInCollec = (allCards)=>{
     );
   }else{
     return (
-      <div>
+            <div>
       <img className="card-detail-image" src={card.image_uris.normal} alt={card.name} />
     </div>
     );
@@ -71,7 +71,7 @@ const cardInCollec = (allCards)=>{
 };
 
 //Funcion para reemplazar los símbolos de texto por su correspondiente imagen
-const replaceSymbols = (text) => {
+  const replaceSymbols = (text) => {
   const symbolRegex = /\{[^{}]+\}/g;
   const parts = text.split(symbolRegex); // dividimos el texto en varias partes, separado por los simbolos
   const matches = text.match(symbolRegex); // se utiliza match, para obtener los simbolos que haya en el texto
@@ -88,7 +88,7 @@ const replaceSymbols = (text) => {
     }
     return acc;
   }, []);
-};
+  };
 
 
   // Función para determinar el color de fondo de la celda según la legalidad
@@ -101,7 +101,7 @@ const replaceSymbols = (text) => {
   };
 
     // Función para poner el símbolo según rareza
-    const getRarityColor = (rarity) => {
+  const getRarityColor = (rarity) => {
       switch (rarity) {
         case "common":
           return <span className="rarity-common">Common</span>;
@@ -114,10 +114,10 @@ const replaceSymbols = (text) => {
         default:
           return null;
       }
-    };
+  };
 
 //Función para obtener los colores de la carta
-    const renderColorSymbols = (colors) => {
+  const renderColorSymbols = (colors) => {
       return colors.map((color, index) => (
         <img
           className="card-detail-symbol-image"
@@ -126,59 +126,59 @@ const replaceSymbols = (text) => {
           alt={color}
         />
       ));
-    };
+  };
          
 
-    return (
-      <div className="card-detail-box">
-        <div className="card-detail-image-container">
-        {cardInCollec(allCards)}
-        </div>  
-        <div className="card-detail-content">
-          <Typography variant="h5" component="h2" gutterBottom>
-            {card.name}
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            {replaceSymbols(card.oracle_text)}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-          Collection: {allCards[currentIndex].set_name} {/* Mostrar el set_name de la carta actual */}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-             Rarity: {getRarityColor(card.rarity)}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-             Colors: {renderColorSymbols(card.colors)}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            Type: {card.type_line}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-          Legalities:
-          <table>
-            <tbody>
-              <tr>
-                <td style={getLegalitiesCellStyle(card.legalities.standard)}>Standard</td>
-                <td style={getLegalitiesCellStyle(card.legalities.pioneer)}>Pioneer</td>
-              </tr>
-              <tr>
-                <td style={getLegalitiesCellStyle(card.legalities.modern)}>Modern</td>
-                <td style={getLegalitiesCellStyle(card.legalities.legacy)}>Legacy</td>
-              </tr>
-              <tr>
-                <td style={getLegalitiesCellStyle(card.legalities.pauper)}>Pauper</td>
-                <td style={getLegalitiesCellStyle(card.legalities.vintage)}>Vintage</td>
-              </tr>
-              <tr>
-                <td style={getLegalitiesCellStyle(card.legalities.commander)}>Commander</td>
-                <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Commander</td>
-              </tr>
-            </tbody>
-          </table>
-          </Typography>
-        </div>
-    </div>
-    );
+  return (
+    <div className="card-detail-box">
+      <div className="card-detail-image-container">
+      {cardInCollec(allCards)}
+      </div>  
+      <div className="card-detail-content">
+        <Typography variant="h5" component="h2" gutterBottom>
+          {card.name}
+        </Typography>
+        <Typography variant="body1" gutterBottom>
+          {replaceSymbols(card.oracle_text)}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+        Collection: {allCards[currentIndex].set_name} {/* Mostrar el set_name de la carta actual */}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            Rarity: {getRarityColor(card.rarity)}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+            Colors: {renderColorSymbols(card.colors)}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+          Type: {card.type_line}
+        </Typography>
+        <Typography variant="body2" gutterBottom>
+        Legalities:
+        <table>
+          <tbody>
+            <tr>
+              <td style={getLegalitiesCellStyle(card.legalities.standard)}>Standard</td>
+              <td style={getLegalitiesCellStyle(card.legalities.pioneer)}>Pioneer</td>
+            </tr>
+            <tr>
+              <td style={getLegalitiesCellStyle(card.legalities.modern)}>Modern</td>
+              <td style={getLegalitiesCellStyle(card.legalities.legacy)}>Legacy</td>
+            </tr>
+            <tr>
+              <td style={getLegalitiesCellStyle(card.legalities.pauper)}>Pauper</td>
+              <td style={getLegalitiesCellStyle(card.legalities.vintage)}>Vintage</td>
+            </tr>
+            <tr>
+              <td style={getLegalitiesCellStyle(card.legalities.commander)}>Commander</td>
+              <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Commander</td>
+            </tr>
+          </tbody>
+        </table>
+        </Typography>
+      </div>
+  </div>
+  );
   };
 
 

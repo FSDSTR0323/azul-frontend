@@ -2,14 +2,9 @@ import React from "react";
 import { Header } from "../header";
 import Footer from "../footer";
 import { CardBox } from "./CardBox";
-import { SellMenu } from "./SellMenu"
+import  SellMenu  from "./SellMenu"
 
 
-
-
-/*const handleSubmit = (e) => {
-    e.preventDefault();
-};*/
 
 export const CardDetail = () => {
   //const [openMenu, setOpenMenu] = useState(false);
@@ -28,42 +23,3 @@ export const CardDetail = () => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*import React from "react";
-import { Header } from "../header";
-import Footer from "../footer";
-import { CardBox } from "./CardBox";
-import SellMenu from "./SellMenu"
-
-
-export const CardDetail = () => {
-  return (
-    <>    
-      <Header />
-      <CardBox />
-      <SellMenu/> 
-      <Footer />
-    </>
-  );
-};*/
