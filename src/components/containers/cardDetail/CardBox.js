@@ -11,7 +11,7 @@ export const CardBox = () => {
   const [card, setCard] = useState(null);  // carta actual
   const [allCards, setAllCards] = useState(null); // todas las cartas con el mismo nombre
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [setPreviousIndex] = useState(0);
+  const [previousIndex, setPreviousIndex] = useState(0);
 
   //const [selectedCard, setSelectedCard]  = useState(null);
   ////OBTENER INFO DE LA CARTA ACTUAL
