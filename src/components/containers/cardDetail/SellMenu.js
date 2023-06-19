@@ -4,197 +4,238 @@ import bidimage from "../../../assets/bid.png";
 import Menu from "@mui/material/Menu";
 import axios from 'axios';
 import { Controller, useForm } from "react-hook-form"
-import { CardBox } from "./CardBox";
 import Checkbox from '@mui/material/Checkbox';
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import TextField from '@mui/material/TextField';
 
 
-export default function SellMenu() {
+
+
+export default function SellMenu({card}) {
+
+  const [sellMessage, setSellMessage] = useState(""); 
+  const [bidMessage, setBidMessage] = useState(""); 
+
   
   const [anchorElSell, setAnchorElSell] = useState(null);
-
   const handleClickSell = (event) => {
-      setAnchorElSell(event.currentTarget);
-    };  
-    const handleCloseSell = () => {
-      setAnchorElSell(null);
-    };
-    
+    setAnchorElSell(event.currentTarget);
+  };
+  const handleCloseSell = () => {
+    setAnchorElSell(null);
+  };
+
+
   const [anchorElBid, setAnchorElBid] = useState(null);
   const handleClickBid = (event) => {
-        setAnchorElBid(event.currentTarget);
-      };  
-      const handleCloseBid = () => {
-        setAnchorElBid(null);
-      };
+    setAnchorElBid(event.currentTarget);
+  };
+  const handleCloseBid = () => {
+    setAnchorElBid(null);
+  };
 
-  const { control, register, handleSubmit, formState: { errors } } = useForm();
-  // const label = { inputProps: { 'aria-label': 'foil' } };
 
-  // function CheckboxLabels({field, label}) {
-  //   return (
-  //     <FormGroup>
-  //       <FormControlLabel control={<Checkbox {...field} />} label={label}/>
-  //     </FormGroup>
-  //   );
-  // }
+  const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit } = useForm();
+  const { control: bidControl, register: bidRegister, handleSubmit: bidHandleSubmit, formState: bidFormState } = useForm();
 
-  const onSubmit = async (formData) =>  {  
-    console.log('Estoy en el onSubmit') 
-    console.log('CardBox es: ', formData)
 
+
+
+  const sellOnSubmit = async (formData) => {
     try {
-      console.log('Entra al try')
-      await axios.post('http://localhost:5000/cards/sellcard', formData)
-    }catch{
-      console.log('Estoy en el catch de OnSubmit')
-  }
-    
-        
-  }
+      let cardSelledData = {
+        id_scryfall: card.id_scryfall,
+        id_card: card._id,
+        name: card.name,
+        set_name: card.set_name,
+        lang: formData.lang,
+        foil: formData.sellFoil ? true : false,
+        status: formData.status,
+        type_sell: "Venta",
+        price: formData.price,
+        user_id: "64836e0bc27bc036dab85cad", //modificar por el user real
+      };
+      console.log('Carta puesta a la venta:', cardSelledData)
+      setSellMessage("¡La carta se ha puesto a la venta!"); 
+      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);      
+    } catch (error) {
+      console.log('Error al incluir la carta en la base de datos', error);
+    }
+  };
 
-return (
-<div className="sell-buttons-container">
-  <div>      
-      <button className="sell-button" onClick={handleClickSell}>
+  const bidOnSubmit = async (formData) => {
+    try {
+      let cardSelledData = {
+        id_scryfall: card.id_scryfall,
+        id_card: card._id,
+        name: card.name,
+        set_name: card.set_name,
+        lang: formData.lang,
+        foil: formData.sellFoil ? true : false,
+        status: formData.status,
+        type_sell: "Subasta",
+        price: formData.price,
+        end_of_bid: formData.end_of_bid,
+        user_id: "64836e0bc27bc036dab85cad", //modificar por el user real
+      };
+      console.log('Carta puesta en subasta:', cardSelledData)
+      setBidMessage("¡La carta se ha puesto en subasta!");
+
+      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);
+    } catch (error) {
+      console.log('Error al incluir la carta en la base de datos', error);
+    }
+  };
+
+  return (
+    <div className="sell-buttons-container">
+      <div>
+        <button className="sell-button" onClick={handleClickSell}>
           Vender <img className="card-detail-symbol-image" src={sellimage} alt="Vender" />
-      </button>
-      <button className="sell-button" onClick={handleClickBid}>
+        </button>
+        <button className="sell-button" onClick={handleClickBid}>
           Subastar <img className="card-detail-symbol-image" src={bidimage} alt="Subastar" />
-      </button>
-  </div>
-    <Menu onSubmit={handleSubmit(onSubmit)}
-      id="selform"
-      className="sell-form-box"
-      component="form"
-      noValidate
-      autoComplete="off"
-      anchorEl={anchorElSell}
-      open={Boolean(anchorElSell)}
-      onClose={handleCloseSell}>
-      <Controller
+        </button>
+      </div>
+
+      <Menu onSubmit={sellHandleSubmit(sellOnSubmit)}
+        id="sellform"
+        className="sell-form-box"
+        component="form"
+        //noValidate
+        autoComplete="off"
+        anchorEl={anchorElSell}
+        open={Boolean(anchorElSell)}
+        onClose={handleCloseSell}
+      >
+         <Controller
         name="sellFoil"
-        control={control}
-        rules={{ required: true }}
+        control={sellControl}
+        rules={{ required: false }}
         render={({ field }) => <FormGroup>
         <FormControlLabel control={<Checkbox {...field} />} label={"foil"}/>
-      </FormGroup>
-      }
-      />
-      
-      {/* <label>Foil: </label>
-      <input 
-          type="checkbox" 
-          id="foil"
-          {...register("foil", {required: false})}
-      /> */}
-      <br/>
-      <label>Idioma de la carta: </label>
-       <select 
-       id="lang" 
-       {...register("lang", {required: true})}
-       >
-          <option value="es">Español</option>
-          <option value="en">Inglés</option>
-          <option value="fr">Francés</option>
-          <option value="fr">Alemán</option>
-          <option value="fr">Italiano</option>
-          <option value="fr">Chino</option>
-          <option value="fr">Japonés</option>
-          <option value="fr">Portugués</option>
-        </select>
+        </FormGroup>}
+        />
+          <br />
+          <label>Idioma de la carta: </label>
+          <select id="lang" {...sellRegister("lang", { required: true })}>
+            <option value="es">Español</option>
+            <option value="en">Inglés</option>
+            <option value="fr">Francés</option>
+            <option value="de">Alemán</option>
+            <option value="it">Italiano</option>
+            <option value="zh">Chino</option>
+            <option value="ja">Japonés</option>
+            <option value="pt">Portugués</option>
+          </select>
 
-       <br/>
-      <label>Estado: </label>
-       <select 
-       id="status" 
-       {...register("status", {required: true})}
-       >
-          <option value="new">Nueva</option>
-          <option value="almost_new">Casi Nueva</option>
-          <option value="excellent">Excelente</option>
-          <option value="good">Buena</option>
-          <option value="lightly_played">Ligeramente Jugada</option>
-          <option value="played">Jugada</option>
-          <option value="poor">Pobre</option>
-        </select>
+          <br />
+          <label>Estado: </label>
+          <select id="status" {...sellRegister("status", { required: true })}>
+            <option value="new">Nueva</option>
+            <option value="almost_new">Casi Nueva</option>
+            <option value="excellent">Excelente</option>
+            <option value="good">Buena</option>
+            <option value="lightly_played">Ligeramente Jugada</option>
+            <option value="played">Jugada</option>
+            <option value="poor">Pobre</option>
+          </select>
 
-        <br/>
-        <label>Precio: </label>
-        <input 
-          type="text" 
-          id="price" 
-          {...register("price", {required: true})}
+          <br />
+          <label>Precio: </label>
+          <input
+            type="text"
+            id="price"
+            {...sellRegister("price", { required: true })}
           />
-        <br/>
-        <button id='sellcard' type="submit" /*disabled={!isValid}*/>Poner en Venta</button>
-    </Menu>
+          <br />
+          <button id="sellcard" type="submit" //disabled={!sellFormState.isValid}
+          >
+            Poner en Venta
+          </button>
+          {sellMessage && <p>{sellMessage}</p>}
 
-    <Menu onSubmit={handleSubmit(onSubmit)}
-      id="bidform"
-      className="bid-form-box"
-      component="form"
-      noValidate
-      autoComplete="off"
-      anchorEl={anchorElBid}
-      open={Boolean(anchorElBid)}
-      onClose={handleCloseBid}>
-      
-      <label>Foil: </label>
-      <input 
-          type="checkbox" 
-          id="foil"
-          {...register("foil", {required: false})}
-      />
-      <br/>
-      <label>Idioma de la carta: </label>
-       <select 
-       id="lang" 
-       {...register("lang", {required: true})}
-       >
-          <option value="es">Español</option>
-          <option value="en">Inglés</option>
-          <option value="fr">Francés</option>
-          <option value="fr">Alemán</option>
-          <option value="fr">Italiano</option>
-          <option value="fr">Chino</option>
-          <option value="fr">Japonés</option>
-          <option value="fr">Portugués</option>
-        </select>
+      </Menu>
 
-       <br/>
-      <label>Estado: </label>
-       <select 
-       id="status" 
-       {...register("status", {required: true})}
-       >
-          <option value="new">Nueva</option>
-          <option value="almost_new">Casi Nueva</option>
-          <option value="excellent">Excelente</option>
-          <option value="good">Buena</option>
-          <option value="lightly_played">Ligeramente Jugada</option>
-          <option value="played">Jugada</option>
-          <option value="poor">Pobre</option>
-        </select>
-
-        <br/>
-        <label>Precio inicial: </label>
-        <input 
-          type="text" 
-          id="price" 
-          {...register("price", {required: true})}  
+      <Menu onSubmit={bidHandleSubmit(bidOnSubmit)}
+        id="bidform"
+        className="bid-form-box"
+        component="form"
+        noValidate
+        autoComplete="off"
+        anchorEl={anchorElBid}
+        open={Boolean(anchorElBid)}
+        onClose={handleCloseBid}
+      >
+          <label>Foil: </label>
+          <input
+            type="checkbox"
+            id="foil"
+            {...bidRegister("foil", { required: false })}
           />
-        <br/>
-        <label>Fecha Fin de puja: </label>
-        <input 
-          type="text" 
-          id="end_of_bid" 
-          {...register("end_of_bid", {required: true})}
+          <br />
+          <label>Idioma de la carta: </label>
+          <select id="lang" {...bidRegister("lang", { required: true })}>
+            <option value="es">Español</option>
+            <option value="en">Inglés</option>
+            <option value="fr">Francés</option>
+            <option value="de">Alemán</option>
+            <option value="it">Italiano</option>
+            <option value="zh">Chino</option>
+            <option value="ja">Japonés</option>
+            <option value="pt">Portugués</option>
+          </select>
+
+          <br />
+          <label>Estado: </label>
+          <select id="status" {...bidRegister("status", { required: true })}>
+            <option value="new">Nueva</option>
+            <option value="almost_new">Casi Nueva</option>
+            <option value="excellent">Excelente</option>
+            <option value="good">Buena</option>
+            <option value="lightly_played">Ligeramente Jugada</option>
+            <option value="played">Jugada</option>
+            <option value="poor">Pobre</option>
+          </select>
+
+          <br />
+          <label>Precio inicial: </label>
+          <input
+            type="text"
+            id="price"
+            {...bidRegister("price", { required: true })}
           />
-        <br/>
-        <button id='bidcard' type="submit" /*disabled={!isValid}*/>Poner en Subasta</button>
-    </Menu>
-</div>
-);
-};
+          <br />
+          <Controller
+          name="end_of_bid"
+          control={bidControl}
+          render={({ field }) => (
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DatePicker
+                label="Fecha fin de puja:"
+                {...field}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    error={Boolean(bidFormState.errors.end_of_bid)}
+                    helperText={bidFormState.errors.end_of_bid?.message}
+                  />
+                )}
+              />
+            </LocalizationProvider>
+          )}
+        />
+          <br />
+          <button id="bidcard" type="submit" disabled={!bidFormState.isValid}>
+            Poner en Subasta
+          </button>
+          {bidMessage && <p>{bidMessage}</p>}
+
+      </Menu>
+    </div>
+  );
+}

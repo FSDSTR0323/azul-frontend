@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { symbolImages } from "./symbolImages";
+import  SellMenu  from "./SellMenu"
+import  CardsOnSell  from "./CardsOnSell"
+
+
 
 
 export const CardBox = () => {
   const [card, setCard] = useState(null);  // carta actual
   const [allCards, setAllCards] = useState(null); // todas las cartas con el mismo nombre
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [previousIndex, setPreviousIndex] = useState(0);
+  const [setPreviousIndex] = useState(0);
 
   //const [selectedCard, setSelectedCard]  = useState(null);
   ////OBTENER INFO DE LA CARTA ACTUAL
@@ -132,6 +136,7 @@ const cardInCollec = (allCards)=>{
 
   return (
     <div className="card-detail-box">
+      <div className="card-detail-and-image">
       <div className="card-detail-image-container">
       {cardInCollec(allCards)}
       </div>  
@@ -176,8 +181,15 @@ const cardInCollec = (allCards)=>{
             </tr>
           </tbody>
         </table>
+        
         </Typography>
       </div>
+      </div>
+      <div>
+      <SellMenu card={allCards[currentIndex]}/>
+      <CardsOnSell card={card.name}/>
+      </div>
+      
   </div>
   );
   };

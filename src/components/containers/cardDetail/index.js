@@ -2,7 +2,6 @@ import React from "react";
 import { Header } from "../header";
 import Footer from "../footer";
 import { CardBox } from "./CardBox";
-import  SellMenu  from "./SellMenu"
 
 
 
@@ -14,7 +13,7 @@ export const CardDetail = () => {
     <>    
       <Header />
       <CardBox />
-      <SellMenu/>
+      
       <Footer />
     </>
   );

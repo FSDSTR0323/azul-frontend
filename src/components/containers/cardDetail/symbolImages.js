@@ -61,6 +61,7 @@ import XImage from "../../../assets/symbols/X.png";
 
 
 
+
 //Relacionamos cada símbolo que viene del texto de la API con su imagen de símbolo 
 export const symbolImages = {
   "{0}": ZeroImage,
@@ -119,5 +120,7 @@ export const symbolImages = {
   "{M}": MImage,
   "{C}": CImage,
   "{X}": XImage,
+
+
 
   };
