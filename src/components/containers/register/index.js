@@ -7,6 +7,7 @@ import { RegistrationForm } from "./RegistrationForm";
 //   setValues({ ...values, [e.target.name]: e.target.value });
 // };
 export const Register = () => {
+
     return (
     <>
         <Header />

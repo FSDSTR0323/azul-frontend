@@ -54,12 +54,21 @@
 }
 
 .registration-form-box {
+  margin-top: 6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-
+.profile-form-box {
+  margin: 6rem auto 0 auto;
+  /* max-width: 62rem;
+  background-color: red; */
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: center;
+}
 
 .box-item {
   margin-bottom: 10px;
@@ -124,7 +133,7 @@ body {
 }
 
 .header {
-position: fixed;
+position: sticky;
 width: 100%;
 top: 0;
 overflow: visible;
@@ -144,13 +153,7 @@ nav {
   padding: .3rem 0; */
 }
 
-.registration-form-box{
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+
 
 #details {
   display: flex;
