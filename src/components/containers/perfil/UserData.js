@@ -11,14 +11,22 @@ import axios from 'axios';
 import { authorizationConfig } from '../../../security';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 export const UserData = ({ name }) => {
     
+    const navigate = useNavigate
   const [userData, setUserData] = useState("")
-  const [formDisabled, setFormDisabled] = useState(true)
+  
+  const { control, register, handleSubmit, reset, formState: { errors } } = useForm()
   const [ error, setError ] = useState()
-  const { control, register, handleSubmit, getValues, reset, formState: { errors } } = useForm();
+  const [formDisabled, setFormDisabled] = useState(true)
 
+  const { register: oldPsswdRegister, handleSubmit: oldPsswdHandleSubmit, formState: { errors: oldPsswdErrors } } = useForm()
+  const { register: psswdRegister, handleSubmit: psswdHandleSubmit, getValues, formState: { errors: psswdErrors } } = useForm()
+  const [ psswdError, setPsswdError ] = useState()
+  const [ psswdFormDisabled, setPsswdFormDisabled] = useState(true)
+  const [ isPsswdCorrect, setIsPsswdCorrect] = useState(false)
 
     useEffect(() => {
         (async() => {
@@ -35,8 +43,12 @@ export const UserData = ({ name }) => {
                 phone: userDataRes.data.phone,
                 username: userDataRes.data.username,
             })
-            } catch(error){
-                console.log(error)
+            } catch(err){
+                console.log(err)
+                if(err.response.data.name === "TokenExpiredError") {
+                    window.localStorage.removeItem('token')
+                    navigate('/login')
+                }
             }
         })()
     }, [])
@@ -46,11 +58,11 @@ export const UserData = ({ name }) => {
     }
 
     const onSubmit = async (formData) =>  {
-        setError(false);
+        setError();
         console.log("Llegamos aquí")
         console.log("la data aactualizada es", formData)
         try {
-            const modifiedDataRes = await axios.put('http://localhost:5000/profile', formData, authorizationConfig)
+            const modifiedDataRes = await axios.put('http://localhost:5000/profile/modify_details', formData, authorizationConfig)
             toast.success(`Has modificado los datos correctamente`, {
                 position: "top-right",
                 autoClose: 5000,
@@ -75,6 +87,67 @@ export const UserData = ({ name }) => {
             setFormDisabled(!formDisabled)
         }  
         catch(err) {
+            if(err.response.data.name === "TokenExpiredError") {
+                window.localStorage.removeItem('token')
+                navigate('/login')
+            }
+            setError({ detailsError: err.response.data.error})
+            setTimeout(() => {
+                setError()
+                console.log(error)
+            }, 3000)
+        }
+    }
+
+
+    const handlePsswdFormBox = () => {
+        setPsswdFormDisabled(!formDisabled)
+    }
+    
+    const onSubmitOldPsswd = async (oldPsswd) => {
+        setPsswdError()
+        try {
+            const res = await axios.put('http://localhost:5000/profile/check_psswd', oldPsswd, authorizationConfig)
+            setIsPsswdCorrect(true)
+            console.log(res)
+        } catch (err) {
+            console.log(err)
+            if(err.response.data.name === "TokenExpiredError") {
+                window.localStorage.removeItem('token')
+                navigate('/login')
+            }
+            setError({ oldPsswdError: err.response.data.error})
+            setTimeout(() => {
+                setError()
+                console.log(error)
+            }, 3000)
+        }
+    }
+
+    const onSubmitPsswd = async (newPsswd) => {
+        setPsswdError()
+        console.log(newPsswd)
+        try {
+            const res = await axios.put('http://localhost:5000/profile/modify_psswd', newPsswd, authorizationConfig)
+            console.log(res)
+            setIsPsswdCorrect(!isPsswdCorrect)
+            setPsswdFormDisabled(!psswdFormDisabled)
+            toast.success(`Has modificado la contraseña correctamente`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        } catch(err) {
+            console.log(err)
+            if(err.response.data.name === "TokenExpiredError") {
+                window.localStorage.removeItem('token')
+                navigate('/login')
+            }
             setError(err.response.data.error)
             setTimeout(() => {
                 setError()
@@ -83,9 +156,11 @@ export const UserData = ({ name }) => {
         }
     }
 
+    
+
     if(userData) {
         return (
-            <>
+            <div style={{marginTop: "6rem"}}>
                 <Box onSubmit={handleSubmit(onSubmit)}
                 className="form-box"
                 component="form"
@@ -117,11 +192,14 @@ export const UserData = ({ name }) => {
                                 <Controller
                                     name="birthdate"
                                     control={control}
+                                    rules={{
+                                        required: true,
+                                    }}
                                     render={({ field }) => <LocalizationProvider
                                     dateAdapter={AdapterDayjs}
                                     >
                                     <DatePicker 
-                                    label={`Fecha nacimiento *`}
+                                    label='Fecha nacimiento *'
                                     defaultValue={dayjs(userData.data.birthdate)}
                                     disabled={formDisabled}
                                     {...field}
@@ -134,7 +212,6 @@ export const UserData = ({ name }) => {
                                     </LocalizationProvider>
                                     }
                                 />
-                                {errors.birthdate && <span className="details-error-message">La fecha de nacimiento es requerida</span>}
                                 <TextField
                                     id="outlined-controlled"
                                     label="Dirección"
@@ -178,36 +255,84 @@ export const UserData = ({ name }) => {
                                     {...register("username", { required: true})}
                                 />
                             </div>
-                            {/* <div id ="credentials-child">
-                                <TextField
-                                    id="outlined-controlled"
-                                    label="Contraseña*"
-                                    defaultValue="password"
-                                    disabled={formDisabled}
-                                    {...register("password", { required: true})}
-                                    type="password"
-                                />
-                                {errors.passwordConfirmation?.type === 'validate' && <span className="details-error-message error-messages">Las contraseñas no coinciden</span>}
-                            </div> */}
-                            {/* <div id ="credentials-child">
-                                <TextField
-                                    id="outlined-controlled"
-                                    label="Confirmación*"
-                                    {...register("passwordConfirmation", { 
-                                        required: true,
-                                        validate: value => value === getValues('password')
-                                        }
-                                    )}
-                                    type="password"
-                                />
-                            </div> */}
                         </div>
-                        {(errors.email?.type === 'required' || errors.name?.type === 'required' || errors.username?.type === 'required' || errors.password?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
+                        {(errors.email?.type === 'required' || errors.name?.type === 'required' || errors.birthdate?.type === 'required' || errors.username?.type === 'required' || errors.password?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
+                        {error?.detailsError && <span className="profile-error-message error-messages">{error.detailsError}</span>}
                         {!formDisabled && <button className="secondary-button" id='login-form-box-button'>Aplicar cambios</button>}       
                     </div> 
                 </Box>
-                {formDisabled && <button className="secondary-button" id='login-form-box-button' style={{margin: "0 auto"}} onClick={handleFormBox}>Modificar</button>}
-            </> 
+                
+                {formDisabled && <button className="secondary-button" id='login-form-box-button' style={{margin: "0 auto 2rem auto"}} onClick={handleFormBox}>Modificar</button>}
+                
+                {!psswdFormDisabled && !isPsswdCorrect &&
+                    <>
+                        <Divider  style={{width: "40vw", margin: "0 auto 2rem auto"}}/> 
+                        <Box onSubmit={oldPsswdHandleSubmit(onSubmitOldPsswd)}
+                            className="form-box"
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m: 1, width: '100%' },
+                            }}
+                            noValidate
+                            autoComplete="off">
+                                <div id="credentials">
+                                <div id ="credentials-child">
+                                    <TextField
+                                        id="outlined-controlled"
+                                        label="Contraseña antigua*"
+                                        {...oldPsswdRegister("oldPassword", { required: true})}
+                                        type="password"
+                                    />
+                                </div>
+                                {error?.oldPsswdError && <span className="credentials-error-message error-messages">{error.oldPsswdError}</span>}
+                                {oldPsswdErrors.oldPassword?.type === 'required' && <span className="credentials-error-message error-messages">Debe rellenar todos los campos obligatorios (*)</span>}
+
+                                </div>
+                                <button className="secondary-button" id='login-form-box-button' style={{marginTop: "21px"}}>Siguiente</button>
+                        </Box>
+                    </>
+                }
+                {isPsswdCorrect &&
+                    <>
+                        <Divider  style={{width: "40vw", margin: "0 auto 2rem auto"}}/> 
+                        <Box onSubmit={psswdHandleSubmit(onSubmitPsswd)}
+                            className="form-box"
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m: 1, width: '100%' },
+                            }}
+                            noValidate
+                            autoComplete="off">
+                                <div id="credentials">
+                                    <div id ="credentials-child">
+                                        <TextField
+                                            id="outlined-controlled"
+                                            label="Nueva Contraseña*"
+                                            {...psswdRegister("newPassword", { required: true})}
+                                            type="password"
+                                        />
+                                        {psswdErrors.passwordConfirmation?.type === 'validate' && <span className="details-error-message error-messages">Las contraseñas no coinciden</span>}
+                                    </div>
+                                    <div id ="credentials-child">
+                                        <TextField
+                                            id="outlined-controlled"
+                                            label="Confirmación*"
+                                            {...psswdRegister("passwordConfirmation", { 
+                                                required: true,
+                                                validate: value => value === getValues('newPassword')
+                                                }
+                                            )}
+                                            type="password"
+                                        />
+                                    </div>
+                                </div>
+                               {(psswdErrors.newPassword?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
+                                <button className="secondary-button" id='login-form-box-button' style={{marginTop: "21px"}}>Aplicar cambio</button>
+                        </Box>
+                    </>
+                }
+                {psswdFormDisabled && <button className="secondary-button" id='login-form-box-button' style={{margin: "0 auto"}} onClick={handlePsswdFormBox}>Modificar contraseña</button>}
+            </div> 
         );
     }
 }

@@ -69,6 +69,9 @@ export const RegistrationForm = () => {
                         <Controller
                             name="birthdate"
                             control={control}
+                            rules={{
+                                required: true,
+                            }}
                             render={({ field }) => <LocalizationProvider 
                             dateAdapter={AdapterDayjs}>
                             <DatePicker 
@@ -83,7 +86,6 @@ export const RegistrationForm = () => {
                             </LocalizationProvider>
                             }
                         />
-                        {/* {errors.birthdate && <span className="details-error-message">La fecha de nacimiento es requerida</span>} */}
                         <TextField
                             id="outlined-controlled"
                             label="Dirección"
@@ -142,7 +144,7 @@ export const RegistrationForm = () => {
                         </div>
                     </div>
                 </div> 
-                {(errors.email?.type === 'required' || errors.name?.type === 'required' || errors.username?.type === 'required' || errors.password?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
+                {(errors.email?.type === 'required' || errors.name?.type === 'required' || errors.birthdate?.type === 'required' ||errors.username?.type === 'required' || errors.password?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
                 <button className="secondary-button" id='login-form-box-button'>Registrarse</button>       
             </Box>
             {error && <p className='error-messages' style={{textAlign: "center", position: "relative"}}>{error}</p>}

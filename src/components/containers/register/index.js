@@ -1,6 +1,6 @@
 import React from "react";
-import { Header } from "../header";
-import Footer from "../footer"
+import { Header } from "../main/header";
+import Footer from "../main/footer"
 import { RegistrationForm } from "./RegistrationForm";
 
 // const onChange = (e) => {

@@ -273,7 +273,6 @@ nav {
 }
 
 .form-box {
-  margin-top: 6rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -286,9 +285,20 @@ nav {
   margin-top: 55px;
 }
 
+.credentials-error-message {
+  padding-left: 0;
+  position: absolute;
+  margin-top: 70px;
+}
+
 .error-messages {
   color: red;
   font-size: 0.8rem;
+}
+
+.profile-error-message {
+  position: relative;
+  margin-bottom: 1rem;
 }
 
 .card-detail-box {
@@ -488,6 +498,12 @@ background-color: #6a6a6a;
   background-color: #e48f0f;
 }
 
+#search-bar{ 
+  position: 'relative';
+  z-index: 1;
+  background-color: hsla(0, 0%, 42%, 0.10);
+}
+
 .navbar-icon {
   font-size: 1.5rem;
   margin-right: 2rem;
@@ -496,7 +512,7 @@ background-color: #6a6a6a;
 
 .navbar-cart-icon{
   font-size: 1.5rem;
-  transform: translatey(-1px);
+  transform: translatey(2px);
 }
 
 .primary-button:hover {
@@ -509,8 +525,7 @@ background-color: #6a6a6a;
 .home-banner-container {
   position: relative;
   display: flex;
-  margin-top: 6rem;
-  padding-top: 3rem;
+  padding-top: 1rem;
   padding-left: 4rem;
 }
 .home-bannerImage-container {
@@ -537,7 +552,7 @@ background-color: #6a6a6a;
 .primary-heading {
   font-size: clamp(2rem, 5vw, 4rem);
   color: #4c4c4c;
-  /* line-height: 5rem; */
+  line-height: 5rem;
   max-width: 600px;
 }
 .primary-text {
