@@ -4,13 +4,16 @@ import TextField from '@mui/material/TextField';
 import { useForm } from "react-hook-form"
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 
 
-export default function LoginForm() {
-    const navigate = useNavigate();
+
+export default function LoginForm({ handleClose }) {
     const { register, handleSubmit, formState: { isValid } } = useForm();
     const [ error, setError ] = useState('')
+    const navigate = useNavigate()
     
     const onSubmit = async (formData) =>  {
         try {
@@ -18,7 +21,20 @@ export default function LoginForm() {
             console.log("el token es", res.data.token)
             console.log("el mensaje es", res.data.message)
             window.localStorage.setItem('token', res.data.token)
-            navigate('/profile', { replace: true });
+            if(handleClose) {
+                handleClose()
+            }
+            toast.success(`Te has conectado correctamente`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                });
+            navigate('/')
         } catch(err) {
             console.log("este es el error", err.response.data.error)
             setError(err.response.data.error)

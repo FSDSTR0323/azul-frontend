@@ -1,14 +1,21 @@
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 
-export const UserContext = createContext();
+// export const UserContext = createContext();
 
-export const MyUserContextProvider = ({ children }) => {
+// export const MyUserContextProvider = ({ children }) => {
 
-    const [token, setToken] = useState('')
+//     const [userIsLogged, setUserIsLogged] = useState()
 
-    return (
-        <UserContext.Provider value={{token, setToken}}>
-            {children}
-        </UserContext.Provider>
-    )
-}
+//     useEffect(() => {
+//         const token = window.localStorage.getItem("token") || null
+//         if (token) {
+
+//         }
+//     })
+
+//     return (
+//         <UserContext.Provider >
+//             {children}
+//         </UserContext.Provider>
+//     )
+// }

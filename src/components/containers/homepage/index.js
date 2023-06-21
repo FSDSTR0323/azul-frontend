@@ -8,8 +8,8 @@ import News from "./News";
 import Work from "./Work";
 import Testimonial from "./Testimonial";
 import Contact from "./Contact";
-import { Header } from "../header"
-import Footer from "../footer"
+import { Header } from "../main/header"
+import Footer from "../main/footer"
 
 export const Homepage = () => {
   return (

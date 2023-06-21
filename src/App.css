@@ -273,7 +273,6 @@ nav {
 }
 
 .form-box {
-  margin-top: 6rem;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -286,9 +285,20 @@ nav {
   margin-top: 55px;
 }
 
+.credentials-error-message {
+  padding-left: 0;
+  position: absolute;
+  margin-top: 70px;
+}
+
 .error-messages {
   color: red;
   font-size: 0.8rem;
+}
+
+.profile-error-message {
+  position: relative;
+  margin-bottom: 1rem;
 }
 
 .card-detail-box {
