@@ -10,6 +10,8 @@ import japanese from "../../../assets/symbols/japan.png";
 import portuguese from "../../../assets/symbols/portugal.png";
 import sellimage from "../../../assets/sell.png";
 import bidimage from "../../../assets/bid.png";
+import moment from 'moment';
+
 
 
 const CardsOnSell = ({ card }) => {
@@ -80,6 +82,24 @@ const CardsOnSell = ({ card }) => {
     }
   };
 
+  const getBidDate = (date) => {
+    if (date) {
+     const formatedDate = moment(date).format('DD/MM/YYYY HH:mm')
+     return (formatedDate)
+    }else{
+      return ('-')
+    }
+  }
+
+///Función para obtener el nombre de usuario a partir de su ID
+  /*const getUserName = async (userid) => {
+  console.log('fallo antes del get');
+  const response = await axios.get(`http://localhost:5000/username/?user_id=${userid}`);
+  console.log('response es:', response.data);
+  return response.data; // Devolver solo los datos de la respuesta
+};*/
+
+
   return (
     <div>
       <h2>Cartas en Venta</h2>
@@ -93,6 +113,7 @@ const CardsOnSell = ({ card }) => {
             <th>Venta / Subasta</th>
             <th>Precio</th>
             <th>Fin de la Subasta</th>
+            {/*<th>Usuario</th>*/}
           </tr>
         </thead>
         <tbody>
@@ -104,7 +125,9 @@ const CardsOnSell = ({ card }) => {
               <td>{getStatus(card.status)}</td>
               <td>{getTypeSell(card.type_sell)}</td>
               <td>{card.price} €</td>
-              <td>{card.end_of_bid}</td>
+              <td>{getBidDate(card.end_of_bid)}</td>
+              {/*<td>{getUserName(card.user_id)}</td>*/}
+
             </tr>
           ))}
         </tbody>

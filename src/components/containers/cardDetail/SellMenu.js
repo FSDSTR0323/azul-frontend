@@ -11,8 +11,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
-
-
+import { authorizationConfig } from '../../../security';
+import CardsOnSell from "./CardsOnSell";
 
 
 export default function SellMenu({card}) {
@@ -41,12 +41,11 @@ export default function SellMenu({card}) {
 
   const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit } = useForm();
   const { control: bidControl, register: bidRegister, handleSubmit: bidHandleSubmit, formState: bidFormState } = useForm();
-
-
-
+  const [updateKey, setUpdateKey] = useState(0);
 
   const sellOnSubmit = async (formData) => {
     try {
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
@@ -57,11 +56,15 @@ export default function SellMenu({card}) {
         status: formData.status,
         type_sell: "Venta",
         price: formData.price,
-        user_id: "64836e0bc27bc036dab85cad", //modificar por el user real
-      };
-      console.log('Carta puesta a la venta:', cardSelledData)
-      setSellMessage("¡La carta se ha puesto a la venta!"); 
-      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);      
+        user_id: userDataRes.data._id,
+      };      
+      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);   
+      setTimeout(() => {
+        setUpdateKey(updateKey + 1);
+        console.log('Carta puesta a la venta:', cardSelledData)
+        setSellMessage("¡La carta se ha puesto a la venta!"); 
+        }, 100);
+   
     } catch (error) {
       console.log('Error al incluir la carta en la base de datos', error);
     }
@@ -69,6 +72,7 @@ export default function SellMenu({card}) {
 
   const bidOnSubmit = async (formData) => {
     try {
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
@@ -80,18 +84,22 @@ export default function SellMenu({card}) {
         type_sell: "Subasta",
         price: formData.price,
         end_of_bid: formData.end_of_bid,
-        user_id: "64836e0bc27bc036dab85cad", //modificar por el user real
+        user_id: userDataRes.data._id,
       };
+      
+     await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);
+     setTimeout(() => {
+      setUpdateKey(updateKey + 1);
       console.log('Carta puesta en subasta:', cardSelledData)
-      setBidMessage("¡La carta se ha puesto en subasta!");
-
-      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);
+      setBidMessage("¡La carta se ha puesto en subasta!"); 
+      }, 100); 
     } catch (error) {
       console.log('Error al incluir la carta en la base de datos', error);
     }
   };
 
   return (
+    <div>
     <div className="sell-buttons-container">
       <div>
         <button className="sell-button" onClick={handleClickSell}>
@@ -236,6 +244,11 @@ export default function SellMenu({card}) {
           {bidMessage && <p>{bidMessage}</p>}
 
       </Menu>
+      
+
     </div>
+    { <CardsOnSell key={updateKey} card={card.name}/>}
+    </div>
+   
   );
 }

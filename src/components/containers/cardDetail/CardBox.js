@@ -187,7 +187,7 @@ const cardInCollec = (allCards)=>{
       </div>
       <div>
       <SellMenu card={allCards[currentIndex]}/>
-      <CardsOnSell card={card.name}/>
+      {/*<CardsOnSell card={card.name}/>*/}
       </div>
       
   </div>
