@@ -94,7 +94,7 @@ export default function SearchBar() {
       
   return (
     <>
-      <Search style={{position: 'relative', zIndex: 1}}>
+      <Search id="search-bar">
         <SearchIconWrapper>
           <SearchIcon />
         </SearchIconWrapper>

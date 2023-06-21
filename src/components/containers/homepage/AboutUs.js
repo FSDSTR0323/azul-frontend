@@ -14,9 +14,11 @@ export const AboutUs = () => {
             <p className="primary-text">
                 consigue las mejores cartas a mejor precio.
             </p>
+            <a href="/register" style={{textDecoration:"none"}}>
             <button className="secondary-button">
-                comprar <FiArrowRight />{" "}
+                Únete <FiArrowRight />
             </button>
+            </a>
         </div>
         <div className="home-image-section">
         {/* <img src={} alt="" /> */}
