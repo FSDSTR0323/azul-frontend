@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import sellimage from "../../../assets/sell.png";
 import bidimage from "../../../assets/bid.png";
 import Menu from "@mui/material/Menu";
@@ -20,7 +20,6 @@ export default function SellMenu({card}) {
   const [sellMessage, setSellMessage] = useState(""); 
   const [bidMessage, setBidMessage] = useState(""); 
 
-  
   const [anchorElSell, setAnchorElSell] = useState(null);
   const handleClickSell = (event) => {
     setAnchorElSell(event.currentTarget);
@@ -39,27 +38,31 @@ export default function SellMenu({card}) {
   };
 
 
-  const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit } = useForm();
+  const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit, formState: sellFormState } = useForm();
   const { control: bidControl, register: bidRegister, handleSubmit: bidHandleSubmit, formState: bidFormState } = useForm();
   const [updateKey, setUpdateKey] = useState(0);
 
+ 
   const sellOnSubmit = async (formData) => {
+  //On_click del boton vender. obtiene la info del usuario conectado. 
+  //Crea un array con la info de la carta actual + id de usuario y
+  //hace post en el backend para actualizar la BBDD con la nueva carta
     try {
       const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
         name: card.name,
-        set_name: card.set_name,
+        set_name: formData.set_name,
         lang: formData.lang,
         foil: formData.sellFoil ? true : false,
         status: formData.status,
         type_sell: "Venta",
         price: formData.price,
-        user_id: userDataRes.data._id,
-      };      
-      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);   
-      setTimeout(() => {
+        user: userDataRes.data._id,
+      };    
+      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig);   
+      setTimeout(() => { // timeout para esperar a actualizar la BBDD antes de renderizar de nuevo el componente CardsOnSell
         setUpdateKey(updateKey + 1);
         console.log('Carta puesta a la venta:', cardSelledData)
         setSellMessage("¡La carta se ha puesto a la venta!"); 
@@ -77,17 +80,16 @@ export default function SellMenu({card}) {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
         name: card.name,
-        set_name: card.set_name,
+        set_name: formData.set_name,
         lang: formData.lang,
         foil: formData.sellFoil ? true : false,
         status: formData.status,
         type_sell: "Subasta",
         price: formData.price,
         end_of_bid: formData.end_of_bid,
-        user_id: userDataRes.data._id,
-      };
-      
-     await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);
+        user: userDataRes.data._id,
+      };      
+     await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig);
      setTimeout(() => {
       setUpdateKey(updateKey + 1);
       console.log('Carta puesta en subasta:', cardSelledData)
@@ -97,6 +99,31 @@ export default function SellMenu({card}) {
       console.log('Error al incluir la carta en la base de datos', error);
     }
   };
+
+
+
+
+    
+  
+const [setNameOptions, setSetNameOptions] = useState([]);
+useEffect(() => {
+  const fetchSetNameOptions = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/cards/cardcollections?name=${card.name}`);
+      console.log('response es: ', response.data);
+      setSetNameOptions(response.data);
+    } catch (error) {
+      console.error('Error al obtener las colecciones de las cartas en venta:', error);
+    }
+  };
+  fetchSetNameOptions();
+}, [card.name]);
+
+
+
+   
+
+ 
 
   return (
     <div>
@@ -114,20 +141,26 @@ export default function SellMenu({card}) {
         id="sellform"
         className="sell-form-box"
         component="form"
-        //noValidate
+        noValidate
         autoComplete="off"
         anchorEl={anchorElSell}
         open={Boolean(anchorElSell)}
         onClose={handleCloseSell}
       >
-         <Controller
-        name="sellFoil"
-        control={sellControl}
-        rules={{ required: false }}
-        render={({ field }) => <FormGroup>
-        <FormControlLabel control={<Checkbox {...field} />} label={"foil"}/>
-        </FormGroup>}
-        />
+         <label>Foil:</label>
+         <input
+          type="checkbox"
+          id="foil"
+          {...sellRegister("foil", { required: false })}
+         />
+          <br />
+          <select id="set_name" {...sellRegister("set_name", { required: true })}>
+            {setNameOptions.map(option => (
+            <option key={option} value={option}>
+            {option}
+            </option>
+            ))}
+          </select>
           <br />
           <label>Idioma de la carta: </label>
           <select id="lang" {...sellRegister("lang", { required: true })}>
@@ -161,7 +194,7 @@ export default function SellMenu({card}) {
             {...sellRegister("price", { required: true })}
           />
           <br />
-          <button id="sellcard" type="submit" //disabled={!sellFormState.isValid}
+          <button id="sellcard" type="submit" disabled={!sellFormState.isValid}
           >
             Poner en Venta
           </button>
@@ -185,6 +218,14 @@ export default function SellMenu({card}) {
             id="foil"
             {...bidRegister("foil", { required: false })}
           />
+          <br />
+          <select id="set_name" {...bidRegister("set_name", { required: true })}>
+            {setNameOptions.map(option => (
+            <option key={option} value={option}>
+            {option}
+            </option>
+            ))}
+          </select>
           <br />
           <label>Idioma de la carta: </label>
           <select id="lang" {...bidRegister("lang", { required: true })}>
