@@ -58,7 +58,7 @@ export default function SellMenu({card}) {
         price: formData.price,
         user_id: userDataRes.data._id,
       };      
-      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData);   
+      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig);   
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log('Carta puesta a la venta:', cardSelledData)
