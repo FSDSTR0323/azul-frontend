@@ -20,6 +20,7 @@ export default function SellMenu({card}) {
   const [sellMessage, setSellMessage] = useState(""); 
   const [bidMessage, setBidMessage] = useState(""); 
 
+
   const [anchorElSell, setAnchorElSell] = useState(null);
   const handleClickSell = (event) => {
     setAnchorElSell(event.currentTarget);
@@ -41,7 +42,6 @@ export default function SellMenu({card}) {
   const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit, formState: sellFormState } = useForm();
   const { control: bidControl, register: bidRegister, handleSubmit: bidHandleSubmit, formState: bidFormState } = useForm();
   const [updateKey, setUpdateKey] = useState(0);
-
  
   const sellOnSubmit = async (formData) => {
   //On_click del boton vender. obtiene la info del usuario conectado. 
@@ -59,10 +59,10 @@ export default function SellMenu({card}) {
         status: formData.status,
         type_sell: "Venta",
         price: formData.price,
-        user: userDataRes.data._id,
-      };    
+        user_id: userDataRes.data._id,
+      };      
       await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig);   
-      setTimeout(() => { // timeout para esperar a actualizar la BBDD antes de renderizar de nuevo el componente CardsOnSell
+      setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log('Carta puesta a la venta:', cardSelledData)
         setSellMessage("¡La carta se ha puesto a la venta!"); 

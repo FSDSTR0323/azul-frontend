@@ -21,6 +21,7 @@ const CardsOnSell = ({ card }) => {
     const fetchCardsOnSell = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/cards/searchSelled/?name=${card}`);
+        console.log("La response es ", response)
         setCardsOnSell(response.data);
       } catch (error) {
         console.error('Error al obtener las cartas en venta:', error);
