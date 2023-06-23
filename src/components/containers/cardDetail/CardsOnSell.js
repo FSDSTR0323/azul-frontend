@@ -92,15 +92,6 @@ const CardsOnSell = ({ card }) => {
     }
   }
 
-///Función para obtener el nombre de usuario a partir de su ID
-  /*const getUserName = async (userid) => {
-  console.log('fallo antes del get');
-  const response = await axios.get(`http://localhost:5000/username/?user_id=${userid}`);
-  console.log('response es:', response.data);
-  return response.data; // Devolver solo los datos de la respuesta
-};*/
-
-
   return (
     <div>
       <h2>Cartas en Venta</h2>
@@ -114,7 +105,7 @@ const CardsOnSell = ({ card }) => {
             <th>Venta / Subasta</th>
             <th>Precio</th>
             <th>Fin de la Subasta</th>
-            {/*<th>Usuario</th>*/}
+            <th>Usuario</th>
           </tr>
         </thead>
         <tbody>
@@ -127,7 +118,7 @@ const CardsOnSell = ({ card }) => {
               <td>{getTypeSell(card.type_sell)}</td>
               <td>{card.price} €</td>
               <td>{getBidDate(card.end_of_bid)}</td>
-              {/*<td>{getUserName(card.user_id)}</td>*/}
+              <td>{card.user.username}</td>
 
             </tr>
           ))}
