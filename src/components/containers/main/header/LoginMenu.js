@@ -7,7 +7,7 @@ import { Link } from "react-router-dom"
 import { UserContext } from "../../../../contexts/UserContext"
 
 export default function BasicMenu() {
-  const {userAvatar} = React.useContext(UserContext)
+  const {userAvatar, setUserAvatar} = React.useContext(UserContext)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   
@@ -21,7 +21,11 @@ export default function BasicMenu() {
 
   const handleLogOut = () => {
     window.localStorage.removeItem('token')
+    setUserAvatar()
+    handleClose()
   }
+
+  console.log("el user avatar es", userAvatar)
 
   return (
     <>
@@ -43,7 +47,7 @@ export default function BasicMenu() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <LoginForm handleClose={handleClose}></LoginForm>
+            <LoginForm handleClose={handleClose} setUserAvatar={setUserAvatar}></LoginForm>
             <Divider variant="middle" />
             <div className='login-form-box'>
               <p>¿Aún no estás registrado?</p>
@@ -64,7 +68,6 @@ export default function BasicMenu() {
       {window.localStorage.getItem("token") && userAvatar &&
         <>
           <div  
-
             onClick={handleClick}
             className='navbar-icon navbar-avatar-container'
             aria-controls={open ? 'basic-menu' : undefined}
@@ -99,7 +102,6 @@ export default function BasicMenu() {
         </>
       }
       {window.localStorage.getItem("token") && !userAvatar && 
-
         <>
           <CgProfile
           onClick={handleClick}

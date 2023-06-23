@@ -108,6 +108,7 @@ export const UserData = ({ name }) => {
                 progress: undefined,
                 theme: "light",
             });
+            setUserAvatar(modifiedDataRes.data.avatar_image)
             console.log("la data modificada es", modifiedDataRes)
             setUserData(modifiedDataRes)
             reset({

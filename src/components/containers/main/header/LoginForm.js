@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export default function LoginForm({ handleClose }) {
+export default function LoginForm({ handleClose, setUserAvatar }) {
     const { register, handleSubmit, formState: { isValid } } = useForm();
     const [ error, setError ] = useState('')
     const navigate = useNavigate()
@@ -21,6 +21,8 @@ export default function LoginForm({ handleClose }) {
             console.log("el token es", res.data.token)
             console.log("el mensaje es", res.data.message)
             window.localStorage.setItem('token', res.data.token)
+            setUserAvatar(res.data.avatar_image)
+            console.log("La res tras el login es", res.data)
             if(handleClose) {
                 handleClose()
             }

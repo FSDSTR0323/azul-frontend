@@ -13,7 +13,6 @@ export const CardDetail = () => {
     <>    
       <Header />
       <CardBox />
-      
       <Footer />
     </>
   );
