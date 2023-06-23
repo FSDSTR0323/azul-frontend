@@ -70,6 +70,10 @@ export default function SellMenu({card}) {
    
     } catch (error) {
       console.log('Error al incluir la carta en la base de datos', error);
+      setSellMessage("Para poder vender cartas necesitas estar conectado, redirigiendo al login"); 
+      setTimeout(() => {
+        window.location.href = 'http://localhost:3000/login';
+        }, 3000);
     }
   };
 
@@ -97,13 +101,12 @@ export default function SellMenu({card}) {
       }, 100); 
     } catch (error) {
       console.log('Error al incluir la carta en la base de datos', error);
+      setBidMessage("Para poder vender cartas necesitas estar conectado, redirigiendo al login"); 
+      setTimeout(() => {
+        window.location.href = 'http://localhost:3000/login';
+        }, 3000);
     }
   };
-
-
-
-
-    
   
 const [setNameOptions, setSetNameOptions] = useState([]);
 useEffect(() => {
