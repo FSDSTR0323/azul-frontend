@@ -4,7 +4,8 @@ import { Register } from './components/containers/register';
 import { CardDetail } from './components/containers/cardDetail';
 import { SuccessAlert } from './utils/toaster';
 import { Profile } from './components/containers/perfil';
-import { Login } from './components/containers/login'
+import { Login } from './components/containers/login';
+import { MyUserContextProvider } from './contexts/UserContext'
 
 import "./App.css";
 
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="App">
       <SuccessAlert />
+      <MyUserContextProvider>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Homepage />}/>
@@ -22,6 +24,7 @@ function App() {
           <Route path='/login' element={<Login />}></Route>
         </Routes>
       </BrowserRouter>
+      </MyUserContextProvider>
     </div>
   );
 }

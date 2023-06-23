@@ -1,8 +1,8 @@
-import React from "react";
-
+import React, { useEffect } from "react";
+import axios from 'axios';
 // import BannerImage from "../../../assets/home-banner-image.png";
 import { AboutUs } from "./AboutUs";
-
+import { authorizationConfig } from '../../../security';
 import { Catalog } from "./Catalog";
 import News from "./News";
 import Work from "./Work";
@@ -12,6 +12,22 @@ import { Header } from "../main/header"
 import Footer from "../main/footer"
 
 export const Homepage = () => {
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const modifiedDataRes = await axios.get('http://localhost:5000/homepage', authorizationConfig)
+        console.log("la data modificada es", modifiedDataRes)
+      }  
+      catch(err) {
+          if(err.response.data.name === "TokenExpiredError") {
+              window.localStorage.removeItem('token')
+          }
+      }
+    })()
+  }, [])
+
+
   return (
     <div className="home-container">
       <Header />

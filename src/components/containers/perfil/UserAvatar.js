@@ -3,38 +3,33 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Container } from "@mui/material";
 
-export function UploadButtons() {
-    const [file, setFile] = useState();
+
+export function UploadButtons({ register, formDisabled, setFile, userAvatar }) {
+    
   const [imageReader, setImageReader] = useState(null);
 
   const handleFileSelect = (event) => {
+
     setFile(event.target.files)
 
     const fileReader = event.target.files[0];
     const reader = new FileReader();
-
-
     reader.onloadend = () => {
       setImageReader(reader.result);
     };
-
     reader.readAsDataURL(fileReader);
   };
 
-  const handleFileUpload = (file) => {
-    const data = new FormData()
-    data.append("file", file)
-    data.append("upload_preset", "fw-avatars")
-    data.append("cloud_name", "freakyworld")
+    console.log("El estado de la url de avatar es", userAvatar)
 
-    // const mediaType = 
-  }
 
   return (
     <Container maxWidth="md" sx={{ mt: 8 }}>
       <Stack direction="row" alignItems="center" spacing={2}>
+          {imageReader && <img src={imageReader} alt="Uploaded user avatar" className="avatar-image"/>}
+          {!imageReader && userAvatar && <img src={userAvatar} alt="Uploaded user avatar" className="avatar-image"/>}
         <label htmlFor="upload-image">
-          <Button variant="contained" component="span">
+          <Button variant="contained" component="span" disabled={formDisabled}>
             Seleccionar avatar
           </Button>
           <input
@@ -42,10 +37,12 @@ export function UploadButtons() {
             hidden
             accept="image/*"
             type="file"
-            onChange={handleFileSelect}
+            
+            {...register("avatar_image", {
+              onChange: handleFileSelect,
+            })}
           />
         </label>
-        {imageReader && <img src={imageReader} alt="Uploaded user avatar" className="avatar-image"/>}
       </Stack>
     </Container>
   );

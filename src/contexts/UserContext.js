@@ -1,21 +1,22 @@
 import { createContext, useState, useEffect } from 'react'
 
-// export const UserContext = createContext();
+export const UserContext = createContext();
 
-// export const MyUserContextProvider = ({ children }) => {
+export const MyUserContextProvider = ({ children }) => {
 
-//     const [userIsLogged, setUserIsLogged] = useState()
+    // const [userIsLogged, setUserIsLogged] = useState()
+    const [userAvatar, setUserAvatar] = useState()
 
-//     useEffect(() => {
-//         const token = window.localStorage.getItem("token") || null
-//         if (token) {
+    // useEffect(() => {
+    //     const token = window.localStorage.getItem("token") || null
+    //     if (token) {
 
-//         }
-//     })
+    //     }
+    // })
 
-//     return (
-//         <UserContext.Provider >
-//             {children}
-//         </UserContext.Provider>
-//     )
-// }
+    return (
+        <UserContext.Provider value={{userAvatar, setUserAvatar}}>
+            {children}
+        </UserContext.Provider>
+    )
+}

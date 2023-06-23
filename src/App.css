@@ -460,8 +460,14 @@ nav {
 
 .avatar-image {
   max-height: 200px;
-  border-radius: 50%;
+  border:  2px solid rgba(118, 118, 118, 0.3);
+  border-radius: 4px;
   width: auto;
+}
+
+.avatar-navbar-image {
+  max-height: 50px;
+  border-radius: 50%;
 }
 
 #search-menu {
@@ -514,6 +520,11 @@ background-color: #6a6a6a;
   font-size: 1.5rem;
   margin-right: 2rem;
   cursor: pointer;
+}
+
+.navbar-avatar-container {
+  display: flex;
+  align-items: center;
 }
 
 .navbar-cart-icon{

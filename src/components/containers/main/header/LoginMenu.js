@@ -4,9 +4,10 @@ import LoginForm from './LoginForm'
 import { CgProfile } from "react-icons/cg";
 import Divider from '@mui/material/Divider';
 import { Link } from "react-router-dom"
-import { useEffect } from 'react';
+import { UserContext } from "../../../../contexts/UserContext"
 
 export default function BasicMenu() {
+  const {userAvatar} = React.useContext(UserContext)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   
@@ -60,15 +61,18 @@ export default function BasicMenu() {
           </Menu>
         </>
       }
-      {window.localStorage.getItem("token") &&
+      {window.localStorage.getItem("token") && userAvatar &&
         <>
-          <CgProfile
-                  onClick={handleClick}
-                  className='navbar-icon'
-                  aria-controls={open ? 'basic-menu' : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={open ? 'true' : undefined}
-          />
+          <div  
+
+            onClick={handleClick}
+            className='navbar-icon navbar-avatar-container'
+            aria-controls={open ? 'basic-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <img src={userAvatar} alt="User avatar" className='avatar-navbar-image'/>
+          </div>
           <Menu
             id="basic-menu"
             anchorEl={anchorEl}
@@ -77,6 +81,41 @@ export default function BasicMenu() {
             MenuListProps={{
               'aria-labelledby': 'basic-button',
             }}
+          >
+            <a href="/profile">Mi perfil</a>
+            <Divider variant="middle" />
+            <div className='login-form-box'>
+              <Link to={'/'} style={{ textDecoration:"none" }}>
+                <button 
+                  className="secondary-button"
+                  id="login-form-box-button"
+                  onClick={handleLogOut}
+                >
+                  Log out
+                </button>
+              </Link>
+            </div>
+          </Menu>
+        </>
+      }
+      {window.localStorage.getItem("token") && !userAvatar && 
+
+        <>
+          <CgProfile
+          onClick={handleClick}
+          className='navbar-icon'
+          aria-controls={open ? 'basic-menu' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          /> 
+          <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                'aria-labelledby': 'basic-button',
+              }}
           >
             <a href="/profile">Mi perfil</a>
             <Divider variant="middle" />

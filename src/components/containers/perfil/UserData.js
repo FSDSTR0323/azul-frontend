@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Controller, useForm } from "react-hook-form"
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,21 +12,27 @@ import { authorizationConfig } from '../../../security';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { UploadButtons } from "./UserAvatar";
+import { UserContext } from "../../../contexts/UserContext"
 
 export const UserData = ({ name }) => {
     
     const navigate = useNavigate
-  const [userData, setUserData] = useState("")
-  
-  const { control, register, handleSubmit, reset, formState: { errors } } = useForm()
-  const [ error, setError ] = useState()
-  const [formDisabled, setFormDisabled] = useState(true)
 
-  const { register: oldPsswdRegister, handleSubmit: oldPsswdHandleSubmit, formState: { errors: oldPsswdErrors } } = useForm()
-  const { register: psswdRegister, handleSubmit: psswdHandleSubmit, getValues, formState: { errors: psswdErrors } } = useForm()
-  const [ psswdError, setPsswdError ] = useState()
-  const [ psswdFormDisabled, setPsswdFormDisabled] = useState(true)
-  const [ isPsswdCorrect, setIsPsswdCorrect] = useState(false)
+    const [file, setFile] = useState();
+    const {userAvatar, setUserAvatar } = useContext(UserContext)
+    const [imageURL, setImageURL] = useState("");
+
+    const [userData, setUserData] = useState("")
+    const { control, register, handleSubmit, reset, formState: { errors } } = useForm()
+    const [ error, setError ] = useState()
+    const [formDisabled, setFormDisabled] = useState(true)
+
+    const { register: oldPsswdRegister, handleSubmit: oldPsswdHandleSubmit, formState: { errors: oldPsswdErrors } } = useForm()
+    const { register: psswdRegister, handleSubmit: psswdHandleSubmit, getValues, formState: { errors: psswdErrors } } = useForm()
+    const [ psswdError, setPsswdError ] = useState()
+    const [ psswdFormDisabled, setPsswdFormDisabled] = useState(true)
+    const [ isPsswdCorrect, setIsPsswdCorrect] = useState(false)
 
     useEffect(() => {
         (async() => {
@@ -34,6 +40,7 @@ export const UserData = ({ name }) => {
             const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
             console.log("La data res es:", userDataRes)
             setUserData(userDataRes)
+            setUserAvatar(userDataRes.data.avatar_image)
             reset({
                 name: userDataRes.data.name,
                 surname: userDataRes.data.surname ,
@@ -41,6 +48,7 @@ export const UserData = ({ name }) => {
                 address: userDataRes.data.address,
                 email: userDataRes.data.email,
                 phone: userDataRes.data.phone,
+                avatar_image: userDataRes.data.avatar_image,
                 username: userDataRes.data.username,
             })
             } catch(err){
@@ -57,11 +65,38 @@ export const UserData = ({ name }) => {
         setFormDisabled(!formDisabled)
     }
 
+    const handleFileUpload = async (formData) => {
+        const image = file[0] 
+        
+        const imageData = new FormData()
+        imageData.append("file", image)
+        imageData.append("upload_preset", "nuclio-fw")
+        imageData.append("cloud_name", "freakyworld")
+    
+        const mediaType = image.type.split("/")[0]
+
+        try {
+            const imageRes = await axios.post(`https://api.cloudinary.com/v1_1/freakyworld/${mediaType}/upload`, imageData)
+            console.log("la url de la imagen es", imageRes.data.url)
+            formData.avatar_image = imageRes.data.url
+            // setUserAvatar(imageRes.data.url)
+        } catch(err) {
+            console.log("Este es el error al postear img a cloudinary", err)
+        }
+      }
+
     const onSubmit = async (formData) =>  {
         setError();
-        console.log("Llegamos aquí")
-        console.log("la data aactualizada es", formData)
+
+        console.log("La data es", formData.avatar_image)
+
+        await handleFileUpload(formData)
+        
+        // formData.avatar_image = imageURL
+        
+        console.log("La data del url de cloud es", formData.avatar_image)
         try {
+            console.log(formData)
             const modifiedDataRes = await axios.put('http://localhost:5000/profile/modify_details', formData, authorizationConfig)
             toast.success(`Has modificado los datos correctamente`, {
                 position: "top-right",
@@ -73,7 +108,7 @@ export const UserData = ({ name }) => {
                 progress: undefined,
                 theme: "light",
             });
-            console.log(modifiedDataRes)
+            console.log("la data modificada es", modifiedDataRes)
             setUserData(modifiedDataRes)
             reset({
                 name: modifiedDataRes.data.name,
@@ -82,6 +117,7 @@ export const UserData = ({ name }) => {
                 address: modifiedDataRes.data.address,
                 email: modifiedDataRes.data.email,
                 phone: modifiedDataRes.data.phone,
+                avatar_image: modifiedDataRes.data.avatar_image,
                 username: modifiedDataRes.data.username,
             })
             setFormDisabled(!formDisabled)
@@ -171,6 +207,9 @@ export const UserData = ({ name }) => {
                 autoComplete="off"
                 >
                     <div className="profile-form-box">
+                        <div id="details">
+                            <UploadButtons register={register} formDisabled={formDisabled} setFile={setFile} userAvatar={userAvatar}/>
+                        </div>
                         <div id="details">
                             <div id="details-child">
                                 <TextField
