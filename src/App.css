@@ -458,6 +458,12 @@ nav {
   transition: 0.2s;
 }
 
+.avatar-image {
+  max-height: 200px;
+  border-radius: 50%;
+  width: auto;
+}
+
 #search-menu {
   margin-top: 1.4rem;
   width: 100%
