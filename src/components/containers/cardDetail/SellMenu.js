@@ -13,6 +13,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
 import { authorizationConfig } from '../../../security';
 import CardsOnSell from "./CardsOnSell";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'
 
 
 export default function SellMenu({card}) {
@@ -37,6 +40,7 @@ export default function SellMenu({card}) {
     setAnchorElBid(null);
   };
 
+  const navigate = useNavigate()
 
   const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit, formState: sellFormState } = useForm();
   const { control: bidControl, register: bidRegister, handleSubmit: bidHandleSubmit, formState: bidFormState } = useForm();
@@ -70,10 +74,18 @@ export default function SellMenu({card}) {
    
     } catch (error) {
       console.log('Error al incluir la carta en la base de datos', error);
-      setSellMessage("Para poder vender cartas necesitas estar conectado, redirigiendo al login"); 
-      setTimeout(() => {
-        window.location.href = 'http://localhost:3000/login';
-        }, 3000);
+
+      toast.warning("Para poder vender cartas necesitas estar conectado, redirigiendo al login", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        navigate("/login")
     }
   };
 

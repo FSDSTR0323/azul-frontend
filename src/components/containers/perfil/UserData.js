@@ -80,10 +80,11 @@ export const UserData = ({ name }) => {
             console.log("la url de la imagen es", imageRes.data.url)
             formData.avatar_image = imageRes.data.url
             // setUserAvatar(imageRes.data.url)
+            // setImageURL(imageRes.data.url)
         } catch(err) {
             console.log("Este es el error al postear img a cloudinary", err)
         }
-      }
+    }
 
     const onSubmit = async (formData) =>  {
         setError();
@@ -91,7 +92,7 @@ export const UserData = ({ name }) => {
         console.log("La data es", formData.avatar_image)
 
         await handleFileUpload(formData)
-        
+        // console.log("---------------------", imageURL)
         // formData.avatar_image = imageURL
         
         console.log("La data del url de cloud es", formData.avatar_image)
