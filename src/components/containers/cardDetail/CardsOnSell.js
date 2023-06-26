@@ -10,18 +10,23 @@ import japanese from "../../../assets/symbols/japan.png";
 import portuguese from "../../../assets/symbols/portugal.png";
 import sellimage from "../../../assets/sell.png";
 import bidimage from "../../../assets/bid.png";
+import buyimage from "../../../assets/buy.png";
 import moment from 'moment';
+import { authorizationConfig } from "../../../security";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'
 
 
 
 const CardsOnSell = ({ card }) => {
+  const navigate = useNavigate()
   const [cardsOnSell, setCardsOnSell] = useState([]);
 
   useEffect(() => {
     const fetchCardsOnSell = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/cards/searchSelled/?name=${card}`);
-        console.log("La response es ", response)
         setCardsOnSell(response.data);
       } catch (error) {
         console.error('Error al obtener las cartas en venta:', error);
@@ -92,6 +97,37 @@ const CardsOnSell = ({ card }) => {
     }
   }
 
+  const onClickBuy = async (card) => {
+    try {
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
+      console.log('estoy en el try de onclickbuy')
+      let cardBuyedData = {
+        _id: card._id,
+        buyer: userDataRes.data._id,
+      };
+      console.log('cardBuyedData es:', cardBuyedData)
+      await axios.post("http://localhost:5000/cards/buycard", cardBuyedData, authorizationConfig)
+      
+        console.log('Carta comprada:', cardBuyedData)
+      
+    } catch (error){
+      console.log('Error al comprar la carta en la base de datos', error);
+      toast.warning("Para poder comprar cartas necesitas estar conectado, redirigiendo al login", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        navigate("/login")
+    }
+
+  }
+  
+
   return (
     <div>
       <h2>Cartas en Venta</h2>
@@ -106,6 +142,7 @@ const CardsOnSell = ({ card }) => {
             <th>Precio</th>
             <th>Fin de la Subasta</th>
             <th>Usuario</th>
+            <th>Comprar</th>
           </tr>
         </thead>
         <tbody>
@@ -119,6 +156,18 @@ const CardsOnSell = ({ card }) => {
               <td>{card.price} €</td>
               <td>{getBidDate(card.end_of_bid)}</td>
               <td>{card.user.username}</td>
+              <td>
+                <button className="sell-button">
+                <img
+                  className="card-detail-symbol-image"
+                  onClick={() => onClickBuy(card)}
+                  src={buyimage}
+                  alt="Comprar"
+                />
+                </button>
+              </td>
+
+
 
             </tr>
           ))}

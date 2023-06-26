@@ -58,9 +58,9 @@ const cardInCollec = (allCards)=>{
     const nextCard = allCards[currentIndex];
     return (
       <div>
-      <button className="arrow-button" onClick={handlePreviousCard}>←</button>
+      <button className="sell-button" onClick={handlePreviousCard}>←</button>
       <img className="card-detail-image" src={nextCard.image_uris.normal} alt={nextCard.name} />
-      <button className="arrow-button" onClick={handleNextCard}>→</button> 
+      <button className="sell-button" onClick={handleNextCard}>→</button> 
       <div className="card-detail-counter">{`${currentIndex + 1}/${allCards.length}`}</div>
            
     </div>

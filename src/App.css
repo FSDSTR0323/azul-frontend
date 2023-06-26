@@ -346,21 +346,6 @@ nav {
   height: 15px;
 }
 
-.arrow-button {
-  padding: 0.9rem 1.75rem;
-  background-color: #fe9e0d;
-  outline: none;
-  border: none;
-  border-radius: 5rem;
-  font-size: 1.1rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: 0.2s;
-}
-
-.arrow-button:hover {
-  background-color: rgb(234, 234, 234);
-}
 
 .rarity-common {
   background-color: #000;
@@ -642,10 +627,10 @@ background-color: #6a6a6a;
 }
 
 .sell-button {
-  padding: 0.9rem 1.75rem;
+  padding: 0.5rem 0.9rem;
   background-color: #fe9e0d;
   border: none;
-  border-radius: 5rem;
+  border-radius: 1rem;
   font-size: 1.1rem;
   cursor: pointer;
   transition: 0.2s;
