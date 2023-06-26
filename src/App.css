@@ -37,6 +37,41 @@
   }
 } */
 
+.column-names {
+  position: relative;
+}
+
+.column-names-icon{
+  position: absolute;
+}
+
+.column-names-icon:hover{
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+
+
+.cards-list {
+  display: flex;
+  gap: 1rem;
+}
+
+.cards-list-filter {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+#cards-list-button {
+  margin: 1rem auto;
+}
+
+
+
 
 .center-container {
   display: flex;

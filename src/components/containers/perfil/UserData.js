@@ -63,6 +63,7 @@ export const UserData = ({ name }) => {
 
     const handleFormBox = () => {
         setFormDisabled(!formDisabled)
+        console.log()
     }
 
     const handleFileUpload = async (formData) => {
@@ -89,7 +90,7 @@ export const UserData = ({ name }) => {
     const onSubmit = async (formData) =>  {
         setError();
 
-        console.log("La data es", formData.avatar_image)
+        console.log("La data es----------", formData.avatar_image)
 
         await handleFileUpload(formData)
         // console.log("---------------------", imageURL)

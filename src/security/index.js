@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 
 export const authorizationConfig = {
     headers: {
@@ -7,6 +5,3 @@ export const authorizationConfig = {
     }
 }
 
-export const tokenValidator = () => {
-    
-}

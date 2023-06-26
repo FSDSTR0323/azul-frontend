@@ -5,6 +5,7 @@ import InputBase from '@mui/material/InputBase';
 import { useState, useEffect, useRef } from 'react'
 import axios from 'axios'
 import Divider from '@mui/material/Divider';
+import { Link } from 'react-router-dom';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -110,11 +111,11 @@ export default function SearchBar() {
             matchedCards.map(e =>  {
               return (
                 <div key={e._id}>
-                <a href={`http://localhost:3000/carddetail/${e._id}`}>
+                <Link to={`/carddetail/${e._id}`}>
                     <div className='search-result-background'>
                       <div className='search-result-item'>{e.name}</div>
                     </div>
-                </a>
+                </Link>
                 <Divider />
                 </div>
               )
