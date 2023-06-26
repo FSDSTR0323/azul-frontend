@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
 
 
+
 export default function SellMenu({card}) {
 
   const [sellMessage, setSellMessage] = useState(""); 
@@ -303,7 +304,7 @@ useEffect(() => {
       
 
     </div>
-    { <CardsOnSell key={updateKey} card={card.name}/>}
+      <CardsOnSell key={updateKey} card={card.name}/>
     </div>
    
   );

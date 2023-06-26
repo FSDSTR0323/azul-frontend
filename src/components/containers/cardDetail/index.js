@@ -5,6 +5,7 @@ import { CardBox } from "./CardBox";
 
 
 
+
 export const CardDetail = () => {
   //const [openMenu, setOpenMenu] = useState(false);
 

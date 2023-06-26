@@ -1,64 +1,80 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import spanish from "../../../assets/symbols/spain.png";
-import english from "../../../assets/symbols/uk.png";
-import german from "../../../assets/symbols/germany.png";
-import french from "../../../assets/symbols/france.png";
-import italian from "../../../assets/symbols/italy.png";
-import chinese from "../../../assets/symbols/china.png";
-import japanese from "../../../assets/symbols/japan.png";
-import portuguese from "../../../assets/symbols/portugal.png";
 import sellimage from "../../../assets/sell.png";
 import bidimage from "../../../assets/bid.png";
 import moment from 'moment';
+import { Filter } from './filter'
+import { getFlag } from '../../../utils/languageToFlag'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 
 
 
 const CardsOnSell = ({ card }) => {
+
   const [cardsOnSell, setCardsOnSell] = useState([]);
+  const [filters, setFilters] = useState({
+    collection: ["Todas"],
+    language: ["Todos"],
+    type: "",
+  })
+  const [filteredCardsOnSell, setFilteredCardsOnSell] = useState([])
 
   useEffect(() => {
+
     const fetchCardsOnSell = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/cards/searchSelled/?name=${card}`);
-        console.log("La response es ", response)
         setCardsOnSell(response.data);
       } catch (error) {
         console.error('Error al obtener las cartas en venta:', error);
       }
     };
-    fetchCardsOnSell();
-  }, [card]
-  );
+    fetchCardsOnSell()
+  }, [card] );
+
+  useEffect(() => {
+
+    let filteredCards = cardsOnSell
+
+    console.log("variable de cartas a filtrar", filteredCards)
+
+    console.log("los filtros son", filters)
+        
+    if(filters.collection.length === 1 && filters.collection[0] === "Todas") {
+      console.log("Se deben mostrar todas las cartas")
+    } else if (filters.collection !== undefined) {
+      console.log("Las colecciones a filtrar son", filters.collection)
+      filteredCards = filteredCards.filter(card => {
+        return filters.collection.includes(card.set_name)
+      })
+    }
+
+    if(filters.language.length === 1 && filters.language[0] === "Todos") {
+      console.log("Se deben mostrar todas las cartas")
+    } else if (filters.language !== undefined) {
+      console.log("Las colecciones a filtrar son", filters.language)
+      filteredCards = filteredCards.filter(card => {
+        return filters.language.includes(card.lang)
+      })
+    }
+
+    if(filters.type !== "" && filters.type !== null) {
+      filteredCards = filteredCards.filter(card => {
+        return card.type_sell === filters.type
+      })
+    }
+    
+    setFilteredCardsOnSell(filteredCards)
+
+  }, [filters, cardsOnSell])
 
   const getTypeSell = (typesell) => {
     if (typesell === "Venta") {
       return ( <img className= "card-detail-symbol-image" src={sellimage} alt="venta" /> );
     } else {
       return ( <img className= "card-detail-symbol-image" src={bidimage} alt="subasta" /> )
-    }
-  };
-
-  const getFlag = (lang) => {
-    switch (lang) {
-        case "es" :
-            return <img className= "card-detail-symbol-image" src={spanish} alt="español" />;
-        case "en" :
-            return <img className= "card-detail-symbol-image" src={english} alt="inglés" />;
-        case "fr" :
-            return <img className= "card-detail-symbol-image" src={french} alt="francés" />;
-        case "de" :
-            return <img className= "card-detail-symbol-image" src={german} alt="alemán" />;
-        case "it" :
-            return <img className= "card-detail-symbol-image" src={italian} alt="italiano" />;
-        case "zh" :
-            return <img className= "card-detail-symbol-image" src={chinese} alt="chino" />;
-        case "ja" :
-            return <img className= "card-detail-symbol-image" src={japanese} alt="japonés" />;
-        case "pt" :
-            return <img className= "card-detail-symbol-image" src={portuguese} alt="portugués" />;
-        default:
-            return null;
     }
   };
 
@@ -92,24 +108,46 @@ const CardsOnSell = ({ card }) => {
     }
   }
 
+  const [sortedPrice, setSortedPrice] = useState("-")
+
+  const handleSortList = (filteredCardsOnSell) => {
+    console.log("Las cartas sin ordenar son", filteredCardsOnSell)
+    if(filteredCardsOnSell[0].price < filteredCardsOnSell[filteredCardsOnSell.length -1].price) {
+      setFilteredCardsOnSell([...filteredCardsOnSell].sort((a, b) => a.price - b.price ))
+      setSortedPrice("asc")
+    } else {
+      setFilteredCardsOnSell([...filteredCardsOnSell].sort((a, b) =>  b.price - a.price))
+      setSortedPrice("desc")
+    }    
+  }
+
   return (
-    <div>
+
+    <div className="cards-list">
+      <Filter cardsOnSell={cardsOnSell} filters={filters} setFilters={setFilters}/>
+      <div>
       <h2>Cartas en Venta</h2>
       <table className="card-table">
         <thead>
           <tr>
-            <th>Colección</th>
-            <th>Idioma</th>
-            <th>Foil</th>
-            <th>Estado</th>
-            <th>Venta / Subasta</th>
-            <th>Precio</th>
-            <th>Fin de la Subasta</th>
-            <th>Usuario</th>
+            <th className="column-names">Colección</th>
+            <th className="column-names">Idioma</th>
+            <th className="column-names">Foil</th>
+            <th className="column-names">Estado</th>
+            <th className="column-names">Venta / Subasta</th>
+            <th className="column-names">
+              Precio {
+              sortedPrice === "asc" ? <ArrowDownwardIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)}/> : 
+              sortedPrice === "desc" ? <ArrowUpwardIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)}/> : 
+              <HorizontalRuleIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)}/>
+              }
+            </th>
+            <th className="column-names">Fin de la Subasta</th>
+            <th className="column-names">Usuario</th>
           </tr>
         </thead>
         <tbody>
-          {cardsOnSell.map((card) => (
+          {filteredCardsOnSell.map((card) => (
             <tr key={card._id}>
               <td>{card.set_name}</td>
               <td>{getFlag(card.lang)}</td>
@@ -124,6 +162,7 @@ const CardsOnSell = ({ card }) => {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 };
