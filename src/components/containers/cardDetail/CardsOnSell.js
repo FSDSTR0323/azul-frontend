@@ -151,7 +151,7 @@ const CardsOnSell = ({ card }) => {
 
   const handleSortList = (filteredCardsOnSell) => {
     console.log("Las cartas sin ordenar son", filteredCardsOnSell)
-    if(filteredCardsOnSell[0].price < filteredCardsOnSell[filteredCardsOnSell.length -1].price) {
+    if(filteredCardsOnSell[0].price > filteredCardsOnSell[filteredCardsOnSell.length -1].price) {
       setFilteredCardsOnSell([...filteredCardsOnSell].sort((a, b) => a.price - b.price ))
       setSortedPrice("asc")
     } else {
