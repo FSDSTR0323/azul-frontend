@@ -21,6 +21,7 @@ export default function BasicMenu() {
 
   const handleLogOut = () => {
     window.localStorage.removeItem('token')
+    window.localStorage.removeItem('avatar')
     setUserAvatar()
     handleClose()
   }
@@ -65,7 +66,7 @@ export default function BasicMenu() {
           </Menu>
         </>
       }
-      {window.localStorage.getItem("token") && userAvatar &&
+      {window.localStorage.getItem("token") && window.localStorage.getItem("avatar") &&
         <>
           <div  
             onClick={handleClick}
@@ -74,7 +75,7 @@ export default function BasicMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <img src={userAvatar} alt="User avatar" className='avatar-navbar-image'/>
+            <img src={window.localStorage.getItem("avatar")} alt="User avatar" className='avatar-navbar-image'/>
           </div>
           <Menu
             id="basic-menu"
@@ -101,7 +102,7 @@ export default function BasicMenu() {
           </Menu>
         </>
       }
-      {window.localStorage.getItem("token") && !userAvatar && 
+      {window.localStorage.getItem("token") && !window.localStorage.getItem("avatar") && 
         <>
           <CgProfile
           onClick={handleClick}

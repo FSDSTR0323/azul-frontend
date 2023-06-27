@@ -21,6 +21,7 @@ export default function LoginForm({ handleClose, setUserAvatar }) {
             console.log("el token es", res.data.token)
             console.log("el mensaje es", res.data.message)
             window.localStorage.setItem('token', res.data.token)
+            window.localStorage.setItem('avatar', res.data.avatar_image)
             setUserAvatar(res.data.avatar_image)
             console.log("La res tras el login es", res.data)
             if(handleClose) {

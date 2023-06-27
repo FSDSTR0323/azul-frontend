@@ -21,8 +21,6 @@ export const UserData = ({ name }) => {
 
     const [file, setFile] = useState();
     const {userAvatar, setUserAvatar } = useContext(UserContext)
-    const [imageURL, setImageURL] = useState("");
-
     const [userData, setUserData] = useState("")
     const { control, register, handleSubmit, reset, formState: { errors } } = useForm()
     const [ error, setError ] = useState()
@@ -78,10 +76,7 @@ export const UserData = ({ name }) => {
 
         try {
             const imageRes = await axios.post(`https://api.cloudinary.com/v1_1/freakyworld/${mediaType}/upload`, imageData)
-            console.log("la url de la imagen es", imageRes.data.url)
             formData.avatar_image = imageRes.data.url
-            // setUserAvatar(imageRes.data.url)
-            // setImageURL(imageRes.data.url)
         } catch(err) {
             console.log("Este es el error al postear img a cloudinary", err)
         }
@@ -90,15 +85,11 @@ export const UserData = ({ name }) => {
     const onSubmit = async (formData) =>  {
         setError();
 
-        console.log("La data es----------", formData.avatar_image)
-
-        await handleFileUpload(formData)
-        // console.log("---------------------", imageURL)
-        // formData.avatar_image = imageURL
+        if(typeof formData.avatar_image !== "string") {
+            await handleFileUpload(formData)
+        }
         
-        console.log("La data del url de cloud es", formData.avatar_image)
         try {
-            console.log(formData)
             const modifiedDataRes = await axios.put('http://localhost:5000/profile/modify_details', formData, authorizationConfig)
             toast.success(`Has modificado los datos correctamente`, {
                 position: "top-right",
@@ -110,8 +101,8 @@ export const UserData = ({ name }) => {
                 progress: undefined,
                 theme: "light",
             });
+            window.localStorage.setItem('avatar', modifiedDataRes.data.avatar_image)
             setUserAvatar(modifiedDataRes.data.avatar_image)
-            console.log("la data modificada es", modifiedDataRes)
             setUserData(modifiedDataRes)
             reset({
                 name: modifiedDataRes.data.name,
