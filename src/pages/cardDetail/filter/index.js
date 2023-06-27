@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { MultipleSelectCheckmarks } from './MultipleSelectCheckmarks'
 import { ColorToggleButton } from './ColorToggleButton'
-import { getFlag } from '../../../../utils/languageToFlag'
+import { getFlag } from '../../../utils/languageToFlag'
 
 
 export const Filter = ({ cardsOnSell, filters, setFilters }) => {

@@ -205,7 +205,7 @@ nav {
   flex-wrap: wrap;
   flex-direction: column;
   margin: 5px 5px;
-  justify-content: start;
+  justify-content: flex-start;
   width: 250px;
   gap: 2.4rem;
 }
@@ -226,7 +226,7 @@ nav {
   flex-wrap: wrap;
   flex-direction: column;
   margin: 5px 5px;
-  justify-content: start;
+  justify-content: flex-start;
   width: 250px;
   gap: 2rem;
 }

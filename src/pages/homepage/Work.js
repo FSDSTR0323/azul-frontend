@@ -1,7 +1,7 @@
 import React from "react";
 
-import ChooseMeals from "../../../assets/choose-image.png";
-import DeliveryMeals from "../../../assets/delivery-image.png";
+import ChooseMeals from "../../assets/choose-image.png";
+import DeliveryMeals from "../../assets/delivery-image.png";
 
 const Work = () => {
   const workInfoData = [

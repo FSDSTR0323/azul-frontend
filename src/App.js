@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
-import { Homepage } from './components/containers/homepage'
-import { Register } from './components/containers/register';
-import { CardDetail } from './components/containers/cardDetail';
+import { Homepage } from './pages/homepage'
+import { Register } from './pages/register';
+import { CardDetail } from './pages/cardDetail';
+import { Profile } from './pages/profile';
+import { Login } from './pages/login';
 import { SuccessAlert } from './utils/toaster';
-import { Profile } from './components/containers/perfil';
-import { Login } from './components/containers/login';
 import { MyUserContextProvider } from './contexts/UserContext'
 
 import "./App.css";
