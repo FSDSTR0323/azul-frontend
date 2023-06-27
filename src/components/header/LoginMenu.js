@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 import { CgProfile } from "react-icons/cg";
 import Divider from '@mui/material/Divider';
 import { Link } from "react-router-dom"
-import { UserContext } from "../../../../contexts/UserContext"
+import { UserContext } from "../../contexts/UserContext"
 
 export default function BasicMenu() {
   const {userAvatar, setUserAvatar} = React.useContext(UserContext)

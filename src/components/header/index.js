@@ -17,8 +17,8 @@ import CommentRoundedIcon from "@mui/icons-material/CommentRounded";
 import PhoneRoundedIcon from "@mui/icons-material/PhoneRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import LoginMenu from "./LoginMenu"
-import BannerBackground from "../../../../assets/home-banner-background.png";
-import Logo from "../../../../assets/logo-Image.png"
+import BannerBackground from "../../assets/home-banner-background.png";
+import Logo from "../../assets/logo-Image.png"
 import { Link } from "react-router-dom"
 import SearchBar from "./SearchBar";
 

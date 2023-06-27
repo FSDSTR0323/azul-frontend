@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import sellimage from "../../../assets/sell.png";
-import bidimage from "../../../assets/bid.png";
+import sellimage from "../../assets/sell.png";
+import bidimage from "../../assets/bid.png";
 import Menu from "@mui/material/Menu";
 import axios from 'axios';
 import { Controller, useForm } from "react-hook-form"
@@ -11,7 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import TextField from '@mui/material/TextField';
-import { authorizationConfig } from '../../../security';
+import { authorizationConfig } from '../../security';
 import CardsOnSell from "./CardsOnSell";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

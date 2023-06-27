@@ -1,5 +1,5 @@
 import React from "react";
-import Logo from "../../../../assets/Logo.svg";
+import Logo from "../../assets/Logo.svg";
 // TODO falta agregar logo
 import { BsTwitter } from "react-icons/bs";
 import { SiLinkedin } from "react-icons/si";

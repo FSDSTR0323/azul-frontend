@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import sellimage from "../../../assets/sell.png";
-import bidimage from "../../../assets/bid.png";
-import buyimage from "../../../assets/buy.png";
+import sellimage from "../../assets/sell.png";
+import bidimage from "../../assets/bid.png";
+import buyimage from "../../assets/buy.png";
 import moment from 'moment';
-import { authorizationConfig } from "../../../security";
+import { authorizationConfig } from "../../security";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
 import { Filter } from './filter'
-import { getFlag } from '../../../utils/languageToFlag'
+import { getFlag } from '../../utils/languageToFlag'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';

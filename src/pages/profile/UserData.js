@@ -8,12 +8,12 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import axios from 'axios';
-import { authorizationConfig } from '../../../security';
+import { authorizationConfig } from '../../security';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { UploadButtons } from "./UserAvatar";
-import { UserContext } from "../../../contexts/UserContext"
+import { UserContext } from "../../contexts/UserContext"
 
 export const UserData = ({ name }) => {
     

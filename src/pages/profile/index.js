@@ -1,6 +1,6 @@
 import {React, useEffect, useState } from "react";
- import { Header } from "../main/header";
-import Footer from "../main/footer";
+ import { Header } from "../../components/header";
+import Footer from "../../components/footer";
 import { UserData } from "./UserData";
 
 import { Navigate } from "react-router-dom";
