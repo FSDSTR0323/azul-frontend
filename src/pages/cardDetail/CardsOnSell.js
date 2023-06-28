@@ -13,6 +13,8 @@ import { getFlag } from '../../utils/languageToFlag'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+import CartCount from '../../components/header/CartCount';
+
 
 
 
@@ -20,6 +22,8 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 const CardsOnSell = ({ card }) => {
 
   const navigate = useNavigate()
+  const [keyUpdate, setKeyUpdate] = useState(0);
+
 
   const [cardsOnSell, setCardsOnSell] = useState([]);
   const [filters, setFilters] = useState({
@@ -32,15 +36,18 @@ const CardsOnSell = ({ card }) => {
   useEffect(() => {
 
     const fetchCardsOnSell = async () => {
+
       try {
         const response = await axios.get(`http://localhost:5000/cards/searchSelled/?name=${card}`);
         setCardsOnSell(response.data);
+
       } catch (error) {
         console.error('Error al obtener las cartas en venta:', error);
       }
-    };
+    }
+
     fetchCardsOnSell()
-  }, [card] );
+  }, [card, keyUpdate] ); 
 
   useEffect(() => {
 
@@ -129,7 +136,40 @@ const CardsOnSell = ({ card }) => {
       await axios.post("http://localhost:5000/cards/buycard", cardBuyedData, authorizationConfig)
       
         console.log('Carta comprada:', cardBuyedData)
+        setKeyUpdate(keyUpdate + 1); 
+              
+    } catch (error){
+      console.log('Error al comprar la carta en la base de datos', error);
+      toast.warning("Para poder comprar cartas necesitas estar conectado, redirigiendo al login", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        navigate("/login")
+    }
+  }
+
+
+  const onClickCart = async (card) => {
+    try {
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
+      console.log('estoy en el try de onclickcart')
+      let cardOnCartData = {
+        _id: card._id,
+        onCart: userDataRes.data._id,
+      };
+      console.log('cardOnCartData es:', cardOnCartData)
+      await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig)
       
+        console.log('Carta comprada:', cardOnCartData)
+        setKeyUpdate(keyUpdate + 1); 
+
+     
     } catch (error){
       console.log('Error al comprar la carta en la base de datos', error);
       toast.warning("Para poder comprar cartas necesitas estar conectado, redirigiendo al login", {
@@ -185,6 +225,7 @@ const CardsOnSell = ({ card }) => {
             <th className="column-names">Fin de la Subasta</th>
             <th className="column-names">Usuario</th>
             <th className="column-names">Comprar</th>
+            <th className="column-names">Añadir</th>
           </tr>
         </thead>
         <tbody>
@@ -205,6 +246,16 @@ const CardsOnSell = ({ card }) => {
                   onClick={() => onClickBuy(card)}
                   src={buyimage}
                   alt="Comprar"
+                />
+                </button>
+              </td>
+              <td>
+                <button className="sell-button">
+                <img
+                  className="card-detail-symbol-image"
+                  onClick={() => onClickCart(card)}
+                  src={buyimage}
+                  alt="Añadir"
                 />
                 </button>
               </td>

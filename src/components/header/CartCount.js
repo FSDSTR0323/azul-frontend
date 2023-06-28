@@ -1,24 +1,44 @@
-import React from 'react'
-import SearchIcon from '@mui/icons-material/Search';
-import { styled, alpha } from '@mui/material/styles';
-import { useState, useEffect, useRef } from 'react'
-import axios from 'axios'
-import { BsCart2 } from "react-icons/bs";
-import { authorizationConfig } from '../../../../security';
+import React, { useState, useEffect } from 'react';
+import { BsCart2 } from 'react-icons/bs';
+import axios from 'axios';
+import { authorizationConfig } from '../../security';
+import { useNavigate } from 'react-router-dom';
 
+const CartCount = () => {
+  const [count, setCount] = useState(null);
+  const navigate = useNavigate();
 
-const CartCount = async () => {
-    try {
-        const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
-        let count = userDataRes.data.on_cart
-        console.log ("lacuenta es: ", count)
-    }catch(error){
-        console.log ("error")
-    }  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig);
+        const count = userDataRes.data.on_cart.length;
+        console.log("La cuenta es:", count);
+        setCount(count);
+      } catch (error) {
+        console.log('Error:', error);
+      }
+    };
 
-      
+    fetchData();
+  }, []);
+
+  const onClickCart = () => {
+    navigate('/cartshop');
+  };
+
   return (
-    <BsCart2></BsCart2>
-    )
-}   
-export default CartCount
+    <>
+      {count !== null ? (
+        <div>
+          <BsCart2 onClick={onClickCart} />
+          {count}
+        </div>
+      ) : (
+        <BsCart2 onClick={onClickCart} />
+      )}
+    </>
+  );
+};
+
+export default CartCount;

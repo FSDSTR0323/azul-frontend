@@ -8,6 +8,7 @@ import { SuccessAlert } from './utils/toaster';
 import { MyUserContextProvider } from './contexts/UserContext'
 
 import "./App.css";
+import { CartShop } from './pages/cartshop';
 
 function App() {
   
@@ -22,6 +23,8 @@ function App() {
           <Route path='/carddetail/:cardId' element={<CardDetail />}/>
           <Route path='/profile' element={<Profile />}/>
           <Route path='/login' element={<Login />}></Route>
+          <Route path='/cartshop' element={<CartShop />}></Route>
+
         </Routes>
       </BrowserRouter>
       </MyUserContextProvider>

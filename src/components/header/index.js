@@ -68,9 +68,9 @@ export const Header = () => {
             <a href="">Opiniones</a>
             <a href="">Contacto</a>
             <SearchBar/>
-            <a href="">
-            <BsCart2/>
-              {/* <CartCount className="navbar-cart-icon"/> */}
+            <a>
+            {/* <BsCart2/> */}
+               <CartCount className="navbar-cart-icon"/> 
             </a>
             <LoginMenu></LoginMenu>        
           </div>
