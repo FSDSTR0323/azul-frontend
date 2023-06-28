@@ -11,7 +11,7 @@ const CartCount = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig);
+        const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig.getHeaders());
         const count = userDataRes.data.on_cart.length;
         console.log("La cuenta es:", count);
         setCount(count);

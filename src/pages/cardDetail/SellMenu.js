@@ -53,7 +53,7 @@ export default function SellMenu({card}) {
   //Crea un array con la info de la carta actual + id de usuario y
   //hace post en el backend para actualizar la BBDD con la nueva carta
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
@@ -66,7 +66,7 @@ export default function SellMenu({card}) {
         price: formData.price,
         user: userDataRes.data._id,
       };    
-      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig);   
+      await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig.getHeaders());   
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log('Carta puesta a la venta:', cardSelledData)
@@ -92,7 +92,7 @@ export default function SellMenu({card}) {
 
   const bidOnSubmit = async (formData) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
@@ -106,7 +106,7 @@ export default function SellMenu({card}) {
         end_of_bid: formData.end_of_bid,
         user: userDataRes.data._id,
       };      
-     await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig);
+     await axios.post('http://localhost:5000/cards/sellcard', cardSelledData, authorizationConfig.getHeaders());
      setTimeout(() => {
       setUpdateKey(updateKey + 1);
       console.log('Carta puesta en subasta:', cardSelledData)

@@ -16,7 +16,7 @@ export const Homepage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const modifiedDataRes = await axios.get('http://localhost:5000/homepage', authorizationConfig)
+        const modifiedDataRes = await axios.get('http://localhost:5000/homepage', authorizationConfig.getHeaders())
         console.log("la data modificada es", modifiedDataRes)
       }  
       catch(err) {

@@ -126,14 +126,14 @@ const CardsOnSell = ({ card }) => {
 
   const onClickBuy = async (card) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickbuy')
       let cardBuyedData = {
         _id: card._id,
         buyer: userDataRes.data._id,
       };
       console.log('cardBuyedData es:', cardBuyedData)
-      await axios.post("http://localhost:5000/cards/buycard", cardBuyedData, authorizationConfig)
+      await axios.post("http://localhost:5000/cards/buycard", cardBuyedData, authorizationConfig.getHeaders())
       
         console.log('Carta comprada:', cardBuyedData)
         setKeyUpdate(keyUpdate + 1); 
@@ -154,21 +154,21 @@ const CardsOnSell = ({ card }) => {
     }
   }
 
-
   const onClickCart = async (card) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig)
+      console.log("llamamos al token!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickcart')
       let cardOnCartData = {
         _id: card._id,
         onCart: userDataRes.data._id,
       };
       console.log('cardOnCartData es:', cardOnCartData)
-      await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig)
-      
+      const cardsOnCart = await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig.getHeaders())
+      console.log("que devuleeeeeeeeeeeeeeeeeeee", cardsOnCart)
         console.log('Carta comprada:', cardOnCartData)
         setKeyUpdate(keyUpdate + 1); 
-
+      // window.localStorage.setItem("cardsOnCart", )
      
     } catch (error){
       console.log('Error al comprar la carta en la base de datos', error);
