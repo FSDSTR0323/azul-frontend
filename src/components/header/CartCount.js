@@ -29,14 +29,16 @@ const CartCount = () => {
 
   return (
     <>
-      {count !== null ? (
+    {window.localStorage.getItem("token") &&
+      (count !== (false)) ? (
         <div>
-          <BsCart2 onClick={onClickCart} />
-          {count}
+        <BsCart2 style={{cursor:"pointer"}} onClick={onClickCart} />
+        {count}
         </div>
-      ) : (
-        <BsCart2 onClick={onClickCart} />
-      )}
+        ) : (
+          <BsCart2 disabled="true" />
+          )
+    }
     </>
   );
 };
