@@ -23,6 +23,7 @@ const CardsOnSell = ({ card }) => {
 
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
+  const [count, setCount] = useState(null);
 
 
   const [cardsOnSell, setCardsOnSell] = useState([]);
@@ -168,6 +169,21 @@ const CardsOnSell = ({ card }) => {
       console.log("que devuleeeeeeeeeeeeeeeeeeee", cardsOnCart)
         console.log('Carta comprada:', cardOnCartData)
         setKeyUpdate(keyUpdate + 1); 
+        
+        try {
+          const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig.getHeaders());
+          const count = userDataRes.data.on_cart.length;
+          console.log("La cuenta es:", count);
+          setCount(count);
+          window.localStorage.setItem('carro', count.toString());
+          window.dispatchEvent(new Event('carroChanged'));
+
+          
+
+        } catch (error) {
+          console.log('Error:', error);
+        }
+
       // window.localStorage.setItem("cardsOnCart", )
      
     } catch (error){
