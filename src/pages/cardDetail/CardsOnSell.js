@@ -205,13 +205,16 @@ const CardsOnSell = ({ card }) => {
   const [sortedPrice, setSortedPrice] = useState("-")
 
   const handleSortList = (filteredCardsOnSell) => {
-    console.log("Las cartas sin ordenar son", filteredCardsOnSell)
+    console.log("el precio de la pimera carta es", filteredCardsOnSell[0].price)
+    console.log("el precio de la última carta es", filteredCardsOnSell[filteredCardsOnSell.length -1].price)
     if(filteredCardsOnSell[0].price > filteredCardsOnSell[filteredCardsOnSell.length -1].price) {
       setFilteredCardsOnSell([...filteredCardsOnSell].sort((a, b) => a.price - b.price ))
       setSortedPrice("asc")
+      console.log("Se ordena de forma ascendente")
     } else {
       setFilteredCardsOnSell([...filteredCardsOnSell].sort((a, b) =>  b.price - a.price))
       setSortedPrice("desc")
+      console.log("Se ordena de forma descendente")
     }    
   }
 

@@ -21,7 +21,7 @@ import BannerBackground from "../../assets/home-banner-background.png";
 import Logo from "../../assets/logo-Image.png"
 import { Link } from "react-router-dom"
 import SearchBar from "./SearchBar";
-import CartCount from "./CartCount";
+import CartMenu from "./CartMenu";
 
 
 export const Header = () => {
@@ -70,7 +70,7 @@ export const Header = () => {
             <SearchBar/>
             <a>
             {/* <BsCart2/> */}
-               <CartCount className="navbar-cart-icon"/> 
+               <CartMenu className="navbar-cart-icon"/> 
             </a>
             <LoginMenu></LoginMenu>        
           </div>

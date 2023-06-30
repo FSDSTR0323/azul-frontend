@@ -308,6 +308,12 @@ nav {
   display: block;
 }
 
+.card-on-cart-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .search-result-item {
   height: 30px;
   font-size: 1rem;
