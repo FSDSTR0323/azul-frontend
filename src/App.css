@@ -37,6 +37,50 @@
   }
 } */
 
+/* Estilo tabla CardsOnSell */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 10px;
+}
+
+.grid-header {
+  font-weight: bold;
+}
+
+.buynow-button{
+  padding: 0px;  
+  background-color: #fe9e0d;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-inline: 10px;
+  height: 28px;
+}
+.buynow-button:hover{  
+  background-color: rgb(234, 234, 234);
+}
+
+.buy-button {
+  padding: 5px 6px;
+  background-color: #fe9e0d;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-inline: 10px;
+}
+
+.buy-button:hover {
+  background-color: rgb(234, 234, 234);
+}
+
+.card-detail-symbol-image {
+  width: 20px;
+  height: 20px;
+}
+
 .column-names {
   position: relative;
 }
@@ -50,7 +94,23 @@
   border-radius: 4px;
 }
 
+.grid-content {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: max-content;
+}
 
+.grid-content-collection {
+  font-size: 0.8rem;
+  width: max-content;
+}
+
+.buynow-symbol-image {
+  width: 28px;
+  height: 28px;
+}
 
 .cards-list {
   display: flex;

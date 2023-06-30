@@ -55,7 +55,7 @@ export const MultipleSelectCheckmarks = ({ name, filterProp, list, defaultVal, f
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
+      <FormControl sx={{ m: 1, width: 200 }}>
         <InputLabel id="demo-multiple-checkbox-label">{name}</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"

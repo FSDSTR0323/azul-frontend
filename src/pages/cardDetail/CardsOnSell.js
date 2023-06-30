@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from 'axios';
 import sellimage from "../../assets/sell.png";
 import bidimage from "../../assets/bid.png";
+import buynowimage from "../../assets/buynow.png";
 import buyimage from "../../assets/buy.png";
 import moment from 'moment';
 import { authorizationConfig } from "../../security";
@@ -13,7 +14,6 @@ import { getFlag } from '../../utils/languageToFlag'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import CartCount from '../../components/header/CartCount';
 
 
 
@@ -177,7 +177,6 @@ const CardsOnSell = ({ card }) => {
           setCount(count);
           window.localStorage.setItem('carro', count.toString());
           window.dispatchEvent(new Event('carroChanged'));
-
           
 
         } catch (error) {
@@ -218,70 +217,68 @@ const CardsOnSell = ({ card }) => {
 
 
   return (
-
     <div className="cards-list">
-      <Filter cardsOnSell={cardsOnSell} filters={filters} setFilters={setFilters}/>
+      <Filter cardsOnSell={cardsOnSell} filters={filters} setFilters={setFilters} />
       <div>
-      <h2>Cartas en Venta</h2>
-      <table className="card-table">
-        <thead>
-          <tr>
-            <th className="column-names">Colección</th>
-            <th className="column-names">Idioma</th>
-            <th className="column-names">Foil</th>
-            <th className="column-names">Estado</th>
-            <th className="column-names">Venta / Subasta</th>
-            <th className="column-names">
-              Precio {
-                sortedPrice === "asc" ? <ArrowDownwardIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)}/> : 
-                sortedPrice === "desc" ? <ArrowUpwardIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)}/> : 
-                <HorizontalRuleIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)}/>
-              }
-            </th>
-            <th className="column-names">Fin de la Subasta</th>
-            <th className="column-names">Usuario</th>
-            <th className="column-names">Comprar</th>
-            <th className="column-names">Añadir</th>
-          </tr>
-        </thead>
-        <tbody>
+        <h2>Cartas en Venta</h2>
+        <div className="card-grid">
+          <div className="grid-header">Colección</div>
+          <div className="grid-header">Idioma</div>
+          <div className="grid-header">Foil</div>
+          <div className="grid-header">Estado</div>
+          <div className="grid-header">Venta / Subasta</div>
+          <div className="grid-header">Precio
+            {sortedPrice === "asc" ? (
+              <ArrowDownwardIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)} />
+            ) : sortedPrice === "desc" ? (
+              <ArrowUpwardIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)} />
+            ) : (
+              <HorizontalRuleIcon className="column-names-icon" cursor="pointer" onClick={() => handleSortList(filteredCardsOnSell)} />
+            )}
+          </div>
+          <div className="grid-header">Fin de la Subasta</div>
+          <div className="grid-header">Usuario</div>
+          <div className="grid-header">Comprar</div>
+          <div className="grid-header">Añadir</div>
+  
           {filteredCardsOnSell.map((card) => (
-            <tr key={card._id}>
-              <td>{card.set_name}</td>
-              <td>{getFlag(card.lang)}</td>
-              <td>{card.foil ? "Sí" : "No"}</td>
-              <td>{getStatus(card.status)}</td>
-              <td>{getTypeSell(card.type_sell)}</td>
-              <td>{card.price} €</td>
-              <td>{getBidDate(card.end_of_bid)}</td>
-              <td>{card.user.username}</td>
-              <td>
-                <button className="sell-button">
-                <img
-                  className="card-detail-symbol-image"
-                  onClick={() => onClickBuy(card)}
-                  src={buyimage}
-                  alt="Comprar"
-                />
+            <React.Fragment key={card._id}>
+              <div className="grid-content-collection">{card.set_name}</div>
+              <div className="grid-content">{getFlag(card.lang)}</div>
+              <div className="grid-content">{card.foil ? "Sí" : "No"}</div>
+              <div className="grid-content">{getStatus(card.status)}</div>
+              <div className="grid-content">{getTypeSell(card.type_sell)}</div>
+              <div className="grid-content">{card.price} €</div>
+              <div className="grid-content">{getBidDate(card.end_of_bid)}</div>
+              <div className="grid-content">{card.user.username}</div>
+              <div className="grid-content">
+                <button className="buynow-button">
+                  <img
+                    className="buynow-symbol-image"
+                    onClick={() => onClickBuy(card)}
+                    src={buynowimage}
+                    alt="Comprar"
+                  />
                 </button>
-              </td>
-              <td>
-                <button className="sell-button">
-                <img
-                  className="card-detail-symbol-image"
-                  onClick={() => onClickCart(card)}
-                  src={buyimage}
-                  alt="Añadir"
-                />
+              </div>
+              <div className="grid-content">
+                <button className="buy-button">
+                  <img
+                    className="card-detail-symbol-image"
+                    onClick={() => onClickCart(card)}
+                    src={buyimage}
+                    alt="Añadir"
+                  />
                 </button>
-              </td>
-            </tr>
+              </div>
+            </React.Fragment>
           ))}
-        </tbody>
-      </table>
+        </div>
       </div>
     </div>
   );
+  
+  
 };
 
 export default CardsOnSell;
