@@ -40,9 +40,11 @@
 /* Estilo tabla CardsOnSell */
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-columns: repeat(9, 1fr);
   grid-gap: 10px;
+  justify-items: center;
 }
+
 
 .grid-header {
   font-weight: bold;
@@ -63,13 +65,15 @@
 }
 
 .buy-button {
-  padding: 5px 6px;
+  padding: 0px;
   background-color: #fe9e0d;
   border: none;
-  border-radius: 10px;
+  border-radius: 37px;
   cursor: pointer;
   transition: 0.2s;
   margin-inline: 10px;
+  height: 28px;
+  width: 28px;
 }
 
 .buy-button:hover {
@@ -100,9 +104,25 @@
   align-content: center;
   flex-wrap: wrap;
   width: max-content;
+  text-align: center;
 }
 
-.grid-content-collection {
+.grid-content-colspan {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: max-content;
+  text-align: center;
+}
+
+.grid-content-smaller {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  text-align: center;
   font-size: 0.8rem;
   width: max-content;
 }
@@ -110,6 +130,11 @@
 .buynow-symbol-image {
   width: 28px;
   height: 28px;
+}
+.buy-symbol-image{
+  width: 20px;
+  height: 20px;
+  margin-top: 4.7px;
 }
 
 .cards-list {

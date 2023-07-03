@@ -13,10 +13,6 @@ import { getFlag } from '../../utils/languageToFlag'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
-import Menu from "@mui/material/Menu";
-import { Controller, useForm } from "react-hook-form"
-
-
 
 
 
@@ -27,8 +23,6 @@ const CardsOnSell = ({ card }) => {
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
   const [count, setCount] = useState(null);
-
-  const { control: BidControl, register: BidRegister, handleSubmit: BidHandleSubmit, formState: BidFormState } = useForm();
 
 
   const [cardsOnSell, setCardsOnSell] = useState([]);
@@ -200,32 +194,52 @@ const CardsOnSell = ({ card }) => {
     }
   }
 
-  const [anchorElBid, setAnchorElBid] = useState(null);
-  const [idCard, setIdCard] = useState(null);
-
-  const handleClickBid = (event) => {
-      setIdCard(event.currentTarget.id)
-      setAnchorElBid(event.currentTarget);
-    };
-    const handleCloseBid = () => {
-      setAnchorElBid(null);
-    };
-  
-  const BidOnSubmit = async (formData) => {
-    try{
+  const onClickBid = async (card) => {
+    try {
+      console.log("llamamos al token!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", authorizationConfig.getHeaders())
       const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
-      let cardToBidData = {
-        /////////*******NO TENGO CARD, HAY QUE TRAERSELO */
-        id_card: idCard,
-        user: userDataRes.data._id,
-        price: formData.price,
-      }
-      console.log("id_card es:", cardToBidData.id_card)
-      await axios.post('http://localhost:5000/cards/bidupcard', cardToBidData, authorizationConfig.getHeaders());
+      console.log('estoy en el try de onclickcart')
+      let cardOnCartData = {
+        _id: card._id,
+        onCart: userDataRes.data._id,
+      };
+      console.log('cardOnCartData es:', cardOnCartData)
+      const cardsOnCart = await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig.getHeaders())
+      console.log("que devuleeeeeeeeeeeeeeeeeeee", cardsOnCart)
+        console.log('Carta comprada:', cardOnCartData)
+        setKeyUpdate(keyUpdate + 1); 
+        
+        try {
+          const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig.getHeaders());
+          const count = userDataRes.data.on_cart.length;
+          console.log("La cuenta es:", count);
+          setCount(count);
+          window.localStorage.setItem('carro', count.toString());
+          window.dispatchEvent(new Event('carroChanged'));
+          
 
-    }catch(error){}
+        } catch (error) {
+          console.log('Error:', error);
+        }
 
+      // window.localStorage.setItem("cardsOnCart", )
+     
+    } catch (error){
+      console.log('Error al comprar la carta en la base de datos', error);
+      toast.warning("Para poder comprar cartas necesitas estar conectado, redirigiendo al login", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+        navigate("/login")
+    }
   }
+  
 
   const [sortedPrice, setSortedPrice] = useState("-")
 
@@ -273,7 +287,7 @@ const CardsOnSell = ({ card }) => {
   
           {filteredCardsOnSell.map((card) => (
   <React.Fragment key={card._id}>
-    <div id="selector" className="grid-content-smaller">{card.set_name}</div>
+    <div className="grid-content-smaller">{card.set_name}</div>
     <div className="grid-content">{getFlag(card.lang)}</div>
     <div className="grid-content">{card.foil ? "Sí" : "No"}</div>
     <div className="grid-content">{getStatus(card.status)}</div>
@@ -282,15 +296,13 @@ const CardsOnSell = ({ card }) => {
     <div className="grid-content-smaller">{getBidDate(card.end_of_bid)}</div>
     <div className="grid-content">{card.user.username}</div>
     {card.type_sell === "Subasta" ? (
-      <div className="grid-content-colspan" >
+      <div className="grid-content-colspan">
         <button className="buy-button">
             <img
               className="buy-symbol-image"
-              //onClick={() => onClickBid(card)}
-              onClick={handleClickBid}
+              onClick={() => onClickBid(card)}
               src={bidimage}
               alt="Pujar"
-              id={card._id}
             />
           </button>
         {/* {drawBidForm(card.end_of_bid, card.price)} */}
@@ -325,24 +337,6 @@ const CardsOnSell = ({ card }) => {
 
         </div>
       </div>
-       <Menu onSubmit={BidHandleSubmit(BidOnSubmit)} 
-        id="bidform"
-        className="bid-form-box"
-        component="form"
-        noValidate
-        autoComplete="off"
-        anchorEl={anchorElBid}
-        open={Boolean(anchorElBid)}
-        onClose={handleCloseBid}
-      >
-         <input
-            type="number"
-            id="price"
-            {...BidRegister("price", { required: true })}
-          />
-        <br></br>
-        <button id="Pujar" type="submit" disabled={!BidFormState.isValid}>Pujar</button>
-  </Menu>
     </div>
   );
   
