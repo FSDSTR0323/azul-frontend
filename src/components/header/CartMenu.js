@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BsCart2 } from 'react-icons/bs';
 import axios from 'axios';
 import { authorizationConfig } from '../../security';
@@ -7,29 +7,27 @@ import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { UserContext } from '../../contexts/UserContext';
 
 const CartMenu = () => {
+  const { userData } = useContext(UserContext)
   const [count, setCount] = useState(null);
   const [cardsOnCart, setCardsOnCart] = useState([])
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   
 
-  const fetchData = async () => {
-    try {
-      const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig.getHeaders());
-      console.log("La data recibida cuando se pide la info de usuario es !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", userDataRes.data.on_cart)
-      setCount(userDataRes.data.on_cart.length);
-      setCardsOnCart(userDataRes.data.on_cart)
-      window.localStorage.setItem('carro', count.toString())
-    } catch (error) {
-      console.log('Error:', error);
+  const fetchData = () => {
+    if (userData?.on_cart) {
+      console.log("Se renderiza de nuevo el carrito y el número de productos es :", userData.on_cart.length)
+      setCount(userData.on_cart.length);
+      setCardsOnCart(userData.on_cart)
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [userData]);
 
   const handleCarroChanged = () => {
     const newCount = window.localStorage.getItem('carro');
@@ -60,7 +58,9 @@ const CartMenu = () => {
 
   
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
+    if (count) {
+      setAnchorEl(event.currentTarget);
+    }
   };
 
   const handleClose = () => {
@@ -114,14 +114,13 @@ const CartMenu = () => {
                         className="secondary-button"
                         id="login-form-box-button"
                         onClick={handleClose}
-                      >
+                        >
                         Eliminar
                     </button>
                   </div>
                 )
               })
             }
-            
             </div>
             </div>
           </Menu>
@@ -134,69 +133,4 @@ export default CartMenu;
 
 
 
-
-
-
-
-
-// import React, { useState, useEffect } from 'react';
-// import { BsCart2 } from 'react-icons/bs';
-// import axios from 'axios';
-// import { authorizationConfig } from '../../security';
-// import { useNavigate } from 'react-router-dom';
-
-// const CartCount = () => {
-//   const [count, setCount] = useState(null);
-//   const navigate = useNavigate();
-  
-
-//   const fetchData = async () => {
-//     try {
-//       const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig.getHeaders());
-//       const count = userDataRes.data.on_cart.length;
-//       console.log("La cuenta es:", count);
-//       setCount(count);
-//       window.localStorage.setItem('carro', count.toString())
-//     } catch (error) {
-//       console.log('Error:', error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchData();
-//   }, []);
-
-//   const handleCarroChanged = () => {
-//     const newCount = window.localStorage.getItem('carro');
-//     setCount(newCount);
-//   };
-
-//   useEffect(() => {
-//     window.addEventListener('carroChanged', handleCarroChanged);
-
-//     return () => {
-//       window.removeEventListener('carroChanged', handleCarroChanged);
-//     };
-//   }, []);
-
-//   const onClickCart = () => {
-//     navigate('/cartshop');
-//   };
-
-//   return (
-//     <>
-//       {window.localStorage.getItem("token") &&
-//         count !== null ? (
-//           <div>
-//             <BsCart2 style={{cursor:"pointer"}} onClick={onClickCart} />
-//             {count}
-//           </div>
-//         ) : (
-//           <BsCart2 disabled="true" />
-//         )}
-//     </>
-//   );
-// };
-
-// export default CartCount;
 

@@ -4,18 +4,26 @@ export const UserContext = createContext();
 
 export const MyUserContextProvider = ({ children }) => {
 
-    // const [userIsLogged, setUserIsLogged] = useState()
+    const [userData, setUserData] = useState(
+    //     {
+    //     name: "", 
+    //     surname: "",
+    //     birthdate: "",
+    //     address: "",
+    //     email: "",
+    //     phone: "",
+    //     avatar_image: "",
+    //     username: "",
+    //     _id: "",
+    //     on_cart: [],
+    // }
+    )
     const [userAvatar, setUserAvatar] = useState()
-
-    // useEffect(() => {
-    //     const token = window.localStorage.getItem("token") || null
-    //     if (token) {
-
-    //     }
-    // })
+    const [isLoggedDummy, setIsLoggedDummy] = useState(false)
+    const [userDataChangeDummy, setUserDataChangeDummy] = useState(false)
 
     return (
-        <UserContext.Provider value={{userAvatar, setUserAvatar}}>
+        <UserContext.Provider value={{userData, setUserData, userAvatar, setUserAvatar, isLoggedDummy, setIsLoggedDummy, userDataChangeDummy, setUserDataChangeDummy}}>
             {children}
         </UserContext.Provider>
     )

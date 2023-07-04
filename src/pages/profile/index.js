@@ -1,23 +1,17 @@
-import {React, useEffect, useState } from "react";
- import { Header } from "../../components/header";
+import {React} from "react";
+import { Header } from "../../components/header";
 import Footer from "../../components/footer";
 import { UserData } from "./UserData";
-
-import { Navigate } from "react-router-dom";
+import { PrivatePageValidator } from "../../components/privatePageValidator";
 
 
 export const Profile = () => {
-
-
   return (
-   
-      <>
-        <Header />
-        <UserData />
-        <Footer />
-        {!window.localStorage.getItem("token") && <Navigate to='/login'/>}
-      </>
-
+      <PrivatePageValidator>
+          <Header />
+          <UserData />
+          <Footer />
+      </PrivatePageValidator>
   )
 };
 
