@@ -20,8 +20,8 @@ export const UserData = ({ name }) => {
     const navigate = useNavigate
 
     const [file, setFile] = useState();
-    const {userAvatar, setUserAvatar } = useContext(UserContext)
-    const [userData, setUserData] = useState("")
+    // const [userAvatar, setUserAvatar ] = useState()
+    const {userData, setUserData, userAvatar, setUserAvatar, setUserDataChangeDummy, userDataChangeDummy } = useContext(UserContext)
     const { control, register, handleSubmit, reset, formState: { errors } } = useForm()
     const [ error, setError ] = useState()
     const [formDisabled, setFormDisabled] = useState(true)
@@ -32,32 +32,31 @@ export const UserData = ({ name }) => {
     const [ psswdFormDisabled, setPsswdFormDisabled] = useState(true)
     const [ isPsswdCorrect, setIsPsswdCorrect] = useState(false)
 
+    console.log("La data antes de renderizar el perfil de user es", userData)
     useEffect(() => {
         (async() => {
+            console.log("dataaaa",userData)
             try{
-            const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
-            console.log("La data res es:", userDataRes)
-            setUserData(userDataRes)
-            setUserAvatar(userDataRes.data.avatar_image)
+            setUserAvatar(userData.avatar_image)
             reset({
-                name: userDataRes.data.name,
-                surname: userDataRes.data.surname ,
-                birthdate: dayjs(userDataRes.data.birthdate),
-                address: userDataRes.data.address,
-                email: userDataRes.data.email,
-                phone: userDataRes.data.phone,
-                avatar_image: userDataRes.data.avatar_image,
-                username: userDataRes.data.username,
+                name: userData.name,
+                surname: userData.surname ,
+                birthdate: dayjs(userData.birthdate),
+                address: userData.address,
+                email: userData.email,
+                phone: userData.phone,
+                avatar_image: userData.avatar_image,
+                username: userData.username,
             })
             } catch(err){
                 console.log(err)
-                if(err.response.data.name === "TokenExpiredError") {
-                    window.localStorage.removeItem('token')
-                    navigate('/login')
-                }
+                // if(err.response.data?.name === "TokenExpiredError") {
+                //     window.localStorage.removeItem('token')
+                //     navigate('/login')
+                // }
             }
         })()
-    }, [])
+    }, [userData])
 
     const handleFormBox = () => {
         setFormDisabled(!formDisabled)
@@ -88,6 +87,8 @@ export const UserData = ({ name }) => {
         if(typeof formData.avatar_image !== "string") {
             await handleFileUpload(formData)
         }
+
+        console.log("form data es:", formData)
         
         try {
             const modifiedDataRes = await axios.put('http://localhost:5000/profile/modify_details', formData, authorizationConfig.getHeaders())
@@ -101,9 +102,8 @@ export const UserData = ({ name }) => {
                 progress: undefined,
                 theme: "light",
             });
-            window.localStorage.setItem('avatar', modifiedDataRes.data.avatar_image)
             setUserAvatar(modifiedDataRes.data.avatar_image)
-            setUserData(modifiedDataRes)
+            setUserDataChangeDummy(!userDataChangeDummy)
             reset({
                 name: modifiedDataRes.data.name,
                 surname: modifiedDataRes.data.surname ,
@@ -117,7 +117,7 @@ export const UserData = ({ name }) => {
             setFormDisabled(!formDisabled)
         }  
         catch(err) {
-            if(err.response.data.name === "TokenExpiredError") {
+            if(err.response.data?.name === "TokenExpiredError") {
                 window.localStorage.removeItem('token')
                 navigate('/login')
             }
@@ -188,7 +188,7 @@ export const UserData = ({ name }) => {
 
     
 
-    if(userData) {
+    if(userAvatar) {
         return (
             <div style={{marginTop: "6rem"}}>
                 <Box onSubmit={handleSubmit(onSubmit)}
@@ -209,14 +209,14 @@ export const UserData = ({ name }) => {
                                 <TextField
                                     id="outlined-controlled"
                                     label="Nombre *"
-                                    defaultValue={userData.data.name}
+                                    defaultValue={userData.name}
                                     disabled={formDisabled}
                                     {...register("name", { required: true })}
                                 /> 
                                 <TextField
                                     id="outlined-controlled"
                                     label="Apellido"
-                                    defaultValue={userData.data.surname}
+                                    defaultValue={userData.surname}
                                     disabled={formDisabled}                    
                                     {...register("surname")}
                                 /> 
@@ -233,7 +233,7 @@ export const UserData = ({ name }) => {
                                     >
                                     <DatePicker 
                                     label='Fecha nacimiento *'
-                                    defaultValue={dayjs(userData.data.birthdate)}
+                                    defaultValue={dayjs(userData.birthdate)}
                                     disabled={formDisabled}
                                     {...field}
                                     slotProps={{
@@ -248,7 +248,7 @@ export const UserData = ({ name }) => {
                                 <TextField
                                     id="outlined-controlled"
                                     label="Dirección"
-                                    defaultValue={userData.data.address}
+                                    defaultValue={userData.address}
                                     disabled={formDisabled}
                                     {...register("address")}
                                 /> 
@@ -257,7 +257,7 @@ export const UserData = ({ name }) => {
                                 <TextField
                                     id="outlined-controlled"
                                     label="Email*"
-                                    defaultValue={userData.data.email}
+                                    defaultValue={userData.email}
                                     disabled={formDisabled}
                                     {...register("email", {
                                         required: true,
@@ -271,7 +271,7 @@ export const UserData = ({ name }) => {
                                 <TextField
                                     id="outlined-controlled"
                                     label="Teléfono"
-                                    defaultValue={userData.data.phone}
+                                    defaultValue={userData.phone}
                                     disabled={formDisabled}
                                     {...register("phone")}
                                 /> 
@@ -283,12 +283,13 @@ export const UserData = ({ name }) => {
                                 <TextField
                                     id="outlined-controlled"
                                     label="Usuario*"
-                                    defaultValue={userData.data.username}
+                                    defaultValue={userData.username}
                                     disabled={formDisabled}
                                     {...register("username", { required: true})}
                                 />
                             </div>
                         </div>
+                        {console.log("el error es", errors)}
                         {(errors.email?.type === 'required' || errors.name?.type === 'required' || errors.birthdate?.type === 'required' || errors.username?.type === 'required' || errors.password?.type === 'required' || errors.passwordConfirmation?.type === 'required') && <span className='error-messages' style={{ display:'inline-block', textAlign:'center', marginTop: "2rem"}}>Debe rellenar todos los campos obligatorios (*)</span>}
                         {error?.detailsError && <span className="profile-error-message error-messages">{error.detailsError}</span>}
                         {!formDisabled && <button className="secondary-button" id='login-form-box-button'>Aplicar cambios</button>}       

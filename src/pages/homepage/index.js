@@ -10,6 +10,7 @@ import Testimonial from "./Testimonial";
 import Contact from "./Contact";
 import { Header } from "../../components/header"
 import Footer from "../../components/footer"
+import { PublicPageValidator } from "../../components/publicPageValidator";
 
 export const Homepage = () => {
 
@@ -17,7 +18,6 @@ export const Homepage = () => {
     (async () => {
       try {
         const modifiedDataRes = await axios.get('http://localhost:5000/homepage', authorizationConfig.getHeaders())
-        console.log("la data modificada es", modifiedDataRes)
       }  
       catch(err) {
           if(err.response.data.name === "TokenExpiredError") {
@@ -30,14 +30,16 @@ export const Homepage = () => {
 
   return (
     <div className="home-container">
-      <Header />
-      <AboutUs />
-      <Catalog />
-      <News />
-      <Work />
-      <Testimonial />
-      <Contact />   
-      <Footer />   
+      <PublicPageValidator>
+        <Header />
+        <AboutUs />
+        <Catalog />
+        <News />
+        <Work />
+        <Testimonial />
+        <Contact />   
+        <Footer />  
+      </PublicPageValidator> 
     </div>
   );
 };

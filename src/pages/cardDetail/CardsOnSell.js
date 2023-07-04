@@ -127,7 +127,7 @@ const CardsOnSell = ({ card }) => {
 
   const onClickBuy = async (card) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickbuy')
       let cardBuyedData = {
         _id: card._id,
@@ -158,7 +158,7 @@ const CardsOnSell = ({ card }) => {
   const onClickCart = async (card) => {
     try {
       console.log("llamamos al token!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", authorizationConfig.getHeaders())
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickcart')
       let cardOnCartData = {
         _id: card._id,
@@ -171,7 +171,7 @@ const CardsOnSell = ({ card }) => {
         setKeyUpdate(keyUpdate + 1); 
         
         try {
-          const userDataRes = await axios.get('http://localhost:5000/profile', authorizationConfig.getHeaders());
+          const userDataRes = await axios.get('http://localhost:5000/getUserData', authorizationConfig.getHeaders());
           const count = userDataRes.data.on_cart.length;
           console.log("La cuenta es:", count);
           setCount(count);

@@ -7,10 +7,14 @@ import { Link } from "react-router-dom"
 import { UserContext } from "../../contexts/UserContext"
 
 export default function BasicMenu() {
-  const {userAvatar, setUserAvatar} = React.useContext(UserContext)
+  const {userData, setUserData, userAvatar, setUserAvatar, isLoggedDummy, setIsLoggedDummy, userDataChangeDummy} = React.useContext(UserContext)
+  // const [userAvatar, setUserAvatar] = React.useState("")
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   
+  React.useEffect(() => {
+  }, [userAvatar])
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -21,12 +25,9 @@ export default function BasicMenu() {
 
   const handleLogOut = () => {
     window.localStorage.removeItem('token')
-    window.localStorage.removeItem('avatar')
-    setUserAvatar()
+    setUserData()
     handleClose()
   }
-
-  console.log("el user avatar es", userAvatar)
 
   return (
     <>
@@ -48,7 +49,7 @@ export default function BasicMenu() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <LoginForm handleClose={handleClose} setUserAvatar={setUserAvatar}></LoginForm>
+            <LoginForm handleClose={handleClose} userData={userData} setUserData={setUserData} isLoggedDummy={isLoggedDummy} setIsLoggedDummy={setIsLoggedDummy}></LoginForm>
             <Divider variant="middle" />
             <div className='login-form-box'>
               <p>¿Aún no estás registrado?</p>
@@ -66,7 +67,9 @@ export default function BasicMenu() {
           </Menu>
         </>
       }
-      {window.localStorage.getItem("token") && window.localStorage.getItem("avatar") &&
+      {window.localStorage.getItem("token") 
+      && userAvatar
+      &&
         <>
           <div  
             onClick={handleClick}
@@ -75,7 +78,7 @@ export default function BasicMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <img src={window.localStorage.getItem("avatar")} alt="User avatar" className='avatar-navbar-image'/>
+            <img src={userAvatar} alt="User avatar" className='avatar-navbar-image'/>
           </div>
           <Menu
             id="basic-menu"
@@ -102,7 +105,9 @@ export default function BasicMenu() {
           </Menu>
         </>
       }
-      {window.localStorage.getItem("token") && !window.localStorage.getItem("avatar") && 
+      {window.localStorage.getItem("token") 
+      && !userAvatar
+      && 
         <>
           <CgProfile
           onClick={handleClick}

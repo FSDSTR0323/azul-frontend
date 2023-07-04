@@ -53,7 +53,7 @@ export default function SellMenu({card}) {
   //Crea un array con la info de la carta actual + id de usuario y
   //hace post en el backend para actualizar la BBDD con la nueva carta
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
@@ -92,7 +92,7 @@ export default function SellMenu({card}) {
 
   const bidOnSubmit = async (formData) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       let cardSelledData = {
         id_scryfall: card.id_scryfall,
         id_card: card._id,
