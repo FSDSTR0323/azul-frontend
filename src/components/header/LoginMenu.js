@@ -13,7 +13,7 @@ export default function BasicMenu() {
   const open = Boolean(anchorEl);
   
   React.useEffect(() => {
-  }, [userAvatar])
+  }, [userAvatar, userData])
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

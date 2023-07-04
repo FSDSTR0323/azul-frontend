@@ -19,6 +19,7 @@ const CartMenu = () => {
 
   const fetchData = () => {
     if (userData?.on_cart) {
+      console.log("Se renderiza de nuevo el carrito y el número de productos es :", userData.on_cart.length)
       setCount(userData.on_cart.length);
       setCardsOnCart(userData.on_cart)
     }

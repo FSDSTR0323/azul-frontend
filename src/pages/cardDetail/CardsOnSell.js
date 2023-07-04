@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import axios from 'axios';
 import bidimage from "../../assets/bid.png";
 import buynowimage from "../../assets/buynow.png";
@@ -15,7 +15,7 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import Menu from "@mui/material/Menu";
 import { Controller, useForm } from "react-hook-form"
-
+import { UserContext } from "../../contexts/UserContext"
 
 
 
@@ -24,9 +24,9 @@ import { Controller, useForm } from "react-hook-form"
 
 const CardsOnSell = ({ card }) => {
 
+  const {setUserDataChangeDummy, userDataChangeDummy } = useContext(UserContext)
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
-  const [count, setCount] = useState(null);
 
   const { control: BidControl, register: BidRegister, handleSubmit: BidHandleSubmit, formState: BidFormState } = useForm();
 
@@ -163,27 +163,9 @@ const CardsOnSell = ({ card }) => {
         _id: card._id,
         onCart: userDataRes.data._id,
       };
-      console.log('cardOnCartData es:', cardOnCartData)
-      const cardsOnCart = await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig.getHeaders())
-      console.log("que devuleeeeeeeeeeeeeeeeeeee", cardsOnCart)
-        console.log('Carta comprada:', cardOnCartData)
-        setKeyUpdate(keyUpdate + 1); 
-        
-        try {
-          const userDataRes = await axios.get('http://localhost:5000/getUserData', authorizationConfig.getHeaders());
-          const count = userDataRes.data.on_cart.length;
-          console.log("La cuenta es:", count);
-          setCount(count);
-          window.localStorage.setItem('carro', count.toString());
-          window.dispatchEvent(new Event('carroChanged'));
-          
-
-        } catch (error) {
-          console.log('Error:', error);
-        }
-
-      // window.localStorage.setItem("cardsOnCart", )
-     
+      await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig.getHeaders())
+      setKeyUpdate(keyUpdate + 1); 
+      setUserDataChangeDummy(!userDataChangeDummy)
     } catch (error){
       console.log('Error al comprar la carta en la base de datos', error);
       toast.warning("Para poder comprar cartas necesitas estar conectado, redirigiendo al login", {
