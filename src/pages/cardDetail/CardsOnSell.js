@@ -210,19 +210,16 @@ const CardsOnSell = ({ card }) => {
     const handleCloseBid = () => {
       setAnchorElBid(null);
     };
-  
   const BidOnSubmit = async (formData) => {
     try{
       const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
       let cardToBidData = {
-        /////////*******NO TENGO CARD, HAY QUE TRAERSELO */
         id_card: idCard,
         user: userDataRes.data._id,
         price: formData.price,
       }
       console.log("id_card es:", cardToBidData.id_card)
       await axios.post('http://localhost:5000/cards/bidupcard', cardToBidData, authorizationConfig.getHeaders());
-
     }catch(error){}
 
   }
