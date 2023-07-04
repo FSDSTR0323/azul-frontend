@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-export default function LoginForm({ handleClose, setUserAvatar }) {
+export default function LoginForm({ handleClose, userData, setUserData, isLoggedDummy, setIsLoggedDummy }) {
     const { register, handleSubmit, formState: { isValid } } = useForm();
     const [ error, setError ] = useState('')
     const navigate = useNavigate()
@@ -18,12 +18,8 @@ export default function LoginForm({ handleClose, setUserAvatar }) {
     const onSubmit = async (formData) =>  {
         try {
             const res = await axios.post('http://localhost:5000/login', formData)
-            console.log("el token es", res.data.token)
-            console.log("el mensaje es", res.data.message)
             window.localStorage.setItem('token', res.data.token)
-            window.localStorage.setItem('avatar', res.data.avatar_image)
-            setUserAvatar(res.data.avatar_image)
-            console.log("La res tras el login es", res.data)
+            setIsLoggedDummy(!isLoggedDummy)
             if(handleClose) {
                 handleClose()
             }
@@ -39,7 +35,7 @@ export default function LoginForm({ handleClose, setUserAvatar }) {
                 });
             navigate('/')
         } catch(err) {
-            console.log("este es el error", err.response.data.error)
+            console.log("este es el error", err)
             setError(err.response.data.error)
             setTimeout(() => {
                 setError('')

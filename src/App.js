@@ -24,7 +24,6 @@ function App() {
           <Route path='/profile' element={<Profile />}/>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/cartshop' element={<CartShop />}></Route>
-
         </Routes>
       </BrowserRouter>
       </MyUserContextProvider>

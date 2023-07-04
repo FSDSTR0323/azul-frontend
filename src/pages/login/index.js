@@ -8,12 +8,12 @@ import { UserContext } from "../../contexts/UserContext"
 
 
 export const Login = () => {
-    const {setUserAvatar} = React.useContext(UserContext)
+    const {userData, setUserData, isLoggedDummy, setIsLoggedDummy} = React.useContext(UserContext)
 
     return (
     <>
         <Header />
-        <LoginForm handleClose="" setUserAvatar={setUserAvatar}/>
+        <LoginForm handleClose="" userData={userData} setUserData={setUserData} isLoggedDummy={isLoggedDummy} setIsLoggedDummy={setIsLoggedDummy}/>
         <Footer />
         {window.localStorage.getItem("token") && <Navigate to='/'/>}
     </>

@@ -20,9 +20,6 @@ export function UploadButtons({ register, formDisabled, setFile, userAvatar }) {
     reader.readAsDataURL(fileReader);
   };
 
-    console.log("El estado de la url de avatar es", userAvatar)
-
-
   return (
     <Container maxWidth="md" sx={{ mt: 8 }}>
       <Stack direction="row" alignItems="center" spacing={2}>
