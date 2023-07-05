@@ -2,10 +2,11 @@ import React from 'react'
 import SearchIcon from '@mui/icons-material/Search';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Divider from '@mui/material/Divider';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { CardContext } from '../../contexts/CardContext';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -53,9 +54,12 @@ const Search = styled('div')(({ theme }) => ({
 
 export default function SearchBar() {
 
+
   const [matchedCards, setMatchedCards] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false)
   const [nameInput, setNameInput] = useState('');
+  const { cardIdChangeDummy, setCardIdChangeDummy } = useContext(CardContext)
+  const navigate = useNavigate()
 
   const handleChange = async (event) => {
     setNameInput(event.target.value)
@@ -93,6 +97,14 @@ export default function SearchBar() {
     }
   }, [nameInput])
       
+  const handleNavigateToCardDetail = (cardId) => {
+    setCardIdChangeDummy(!cardIdChangeDummy)
+    const input = document.getElementById('searching-input')
+    input.value=""
+    setShowSuggestions(false)
+    navigate(`/carddetail/${cardId}`)
+  }
+
   return (
     <>
       <Search id="search-bar">
@@ -111,11 +123,11 @@ export default function SearchBar() {
             matchedCards.map(e =>  {
               return (
                 <div key={e._id}>
-                <Link to={`/carddetail/${e._id}`}>
-                    <div className='search-result-background'>
+                {/* <Link to={`/carddetail/${e._id}`}> */}
+                    <div className='search-result-background' onClick={() => handleNavigateToCardDetail(e._id)}>
                       <div className='search-result-item'>{e.name}</div>
                     </div>
-                </Link>
+                {/* </Link> */}
                 <Divider />
                 </div>
               )

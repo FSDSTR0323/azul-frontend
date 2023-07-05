@@ -333,11 +333,38 @@ nav {
   display: block;
 }
 
+.cart-box {
+  max-height: 75vh;
+  width: 350px;
+  padding-bottom: 8px;
+}
+
 .card-on-cart-box {
+  padding-left: 10px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: center;
+  height: 75px;
+  /* justify-content: space-around; */
 }
+
+#cart-text {
+  width: 80%;
+}
+
+#cart-collection {
+  font-size: 0.8rem;
+}
+
+.cart-button-wrapper {
+  padding-bottom: 10px;
+}
+
+#cart-button {
+  margin: 0 auto;
+}
+
 
 .search-result-item {
   height: 30px;
@@ -356,11 +383,13 @@ nav {
 
 .search-result-background {
   background-color: white;
+  cursor: pointer;
 }
 
 .results-box {
   max-height: 369px;
   overflow-y: scroll;
+  font-size: 1rem;
 }
 
 #search-button {

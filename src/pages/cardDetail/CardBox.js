@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Typography } from "@mui/material";
 import { symbolImages } from "./symbolImages";
 import  SellMenu  from "./SellMenu"
-
+import { CardContext } from '../../contexts/CardContext';
 
 
 
@@ -12,7 +12,7 @@ export const CardBox = () => {
   const [allCards, setAllCards] = useState(null); // todas las cartas con el mismo nombre
   const [currentIndex, setCurrentIndex] = useState(0);
   const [previousIndex, setPreviousIndex] = useState(0);
-
+  const { cardIdChangeDummy, setCardIdChangeDummy } = useContext(CardContext)
   //const [selectedCard, setSelectedCard]  = useState(null);
   ////OBTENER INFO DE LA CARTA ACTUAL
   useEffect(() => {
@@ -32,7 +32,7 @@ export const CardBox = () => {
         console.error("Error al obtener los detalles de la carta:", error);
       });     
     
-  }, []);
+  }, [cardIdChangeDummy]);
 
   if (!card) {
     return <div>Cargando...</div>; // mostrara este mensaje mientras esperamos respuesta del backend

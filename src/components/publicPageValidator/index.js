@@ -10,12 +10,12 @@ export const PublicPageValidator = ({ children }) => {
     const {userData, setUserData, userAvatar, setUserAvatar, isLoggedDummy, userDataChangeDummy } = useContext(UserContext)
 
     useEffect(() => {
-
+        console.log("Se ejecuta la función del wrapper")
         if (window.localStorage.getItem("token")) {
             (async() => {
-                
                 try{
                 const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+                console.log("El carrito cuando el wrapper trae la info es", userDataRes.data.on_cart)
                 setUserData(userDataRes.data)
                 setUserAvatar(userDataRes.data.avatar_image)
                 } catch(err){
@@ -27,7 +27,6 @@ export const PublicPageValidator = ({ children }) => {
         } else {
             console.log("no se está comprobando nada")
         }
-
     }, [isLoggedDummy, userDataChangeDummy])
   
     return (
