@@ -383,6 +383,7 @@ nav {
 
 .search-result-background {
   background-color: white;
+  cursor: pointer;
 }
 
 .results-box {

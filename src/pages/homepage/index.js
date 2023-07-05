@@ -14,19 +14,6 @@ import { PublicPageValidator } from "../../components/publicPageValidator";
 
 export const Homepage = () => {
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const modifiedDataRes = await axios.get('http://localhost:5000/homepage', authorizationConfig.getHeaders())
-      }  
-      catch(err) {
-          if(err.response.data.name === "TokenExpiredError") {
-              window.localStorage.removeItem('token')
-          }
-      }
-    })()
-  }, [])
-
 
   return (
     <div className="home-container">
