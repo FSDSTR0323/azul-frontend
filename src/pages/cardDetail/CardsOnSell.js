@@ -194,7 +194,7 @@ const CardsOnSell = ({ card }) => {
     };
   const BidOnSubmit = async (formData) => {
     try{
-      const userDataRes = await axios.get("http://localhost:5000/profile", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       let cardToBidData = {
         id_card: idCard,
         user: userDataRes.data._id,
@@ -202,6 +202,8 @@ const CardsOnSell = ({ card }) => {
       }
       console.log("id_card es:", cardToBidData.id_card)
       await axios.post('http://localhost:5000/cards/bidupcard', cardToBidData, authorizationConfig.getHeaders());
+      setKeyUpdate(!keyUpdate)
+
     }catch(error){}
 
   }
@@ -221,6 +223,7 @@ const CardsOnSell = ({ card }) => {
       console.log("Se ordena de forma descendente")
     }    
   }
+  
 
 
   return (
@@ -245,8 +248,8 @@ const CardsOnSell = ({ card }) => {
           </div>
           <div className="grid-header">Fin de la Subasta</div>
           <div className="grid-header">Usuario</div>
-          <div className="grid-header">Comprar</div>
-          <div className="grid-header">Añadir</div>
+          <div className="grid-header"></div>
+          <div className="grid-header"></div>
           {/* <div className="grid-header">Pujar</div> */}
 
   
@@ -262,7 +265,7 @@ const CardsOnSell = ({ card }) => {
     <div className="grid-content">{card.user.username}</div>
     {card.type_sell === "Subasta" ? (
       <div className="grid-content-colspan" >
-        <button className="buy-button">
+        <button className="buy-button" data-toggle="tooltip" title="Pujar">
             <img
               className="buy-symbol-image"
               //onClick={() => onClickBid(card)}
@@ -278,7 +281,7 @@ const CardsOnSell = ({ card }) => {
     ) : (
       <>
         <div className="grid-content">
-          <button className="buynow-button">
+          <button className="buynow-button" data-toggle="tooltip" title="Comprar ya!">
             <img
               className="buynow-symbol-image"
               onClick={() => onClickBuy(card)}
@@ -288,7 +291,7 @@ const CardsOnSell = ({ card }) => {
           </button>
         </div>
         <div className="grid-content">
-          <button className="buy-button">
+          <button className="buy-button" data-toggle="tooltip" title="Añadir al carrito">
             <img
               className="buy-symbol-image"
               onClick={() => onClickCart(card)}
