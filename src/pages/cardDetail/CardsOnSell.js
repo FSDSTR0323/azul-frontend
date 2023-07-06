@@ -16,6 +16,7 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import Menu from "@mui/material/Menu";
 import { Controller, useForm } from "react-hook-form"
 import { UserContext } from "../../contexts/UserContext"
+import MessageModal from "./MessageModal";
 
 
 
@@ -46,6 +47,7 @@ const CardsOnSell = ({ card }) => {
       try {
         const response = await axios.get(`http://localhost:5000/cards/searchSelled/?name=${card}`);
         setCardsOnSell(response.data);
+        console.log("Las cartas a la venta son", response.data)
 
       } catch (error) {
         console.error('Error al obtener las cartas en venta:', error);
@@ -189,9 +191,11 @@ const CardsOnSell = ({ card }) => {
       setIdCard(event.currentTarget.id)
       setAnchorElBid(event.currentTarget);
     };
-    const handleCloseBid = () => {
+
+  const handleCloseBid = () => {
       setAnchorElBid(null);
     };
+
   const BidOnSubmit = async (formData) => {
     try{
       const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
@@ -223,8 +227,6 @@ const CardsOnSell = ({ card }) => {
       console.log("Se ordena de forma descendente")
     }    
   }
-  
-
 
   return (
     <div className="cards-list">
@@ -262,7 +264,10 @@ const CardsOnSell = ({ card }) => {
     {/* <div className="grid-content">{getTypeSell(card.type_sell)}</div> */}
     <div className="grid-content">{card.price} €</div>
     <div className="grid-content-smaller">{getBidDate(card.end_of_bid)}</div>
-    <div className="grid-content">{card.user.username}</div>
+    <div className="grid-content">
+      {card.user.username}
+      <MessageModal receiverUsername={card.user.username} receiverId={card.user._id}/>
+    </div>
     {card.type_sell === "Subasta" ? (
       <div className="grid-content-colspan" >
         <button className="buy-button" title="Pujar">

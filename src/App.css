@@ -50,6 +50,11 @@
   font-weight: bold;
 }
 
+.text-area {
+  width: 100%;
+  padding: 10px;
+}
+
 .buynow-button{
   padding: 0px;  
   background-color: #fe9e0d;
@@ -790,6 +795,25 @@ background-color: #6a6a6a;
   cursor: pointer;
   transition: 0.2s;
   margin-inline: 10px;
+}
+
+.button-box-message-modal {
+  display: flex;
+  align-items: center;
+}
+
+.modal-send-message-button {
+  padding: 0.5rem 0.9rem;
+  background-color: #fe9e0d;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  /* position: absolute;
+  left: 50%;
+  bottom: -30%;
+  transform: translate(-50%, 0); */
 }
 
 .sell-button:hover {
