@@ -16,7 +16,7 @@ import CardsOnSell from "./CardsOnSell";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
-
+import { SubiendoImagen } from "./imageUpload/Test";
 
 
 export default function SellMenu({card}) {
@@ -86,7 +86,7 @@ export default function SellMenu({card}) {
         progress: undefined,
         theme: "light",
         });
-        navigate("/login")
+         navigate("/login")
     }
   };
 
@@ -214,6 +214,7 @@ useEffect(() => {
           >
             Poner en Venta
           </button>
+          <SubiendoImagen/>
           {sellMessage && <p>{sellMessage}</p>}
 
       </Menu>
@@ -298,6 +299,8 @@ useEffect(() => {
           <button id="bidcard" type="submit" disabled={!bidFormState.isValid}>
             Poner en Subasta
           </button>
+       
+          <SubiendoImagen/>
           {bidMessage && <p>{bidMessage}</p>}
 
       </Menu>
