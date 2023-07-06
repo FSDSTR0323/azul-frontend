@@ -16,7 +16,7 @@ import CardsOnSell from "./CardsOnSell";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom'
-import { SubiendoImagen } from "./imageUpload/Test";
+
 
 
 export default function SellMenu({card}) {
@@ -46,6 +46,60 @@ export default function SellMenu({card}) {
   const { control: sellControl, register: sellRegister, handleSubmit: sellHandleSubmit, formState: sellFormState } = useForm();
   const { control: bidControl, register: bidRegister, handleSubmit: bidHandleSubmit, formState: bidFormState } = useForm();
   const [updateKey, setUpdateKey] = useState(0);
+
+  const handleFileUpload =async(file)=>{
+        const image = file.target.files[0];
+        
+        const imageData = new FormData()
+        imageData.append("file", image)
+        imageData.append("upload_preset", "nuclio-fw")
+        imageData.append("cloud_name", "freakyworld")
+    
+        const mediaType = image.type.split("/")[0]
+
+        try {
+            const imageRes = await axios.post(`https://api.cloudinary.com/v1_1/freakyworld/${mediaType}/upload`, imageData)
+            imageData.avatar_image = imageRes.data.url
+            console.log('SellMenu.js 62 | image url', imageRes.data.url);
+        } catch(err) {
+            console.log("Este es el error al postear img a cloudinary", err)
+        }
+  }
+
+   const uploadToCloudinary = async (file) =>{
+      // returns link to image after cloudinary upload
+     console.log('SellMenu.js 70 | uploading...', file.type, file.target.files);
+
+     const image = file.target.files[0];
+     let cloudinaryImageLink = "";
+
+      //# CLOUD_KEY = '192837253314764'
+     // # CLOUD_KEY_SECRET = 'QuRdaYmg6oRtI3Up0qkaylswtF8'
+      //#  CLOUD_NAME = 'dcvlhfeqv'
+
+     const imageData = new FormData()
+     imageData.append("upload_preset", "FreakyWorld");
+     imageData.append("file", image)
+      imageData.append("api_key",'192837253314764');
+      imageData.append("cloud_name", "freakyworld")
+     imageData.append("upload_preset", "nuclio-fw")
+     imageData.append("cloud_name", "freakyworld")
+
+     const mediaType = image.type.split("")[0];
+     console.log('SellMenu.js 67 | media type', mediaType);
+
+     try {
+         const imageRes = await axios.post(`https:api.cloudinary.comv1_1freakyworld${mediaType}upload`, imageData)
+         console.log('SellMenu.js 69 | image url to cloudinary', imageRes.data.url);
+         cloudinaryImageLink = imageRes.data.url
+
+     } catch(err) {
+         console.log("Este es el error al postear img a cloudinary", err)
+     }
+
+      //upload file to cloudinary
+     return cloudinaryImageLink;
+   }
 
  
   const sellOnSubmit = async (formData) => {
@@ -86,7 +140,7 @@ export default function SellMenu({card}) {
         progress: undefined,
         theme: "light",
         });
-         navigate("/login")
+        navigate("/login")
     }
   };
 
@@ -210,11 +264,11 @@ useEffect(() => {
             {...sellRegister("price", { required: true })}
           />
           <br />
+          <input type="file" onChange={file=>handleFileUpload(file)}/>
           <button id="sellcard" type="submit" disabled={!sellFormState.isValid}
           >
             Poner en Venta
           </button>
-          <SubiendoImagen/>
           {sellMessage && <p>{sellMessage}</p>}
 
       </Menu>
@@ -299,8 +353,6 @@ useEffect(() => {
           <button id="bidcard" type="submit" disabled={!bidFormState.isValid}>
             Poner en Subasta
           </button>
-       
-          <SubiendoImagen/>
           {bidMessage && <p>{bidMessage}</p>}
 
       </Menu>
