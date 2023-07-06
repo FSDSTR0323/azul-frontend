@@ -61,9 +61,25 @@ export default function SearchBar() {
   const { cardIdChangeDummy, setCardIdChangeDummy } = useContext(CardContext)
   const navigate = useNavigate()
 
+  // function debounce(func, timeout = 300){
+  //   let timer;
+  //   return (...args) => {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  //   };
+  // }
+
+  // const changeInputValue = (event) => {
+  //   setNameInput(event.target.value)
+  //   setShowSuggestions(true)
+  // }
+ 
   const handleChange = async (event) => {
-    setNameInput(event.target.value)
-    setShowSuggestions(true)
+    if (event.target.value.length > 2) {
+      setNameInput(event.target.value)
+      setShowSuggestions(true)
+      // debounce(() => changeInputValue(event))
+    }
   }
 
   const clearResultInput = () => {

@@ -265,7 +265,7 @@ const CardsOnSell = ({ card }) => {
     <div className="grid-content">{card.user.username}</div>
     {card.type_sell === "Subasta" ? (
       <div className="grid-content-colspan" >
-        <button className="buy-button" data-toggle="tooltip" title="Pujar">
+        <button className="buy-button" title="Pujar">
             <img
               className="buy-symbol-image"
               //onClick={() => onClickBid(card)}
@@ -281,7 +281,7 @@ const CardsOnSell = ({ card }) => {
     ) : (
       <>
         <div className="grid-content">
-          <button className="buynow-button" data-toggle="tooltip" title="Comprar ya!">
+          <button className="buynow-button" title="Comprar ya!">
             <img
               className="buynow-symbol-image"
               onClick={() => onClickBuy(card)}
