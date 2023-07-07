@@ -4,6 +4,7 @@ import { Register } from './pages/register';
 import { CardDetail } from './pages/cardDetail';
 import { Profile } from './pages/profile';
 import { Login } from './pages/login';
+import { Messages } from './pages/messages';
 import { SuccessAlert } from './utils/toaster';
 import { MyUserContextProvider } from './contexts/UserContext'
 import { MyCardContextProvider } from './contexts/CardContext'; 
@@ -26,6 +27,7 @@ function App() {
               <Route path='/profile' element={<Profile />}/>
               <Route path='/login' element={<Login />}></Route>
               <Route path='/cartshop' element={<CartShop />}></Route>
+              <Route path='/messages' element={<Messages />}></Route>
             </Routes>
           </BrowserRouter>
           </MyCardContextProvider>

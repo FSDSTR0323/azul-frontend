@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 // import Logo from "../../../assets/Logo.svg";
-import { BsCart2 } from "react-icons/bs";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -22,11 +21,13 @@ import Logo from "../../assets/logo-Image.png"
 import { Link } from "react-router-dom"
 import SearchBar from "./SearchBar";
 import CartMenu from "./CartMenu";
-
+import { InboxMenu } from "./InboxMenu";
+import { UserContext } from '../../contexts/UserContext';
 
 export const Header = () => {
-  const [openMenu, setOpenMenu] = useState(false);
 
+  const [openMenu, setOpenMenu] = useState(false);
+  const { userData } = useContext(UserContext)
   const menuOptions = [
     {
       text: "Inicio",
@@ -50,6 +51,10 @@ export const Header = () => {
     },
   ];
 
+  useEffect(() => {
+
+  }, [userData])
+
   return (
     <>
       <div className="home-bannerImage-container">
@@ -68,10 +73,16 @@ export const Header = () => {
             <a href="">Opiniones</a>
             <a href="">Contacto</a>
             <SearchBar/>
-            <a>
-            {/* <BsCart2/> */}
-               <CartMenu className="navbar-cart-icon"/> 
-            </a>
+            {window.localStorage.getItem("token") && 
+              <a>
+                <CartMenu className="navbar-cart-icon"/> 
+              </a>
+            } 
+            {window.localStorage.getItem("token") && 
+              <a>
+                <InboxMenu className="navbar-cart-icon"/> 
+              </a>
+            }
             <LoginMenu></LoginMenu>        
           </div>
           <div className="navbar-menu-container">

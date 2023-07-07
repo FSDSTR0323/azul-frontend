@@ -7,7 +7,7 @@ import { UserContext } from '../../contexts/UserContext'
 export const PrivatePageValidator = ({ children }) => {
 
     const navigate = useNavigate()
-    const {userData, setUserData, userAvatar, setUserAvatar, isLoggedDummy, userDataChangeDummy } = useContext(UserContext)
+    const { setUserData, setUserMessages, setUserAvatar, isLoggedDummy, userDataChangeDummy } = useContext(UserContext)
 
     useEffect(() => {
 
@@ -15,8 +15,10 @@ export const PrivatePageValidator = ({ children }) => {
             (async() => {
                 try{
                 const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
-                setUserData(userDataRes.data)
-                setUserAvatar(userDataRes.data.avatar_image)
+                setUserData(userDataRes.data.userData)
+                setUserMessages(userDataRes.data.userMessagesData)
+                setUserAvatar(userDataRes.data.userData.avatar_image)
+                console.log("Los mensajes del usuario son", userDataRes.data.userMessagesData)
                 } catch(err){
                     if(err.response.data.name === "TokenExpiredError") {
                         window.localStorage.removeItem('token')
