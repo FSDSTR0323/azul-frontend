@@ -132,7 +132,7 @@ const CardsOnSell = ({ card }) => {
       console.log('estoy en el try de onclickbuy')
       let cardBuyedData = {
         _id: card._id,
-        buyer: userDataRes.data._id,
+        buyer: userDataRes.data.userData._id,
       };
       console.log('cardBuyedData es:', cardBuyedData)
       await axios.post("http://localhost:5000/cards/buycard", cardBuyedData, authorizationConfig.getHeaders())
@@ -163,7 +163,7 @@ const CardsOnSell = ({ card }) => {
       console.log('estoy en el try de onclickcart')
       let cardOnCartData = {
         _id: card._id,
-        onCart: userDataRes.data._id,
+        onCart: userDataRes.data.userData._id,
       };
       await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig.getHeaders())
       setKeyUpdate(keyUpdate + 1); 
