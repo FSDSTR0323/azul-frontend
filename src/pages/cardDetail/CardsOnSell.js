@@ -201,7 +201,7 @@ const CardsOnSell = ({ card }) => {
       const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       let cardToBidData = {
         id_card: idCard,
-        user: userDataRes.data._id,
+        user: userDataRes.data.userData._id,
         price: formData.price,
       }
       console.log("id_card es:", cardToBidData.id_card)
