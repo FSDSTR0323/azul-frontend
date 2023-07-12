@@ -38,6 +38,12 @@
 } */
 
 /* Estilo tabla CardsOnSell */
+
+.inbox-wrapper {
+  display: flex;
+  
+}
+
 .card-grid {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
