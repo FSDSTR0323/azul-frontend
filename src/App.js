@@ -21,7 +21,7 @@ function App() {
     let updateBids = setInterval(async () => {
       try {
         const res = await axios.get('http://localhost:5000/cards/endOfBid');
-        //console.log('Estoy entrando en el intervalooooooooooooooooo', res);
+        console.log('Estoy entrando en el intervalooooooooooooooooo', res);
       } catch (error) {
         console.error('Error en la solicitud:', error);
       }
