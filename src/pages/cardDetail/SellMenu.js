@@ -109,7 +109,7 @@ export default function SellMenu({ card }) {
         status: formData.status,
         type_sell: "Venta",
         price: formData.price,
-        user: userDataRes.data._id,
+        user: userDataRes.data.userData._id,
         image: imageUrls
       };
       console.log('SellMenu.js 138 | sending card data', cardSelledData);
@@ -160,7 +160,7 @@ export default function SellMenu({ card }) {
         type_sell: "Subasta",
         price: formData.price,
         end_of_bid: formData.end_of_bid,
-        user: userDataRes.data._id,
+        user: userDataRes.data.userData._id,
         image: imageUrl
       };
       await axios.post(
