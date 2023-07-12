@@ -7,12 +7,30 @@ import { Login } from './pages/login';
 import { SuccessAlert } from './utils/toaster';
 import { MyUserContextProvider } from './contexts/UserContext'
 import { MyCardContextProvider } from './contexts/CardContext'; 
+import axios from 'axios';
+import {useEffect} from 'react';
+
 
 import "./App.css";
 import { CartShop } from './pages/cartshop';
 
 function App() {
-  
+
+  useEffect(() => {
+    let updateBids = setInterval(async () => {
+      try {
+        const res = await axios.get('http://localhost:5000/cards/endOfBid');
+        //console.log('Estoy entrando en el intervalooooooooooooooooo', res);
+      } catch (error) {
+        console.error('Error en la solicitud:', error);
+      }
+    }, 60000);
+    return () => {
+      clearInterval(updateBids);
+    };
+  }, []);
+
+
   return (
     <div className="App">
       <SuccessAlert />
@@ -32,6 +50,7 @@ function App() {
       </MyUserContextProvider>
     </div>
   );
+  
 }
 
 export default App;
