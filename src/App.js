@@ -8,6 +8,7 @@ import { Messages } from './pages/messages';
 import { SuccessAlert } from './utils/toaster';
 import { MyUserContextProvider } from './contexts/UserContext'
 import { MyCardContextProvider } from './contexts/CardContext'; 
+import axios from 'axios';
 import { io } from 'socket.io-client'
 
 import "./App.css";
@@ -18,17 +19,6 @@ export const socket = io("http://localhost:5000")
 
 function App() {
   
-    useEffect(() => {
-      socket.on("connect", () => {
-        socket.on("message", (mssg) => console.log(mssg))
-       })
-
-       return () => {
-        socket.off("connect")
-        socket.off("message")
-       }
-    }, [])
-    
   return (
     <div className="App">
       <SuccessAlert />
@@ -49,6 +39,7 @@ function App() {
       </MyUserContextProvider>
     </div>
   );
+  
 }
 
 export default App;

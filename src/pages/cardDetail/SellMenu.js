@@ -160,7 +160,7 @@ export default function SellMenu({ card }) {
         type_sell: "Subasta",
         price: formData.price,
         end_of_bid: formData.end_of_bid,
-        user: userDataRes.data._id,
+        user: userDataRes.data.userData._id,
         image: imageUrl
       };
       await axios.post(

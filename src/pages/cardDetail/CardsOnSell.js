@@ -25,7 +25,7 @@ import MessageModal from "./MessageModal";
 
 const CardsOnSell = ({ card }) => {
 
-  const {setUserDataChangeDummy, userDataChangeDummy } = useContext(UserContext)
+  const {setUserDataChangeDummy, userDataChangeDummy} = useContext(UserContext)
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
 
@@ -186,9 +186,11 @@ const CardsOnSell = ({ card }) => {
 
   const [anchorElBid, setAnchorElBid] = useState(null);
   const [idCard, setIdCard] = useState(null);
+  const [BidsCard, setBidsCard] = useState(null);
 
   const handleClickBid = (event) => {
       setIdCard(event.currentTarget.id)
+      setBidsCard(event.currentTarget.bids)
       setAnchorElBid(event.currentTarget);
     };
 
@@ -197,6 +199,7 @@ const CardsOnSell = ({ card }) => {
     };
 
   const BidOnSubmit = async (formData) => {
+    console.log("BidsCard es",BidsCard)
     try{
       const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       let cardToBidData = {
@@ -209,8 +212,14 @@ const CardsOnSell = ({ card }) => {
       setKeyUpdate(!keyUpdate)
 
     }catch(error){}
-
   }
+
+  const getBidsAmount = (card) => {
+      const amount = card.bids.length;
+      console.log ("Amount es:", amount)
+      return amount
+  }
+
 
   const [sortedPrice, setSortedPrice] = useState("-")
 
@@ -227,6 +236,8 @@ const CardsOnSell = ({ card }) => {
       console.log("Se ordena de forma descendente")
     }    
   }
+
+
 
   return (
     <div className="cards-list">
@@ -256,7 +267,7 @@ const CardsOnSell = ({ card }) => {
 
   
           {filteredCardsOnSell.map((card) => (
-  <React.Fragment key={card._id}>
+                <React.Fragment key={card._id}>
     <div id="selector" className="grid-content-smaller">{card.set_name}</div>
     <div className="grid-content">{getFlag(card.lang)}</div>
     <div className="grid-content">{card.foil ? "Sí" : "No"}</div>
@@ -281,9 +292,27 @@ const CardsOnSell = ({ card }) => {
             />
           </button>
         {/* {drawBidForm(card.end_of_bid, card.price)} */}
-
+          <Menu onSubmit={BidHandleSubmit(BidOnSubmit)} 
+                  id="bidform"
+                  className="bid-form-box"
+                  component="form"
+                  noValidate
+                  autoComplete="off"
+                  anchorEl={anchorElBid}
+                  open={Boolean(anchorElBid)}
+                  onClose={handleCloseBid}
+                >
+                  <input
+                      type="number"
+                      id="price"
+                      {...BidRegister("price", { required: true })}
+                    />
+                  <br></br>
+                  <div className="grid-content">Pujas realizadas: {getBidsAmount(card)}</div>
+                  <button id="Pujar" type="submit" disabled={!BidFormState.isValid}>Pujar</button>
+            </Menu>
       </div>
-    ) : (
+    ) :  (
       <>
         <div className="grid-content">
           <button className="buynow-button" title="Comprar ya!">
@@ -314,28 +343,12 @@ const CardsOnSell = ({ card }) => {
       </>
     )}
   </React.Fragment>
-))}
+))
+}
 
         </div>
       </div>
-       <Menu onSubmit={BidHandleSubmit(BidOnSubmit)} 
-        id="bidform"
-        className="bid-form-box"
-        component="form"
-        noValidate
-        autoComplete="off"
-        anchorEl={anchorElBid}
-        open={Boolean(anchorElBid)}
-        onClose={handleCloseBid}
-      >
-         <input
-            type="number"
-            id="price"
-            {...BidRegister("price", { required: true })}
-          />
-        <br></br>
-        <button id="Pujar" type="submit" disabled={!BidFormState.isValid}>Pujar</button>
-  </Menu>
+       
     </div>
   );
   
