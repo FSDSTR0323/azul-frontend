@@ -39,9 +39,43 @@
 
 /* Estilo tabla CardsOnSell */
 
+
+
+.conversations-section-header {
+  margin: 1rem;
+}
+
+.conversation-card-box {
+  display:flex;
+  cursor: pointer;
+}
+
+.conversation-card-box:hover {
+  background-color: hsla(240, 63%, 61%, 0.235);
+}
+
+.card-content {
+  width: 100%
+}
+
+.conversation-user-info{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-card-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
 .inbox-wrapper {
   display: flex;
-  
+  margin: 5rem;
+  gap: 2rem;
 }
 
 .card-grid {
@@ -49,6 +83,89 @@
   grid-template-columns: repeat(9, 1fr);
   grid-gap: 10px;
   justify-items: center;
+}
+
+.conversations-section{
+  width: 25vw;
+  max-width: 25vw;
+  height: 80vh;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid hsla(0, 0%, 0%, 0.3);
+  border-radius: 2px;
+  z-index: 0;
+  background-color: white;;
+}
+
+.messages-section {
+  width: 60vw;
+  max-width: 60vw;
+  height: 80vh;
+  max-height: 80vh;
+  border: 1px solid hsla(0, 0%, 0%, 0.3);
+  border-radius: 2px;
+  z-index: 1;
+  padding: 2rem;
+  background-color: white;
+}
+
+.message-box-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.messages-container {
+  height: 80%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-end;
+  overflow-y: auto;
+  gap: 0.3rem;
+}
+
+.user-message {
+  background-color:hsla(36, 99%, 52%, 0.3);
+  width: fit-content;
+  max-width: 100%;
+  height: 2.5rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid 1px transparent;
+  border-radius: 4px;
+}
+
+.other-user-message {
+  background-color: hsla(0, 0%, 0%, 0.3);
+  width: fit-content;
+  max-width: 100%;
+  height: 2.5rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  border: solid 1px transparent;
+  border-radius: 4px;
+}
+
+.messages-input-container {
+  width: 100%;
+  height: 3rem;
+  margin-top: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: flex;
+}
+
+.messages-input {
+  width: 95%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  padding: 0 1rem;
 }
 
 
@@ -270,7 +387,7 @@ top: 0;
 overflow: visible;
 padding-right: 2rem;
 padding-left: 4rem;
-z-index: 1;
+z-index: 2;
 height: 60px;
 background-color: #f6f6f6;
 border-bottom: 1px solid black;

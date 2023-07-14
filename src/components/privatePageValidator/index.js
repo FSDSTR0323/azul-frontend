@@ -15,6 +15,7 @@ export const PrivatePageValidator = ({ children }) => {
             (async() => {
                 try{
                 const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+                console.log("DATAAA", userDataRes)
                 setUserData(userDataRes.data.userData)
                 setUserMessages(userDataRes.data.userMessagesData)
                 setUserAvatar(userDataRes.data.userData.avatar_image)

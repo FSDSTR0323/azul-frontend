@@ -8,12 +8,27 @@ import { Messages } from './pages/messages';
 import { SuccessAlert } from './utils/toaster';
 import { MyUserContextProvider } from './contexts/UserContext'
 import { MyCardContextProvider } from './contexts/CardContext'; 
+import { io } from 'socket.io-client'
 
 import "./App.css";
 import { CartShop } from './pages/cartshop';
+import { useEffect } from 'react';
+
+export const socket = io("http://localhost:5000")
 
 function App() {
   
+    useEffect(() => {
+      socket.on("connect", () => {
+        socket.on("message", (mssg) => console.log(mssg))
+       })
+
+       return () => {
+        socket.off("connect")
+        socket.off("message")
+       }
+    }, [])
+    
   return (
     <div className="App">
       <SuccessAlert />

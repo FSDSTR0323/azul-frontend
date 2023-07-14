@@ -39,7 +39,6 @@ export default function MessageModal({ receiverUsername, receiverId }) {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    //TODO: función onclick botón llamando al endpoint de crear message
     const handleSendMessage = async () => {
         try {
             const message = document.getElementById("text-area").value

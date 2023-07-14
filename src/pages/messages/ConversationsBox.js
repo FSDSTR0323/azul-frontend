@@ -3,23 +3,26 @@ import { UserContext } from '../../contexts/UserContext';
 import ConversationCard from './ConversationCard';
 import { useEffect } from 'react';
 
-export const ConversationsBox = () => {
+export const ConversationsBox = ({ setSelectedConversation }) => {
 
     const { userMessages, userDataChangeDummy, setUserDataChangeDummy } = useContext(UserContext)
     
     useEffect(() => {
-
     }, [userMessages])
 
-    console.log("El mensaje es", userMessages)
+    const handleSelectConversation = (conversationToShow) => {
+        setSelectedConversation(conversationToShow)
+    }
 
     return (
-        <section>
-            <h1>bandeja de entrada</h1>
+        <section className='conversations-section'>
+            <div className='conversations-section-header'>
+            <h1>Bandeja de entrada</h1>
+            </div>
             {userMessages &&
-                userMessages.map(conversation => {
+                userMessages.map((conversation, index) => {
                     return (
-                        <ConversationCard conversation={conversation}/>
+                        <ConversationCard handleSelectConversation={handleSelectConversation} conversation={conversation} position={index}/>
                     )
                 })
             }
