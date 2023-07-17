@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 export const ConversationsBox = ({ setSelectedConversation }) => {
 
-    const { userMessages, userDataChangeDummy, setUserDataChangeDummy } = useContext(UserContext)
+    const { userMessages, unreadCount, setUnreadCount, unreadConversations, userDataChangeDummy, setUserDataChangeDummy } = useContext(UserContext)
     
     useEffect(() => {
     }, [userMessages])
@@ -22,7 +22,7 @@ export const ConversationsBox = ({ setSelectedConversation }) => {
             {userMessages &&
                 userMessages.map((conversation, index) => {
                     return (
-                        <ConversationCard handleSelectConversation={handleSelectConversation} conversation={conversation} position={index}/>
+                        <ConversationCard key={conversation.conversation._id} handleSelectConversation={handleSelectConversation} conversation={conversation} position={index}/>
                     )
                 })
             }

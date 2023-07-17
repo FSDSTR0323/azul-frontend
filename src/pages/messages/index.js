@@ -10,7 +10,7 @@ import { useEffect } from "react";
 
 export const Messages = () => {
 
-    const { userData, userMessages } = useContext(UserContext)
+    const { userData } = useContext(UserContext)
     const [ selectedConversation, setSelectedConversation ] = useState({})
 
     useEffect(() => {

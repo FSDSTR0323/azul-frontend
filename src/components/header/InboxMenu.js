@@ -9,31 +9,36 @@ import { useNavigate } from 'react-router-dom';
 
 
 export const InboxMenu = () => {
-  const { userMessages, userDataChangeDummy, setUserDataChangeDummy } = useContext(UserContext)
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [unreadConversations, setUnreadConversations] = useState([])
+  const { userData, userMessages, setUnreadConversations, unreadCount, setUnreadCount } = useContext(UserContext)
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const navigate = useNavigate()
 
   const fetchData = () => {
     if (userMessages) {
-        console.log("USER MESSAGES ES", userMessages)
-        const unreadConversations = []
-        userMessages.forEach(conversation => {
-            if (!conversation.messages.forEach(m => m.read === true)) {
-                unreadConversations.push(conversation)
-                console.log("se suma un mensaje no leido")
-            }
+      const unreadConversations = []
+      let isUnread = false
+      userMessages.forEach(conversation => {
+        isUnread = false
+        conversation.messages.forEach(m => {
+          if (m.sender !== userData?._id && m.read === false) {
+            console.log("se marca una conver como no leída")
+            isUnread = true
+          }
         })
-        setUnreadConversations(unreadConversations)
-        setUnreadCount(unreadConversations.length)
+        if (isUnread) {
+          unreadConversations.push(conversation)              
+          setUnreadCount(unreadConversations.length)
+        }
+      })
+      setUnreadConversations(unreadConversations)
     }
-}
+  }
 
   useEffect(() => {
     fetchData();
-  }, [userMessages]);
+  }, [unreadCount, userMessages]);
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {

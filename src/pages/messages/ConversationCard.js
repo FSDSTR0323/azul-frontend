@@ -6,13 +6,13 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { UserContext } from '../../contexts/UserContext';
 import Divider from '@mui/material/Divider'; 
+import AnnouncementIcon from '@mui/icons-material/Announcement';
 
 export default function ConversationCard({ handleSelectConversation, conversation, position }) {
 
-    const { userData, userDataMessages } = useContext(UserContext)
+    const { userData, userMessages, unreadConversations, setUnreadConversations } = useContext(UserContext)
     const [ otherUserData, setOtherUserData] = useState({})
     const [ lastMessage, setLastMessage] = useState({})
-
     const [ conversationData, setConversationData] = useState({})
 
     useEffect(() => {
@@ -40,13 +40,10 @@ export default function ConversationCard({ handleSelectConversation, conversatio
       const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
       const dayAndMonth = date.getDate() + " " + months[date.getMonth()].slice(0,3)
-      console.log("la fecha es:::::::::", dayAndMonth)
       setLastMessage({
         text: conversation.messages[conversation.messages.length - 1].message,
         date: dayAndMonth,
       })
-
-      console.log("La variable con la info es", conversationInfo)
 
       setConversationData(conversationInfo)
 
@@ -54,7 +51,7 @@ export default function ConversationCard({ handleSelectConversation, conversatio
         handleSelectConversation(conversation)
       }
 
-    }, [userDataMessages])
+    }, [userMessages, unreadConversations])
 
 
 
@@ -62,18 +59,19 @@ export default function ConversationCard({ handleSelectConversation, conversatio
     return (  
     <>   
     <Card className="conversation-card-box" onClick={() => handleSelectConversation(conversation)}>
-      {console.log("El estado en el momento de renderizar el compoentne es", conversationData)}
-
       <Box sx={{ display: 'flex', flexDirection: 'column', width: "100%"}}>
         <CardContent className='card-content'>
             <div className='header-card-box'>
               <div className='conversation-user-info'>
-                <img src={conversationData.avatar_image} alt="Imagen de avatar de usuario que participa en la conversación" className='avatar-navbar-image'/>
+                <img src={conversationData.avatar_image || "https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="} alt="Imagen de avatar de usuario que participa en la conversación" className='avatar-navbar-image'/>
                 <Typography component="div" variant="h5">
                     {conversationData.username}
                 </Typography>
               </div>
               <Typography component="div" variant="h8">
+                  {unreadConversations.includes(conversation) && 
+                  <AnnouncementIcon />
+                  }
                   {lastMessage.date}
               </Typography>
             </div>

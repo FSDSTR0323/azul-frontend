@@ -17,6 +17,7 @@ import Menu from "@mui/material/Menu";
 import { Controller, useForm } from "react-hook-form"
 import { UserContext } from "../../contexts/UserContext"
 import MessageModal from "./MessageModal";
+import CardImagesModal from "./CardImagesModal";
 
 
 
@@ -268,7 +269,10 @@ const CardsOnSell = ({ card }) => {
   
           {filteredCardsOnSell.map((card) => (
                 <React.Fragment key={card._id}>
-    <div id="selector" className="grid-content-smaller">{card.set_name}</div>
+    <div className="grid-content-smaller">
+      <div id="selector" className="grid-content-smaller">{card.set_name}</div>
+      <CardImagesModal cardImages={card.image}/>
+    </div>
     <div className="grid-content">{getFlag(card.lang)}</div>
     <div className="grid-content">{card.foil ? "Sí" : "No"}</div>
     <div className="grid-content">{getStatus(card.status)}</div>
@@ -276,7 +280,7 @@ const CardsOnSell = ({ card }) => {
     <div className="grid-content">{card.price} €</div>
     <div className="grid-content-smaller">{getBidDate(card.end_of_bid)}</div>
     <div className="grid-content">
-      {card.user.username}
+      <div className="grid-content">{card.user.username}</div>
       <MessageModal receiverUsername={card.user.username} receiverId={card.user._id}/>
     </div>
     {card.type_sell === "Subasta" ? (
@@ -333,12 +337,6 @@ const CardsOnSell = ({ card }) => {
               alt="Añadir"
             />
           </button>
-        </div>
-        <div className="grid-content">
-          {card.image && card.image.map((imgSrc, index)=>{ 
-           console.log('CardsOnSell.js | 303', imgSrc); 
-              return <img style={{marginRight:20}} width={20} height={20} key={index} src={imgSrc}/>
-           })}
         </div>
       </>
     )}
