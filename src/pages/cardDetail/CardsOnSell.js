@@ -3,6 +3,7 @@ import axios from 'axios';
 import bidimage from "../../assets/bid.png";
 import buynowimage from "../../assets/buynow.png";
 import buyimage from "../../assets/buy.png";
+import deleteimage from "../../assets/delete.png";
 import moment from 'moment';
 import { authorizationConfig } from "../../security";
 import { toast } from 'react-toastify';
@@ -18,6 +19,7 @@ import { Controller, useForm } from "react-hook-form"
 import { UserContext } from "../../contexts/UserContext"
 import MessageModal from "./MessageModal";
 import CardImagesModal from "./CardImagesModal";
+import { UserData } from "../profile/UserData";
 
 
 
@@ -26,7 +28,7 @@ import CardImagesModal from "./CardImagesModal";
 
 const CardsOnSell = ({ card }) => {
 
-  const {setUserDataChangeDummy, userDataChangeDummy} = useContext(UserContext)
+  const {userData, setUserData, setUserDataChangeDummy, userDataChangeDummy} = useContext(UserContext)
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
 
@@ -185,6 +187,25 @@ const CardsOnSell = ({ card }) => {
     }
   }
 
+  const onClickDel = async (card) => {
+    try {
+      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+      console.log('estoy en el try de onclickDEL')
+      let cardDelData = {
+        _id: card._id,
+      };
+      console.log('cardDelData es:', cardDelData)
+      await axios.post("http://localhost:5000/cards/delcard", cardDelData, authorizationConfig.getHeaders())
+      
+        console.log('Carta eliminada:', cardDelData)
+        setKeyUpdate(keyUpdate + 1); 
+              
+    } catch (error){
+      console.log('Error al eliminar la carta en la base de datos', error);
+      navigate("/login")
+    }
+  }
+
   const [anchorElBid, setAnchorElBid] = useState(null);
   const [idCard, setIdCard] = useState(null);
   const [BidsCard, setBidsCard] = useState(null);
@@ -283,62 +304,78 @@ const CardsOnSell = ({ card }) => {
       <div className="grid-content">{card.user.username}</div>
       <MessageModal receiverUsername={card.user.username} receiverId={card.user._id}/>
     </div>
-    {card.type_sell === "Subasta" ? (
+    {card.user.username === userData.username ? (
+      
       <div className="grid-content-colspan" >
-        <button className="buy-button" title="Pujar">
-            <img
-              className="buy-symbol-image"
-              //onClick={() => onClickBid(card)}
-              onClick={handleClickBid}
-              src={bidimage}
-              alt="Pujar"
-              id={card._id}
-            />
-          </button>
-        {/* {drawBidForm(card.end_of_bid, card.price)} */}
-          <Menu onSubmit={BidHandleSubmit(BidOnSubmit)} 
-                  id="bidform"
-                  className="bid-form-box"
-                  component="form"
-                  noValidate
-                  autoComplete="off"
-                  anchorEl={anchorElBid}
-                  open={Boolean(anchorElBid)}
-                  onClose={handleCloseBid}
-                >
-                  <input
-                      type="number"
-                      id="price"
-                      {...BidRegister("price", { required: true })}
-                    />
-                  <br></br>
-                  <div className="grid-content">Pujas realizadas: {getBidsAmount(card)}</div>
-                  <button id="Pujar" type="submit" disabled={!BidFormState.isValid}>Pujar</button>
-            </Menu>
+            <button className="buy-button" title="Pujar">
+                <img
+                  className="buy-symbol-image"
+                  onClick={() => onClickDel(card)}
+                  src={deleteimage}
+                  alt="Eliminar"
+                  id={card._id}
+                />
+              </button>
       </div>
-    ) :  (
+    ) : (
       <>
-        <div className="grid-content">
-          <button className="buynow-button" title="Comprar ya!">
-            <img
-              className="buynow-symbol-image"
-              onClick={() => onClickBuy(card)}
-              src={buynowimage}
-              alt="Comprar"
-            />
-          </button>
-        </div>
-        <div className="grid-content">
-          <button className="buy-button" data-toggle="tooltip" title="Añadir al carrito">
-            <img
-              className="buy-symbol-image"
-              onClick={() => onClickCart(card)}
-              src={buyimage}
-              alt="Añadir"
-            />
-          </button>
-        </div>
-      </>
+        {card.type_sell === "Subasta" ? (
+          <div className="grid-content-colspan" >
+            <button className="buy-button" title="Pujar">
+                <img
+                  className="buy-symbol-image"
+                  //onClick={() => onClickBid(card)}
+                  onClick={handleClickBid}
+                  src={bidimage}
+                  alt="Pujar"
+                  id={card._id}
+                />
+              </button>
+              <Menu onSubmit={BidHandleSubmit(BidOnSubmit)} 
+                      id="bidform"
+                      className="bid-form-box"
+                      component="form"
+                      noValidate
+                      autoComplete="off"
+                      anchorEl={anchorElBid}
+                      open={Boolean(anchorElBid)}
+                      onClose={handleCloseBid}
+                    >
+                      <input
+                          type="number"
+                          id="price"
+                          {...BidRegister("price", { required: true })}
+                        />
+                      <br></br>
+                      <div className="grid-content">Pujas realizadas: {getBidsAmount(card)}</div>
+                      <button id="Pujar" type="submit" disabled={!BidFormState.isValid}>Pujar</button>
+                </Menu>
+          </div>
+        ) :  (
+          <>
+            <div className="grid-content">
+              <button className="buynow-button" title="Comprar ya!">
+                <img
+                  className="buynow-symbol-image"
+                  onClick={() => onClickBuy(card)}
+                  src={buynowimage}
+                  alt="Comprar"
+                />
+              </button>
+            </div>
+            <div className="grid-content">
+              <button className="buy-button" data-toggle="tooltip" title="Añadir al carrito">
+                <img
+                  className="buy-symbol-image"
+                  onClick={() => onClickCart(card)}
+                  src={buyimage}
+                  alt="Añadir"
+                />
+              </button>
+            </div>
+          </>
+        )}
+       </>
     )}
   </React.Fragment>
 ))
