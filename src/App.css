@@ -397,7 +397,7 @@ img {
 body {
   max-width: 100%;
   overflow: auto !important;
-  overflow-x: hidden !important;
+  /* overflow-x: hidden !important; */
 }
 
 body {

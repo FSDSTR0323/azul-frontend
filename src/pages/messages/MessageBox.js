@@ -19,13 +19,13 @@ export const MessageBox = ({ selectedConversation }) => {
   useEffect(() => {
     fetchConversationData(selectedConversation)
     setMessagesToRead(selectedConversation)
-    // if (unreadConversations.includes(selectedConversation)) {
-    //   setUnreadCount(unreadCount - 1)
-    //   if (unreadConversations) {
-    //     const newUnreadConversations = unreadConversations.filter(conver => conver !== selectedConversation)
-    //     setUnreadConversations(newUnreadConversations)
-    //   }
-    // }
+    if (unreadConversations.includes(selectedConversation)) {
+      setUnreadCount(unreadCount - 1)
+      if (unreadConversations) {
+        const newUnreadConversations = unreadConversations.filter(conver => conver !== selectedConversation)
+        setUnreadConversations(newUnreadConversations)
+      }
+    }
   }, [userDataMessages, selectedConversation])
 
   const fetchConversationData = (selectedConversation) => {
