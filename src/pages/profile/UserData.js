@@ -91,7 +91,7 @@ export const UserData = ({ name }) => {
         console.log("form data es:", formData)
         
         try {
-            const modifiedDataRes = await axios.put('http://localhost:5000/profile/modify_details', formData, authorizationConfig.getHeaders())
+            const modifiedDataRes = await axios.put(`${process.env.REACT_APP_BASE_URL}/profile/modify_details`, formData, authorizationConfig.getHeaders())
             toast.success(`Has modificado los datos correctamente`, {
                 position: "top-right",
                 autoClose: 5000,
@@ -137,7 +137,7 @@ export const UserData = ({ name }) => {
     const onSubmitOldPsswd = async (oldPsswd) => {
         setPsswdError()
         try {
-            const res = await axios.put('http://localhost:5000/profile/check_psswd', oldPsswd, authorizationConfig.getHeaders())
+            const res = await axios.put(`${process.env.REACT_APP_BASE_URL}/profile/check_psswd`, oldPsswd, authorizationConfig.getHeaders())
             setIsPsswdCorrect(true)
             console.log(res)
         } catch (err) {
@@ -158,7 +158,7 @@ export const UserData = ({ name }) => {
         setPsswdError()
         console.log(newPsswd)
         try {
-            const res = await axios.put('http://localhost:5000/profile/modify_psswd', newPsswd, authorizationConfig.getHeaders())
+            const res = await axios.put(`${process.env.REACT_APP_BASE_URL}/profile/modify_psswd`, newPsswd, authorizationConfig.getHeaders())
             console.log(res)
             setIsPsswdCorrect(!isPsswdCorrect)
             setPsswdFormDisabled(!psswdFormDisabled)

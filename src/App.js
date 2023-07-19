@@ -10,12 +10,12 @@ import { MyUserContextProvider } from './contexts/UserContext'
 import { MyCardContextProvider } from './contexts/CardContext'; 
 import axios from 'axios';
 import { io } from 'socket.io-client'
-
 import "./App.css";
 import { CartShop } from './pages/cartshop';
 import { useEffect } from 'react';
 
-export const socket = io("http://localhost:5000")
+export const socket = io(`${process.env.REACT_APP_BASE_URL}`)
+
 
 function App() {
   

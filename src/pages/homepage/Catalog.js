@@ -8,7 +8,7 @@ export const Catalog = () => {
 
   const getRandomCards = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/cards/random', {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/cards/random`, {
             params: {
               count: 5
             }

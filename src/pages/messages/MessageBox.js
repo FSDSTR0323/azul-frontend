@@ -65,7 +65,6 @@ export const MessageBox = () => {
 
   const setMessagesAsRead = async (selectedConversation) => {
     console.log("Se accede a la función settMessageToRead y la info de la conver es", selectedConversation)
-    // await axios.put('http://localhost:5000/updateMessages', {conversation_id: selectedConversation.conversation?._id}, authorizationConfig.getHeaders())
     if (selectedConversation.current) {
       try {
         socket.emit('conversationRead', {conversation_id: selectedConversation.current, reader_id: userData?._id})
@@ -89,11 +88,8 @@ export const MessageBox = () => {
     let message = document.getElementById("messages-input")
     if (message.value !== "") {
       try {
-          // await axios.post('http://localhost:5000/sendmessage', {receiver: conversationData.user_id, message: message.value}, authorizationConfig.getHeaders())
           socket.emit("message", { sender_id : userData._id, receiver_id : conversationData.user_id, text : message.value})
           message.value = ""
-          // setUserDataChangeDummy(!userDataChangeDummy)
-          // setDummy(!dummy)
       } catch(error) {
           console.log("Error al enviar un mensaje", error)
       }
