@@ -11,6 +11,7 @@ import axios from 'axios';
 import { authorizationConfig } from '../../security';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { socket } from "../../App";
 
 const style = {
     position: 'absolute',
@@ -42,6 +43,7 @@ export default function MessageModal({ receiverUsername, receiverId }) {
     const handleSendMessage = async () => {
         try {
             const message = document.getElementById("text-area").value
+            
             await axios.post('http://localhost:5000/sendmessage', {receiver: receiverId, message}, authorizationConfig.getHeaders())
             handleClose()
             toast.success(`Mensaje enviado a ${receiverUsername}`, {

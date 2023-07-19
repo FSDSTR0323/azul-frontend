@@ -8,10 +8,9 @@ import { UserContext } from '../../contexts/UserContext';
 import Divider from '@mui/material/Divider'; 
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 
-export default function ConversationCard({ handleSelectConversation, conversation, position }) {
+export default function ConversationCard({ handleSelectConversation, conversation }) {
 
     const { userData, userMessages, unreadConversations, setUnreadConversations } = useContext(UserContext)
-    const [ otherUserData, setOtherUserData] = useState({})
     const [ lastMessage, setLastMessage] = useState({})
     const [ conversationData, setConversationData] = useState({})
 
@@ -47,9 +46,9 @@ export default function ConversationCard({ handleSelectConversation, conversatio
 
       setConversationData(conversationInfo)
 
-      if(position === 0) {
-        handleSelectConversation(conversation)
-      }
+      // if(position === 0) {
+      //   handleSelectConversation(conversation)
+      // }
 
     }, [userMessages, unreadConversations])
 
@@ -58,7 +57,10 @@ export default function ConversationCard({ handleSelectConversation, conversatio
 
     return (  
     <>   
-    <Card className="conversation-card-box" onClick={() => handleSelectConversation(conversation)}>
+    <Card className="conversation-card-box" onClick={() =>  { 
+      console.log("Se ejecuta la función de seleccionar una conver y el id de la seleccionada es", conversation.conversation._id) 
+      handleSelectConversation(conversation.conversation._id)
+      }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: "100%"}}>
         <CardContent className='card-content'>
             <div className='header-card-box'>

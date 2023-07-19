@@ -16,24 +16,7 @@ export const InboxMenu = () => {
   const navigate = useNavigate()
 
   const fetchData = () => {
-    if (userMessages) {
-      const unreadConversations = []
-      let isUnread = false
-      userMessages.forEach(conversation => {
-        isUnread = false
-        conversation.messages.forEach(m => {
-          if (m.sender !== userData?._id && m.read === false) {
-            console.log("se marca una conver como no leída")
-            isUnread = true
-          }
-        })
-        if (isUnread) {
-          unreadConversations.push(conversation)              
-          setUnreadCount(unreadConversations.length)
-        }
-      })
-      setUnreadConversations(unreadConversations)
-    }
+    
   }
 
   useEffect(() => {

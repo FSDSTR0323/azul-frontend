@@ -26,6 +26,7 @@ import { UserData } from "../profile/UserData";
 
 
 
+
 const CardsOnSell = ({ card }) => {
 
   const {userData, setUserData, setUserDataChangeDummy, userDataChangeDummy} = useContext(UserContext)
