@@ -16,6 +16,15 @@ import CardsOnSell from "./CardsOnSell";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import {MuiIdiomas} from "./estiladomenu/MuiIdiomas"
+import { Estado } from "./estiladomenu/estado";
+import{Box, MenuItem} from "@mui/material";
+import Button from '@mui/material/Button';
+import Stack from "@mui/material/Stack";
+import { Container } from "@mui/material";
+import {PujarIdiomas} from "./estiladomenu/pugjaridiomas";
+import {PujarEstado} from "./estiladomenu/pujarEstado";
+
 
 export default function SellMenu({ card }) {
   const [sellMessage, setSellMessage] = useState("");
@@ -36,7 +45,7 @@ export default function SellMenu({ card }) {
   const handleCloseBid = () => {
     setAnchorElBid(null);
   };
-
+  const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
   const navigate = useNavigate();
 
   const {
@@ -236,12 +245,20 @@ export default function SellMenu({ card }) {
           open={Boolean(anchorElSell)}
           onClose={handleCloseSell}
         >
-          <label>Foil:</label>
+          {/* <label>Foil:</label>
           <input
             type="checkbox"
             id="foil"
             {...sellRegister("foil", { required: false })}
+          /> */}
+          <Box component="span"  m="10px 10px" sx={{ p: 2, border: '1px dashed with'   }}>
+          <label className="Foil">Foil:</label>
+          <Checkbox
+            {...label}
+            id='foil'
+            {...sellRegister("foil", { required: false })}
           />
+          </Box>
           <br />
           <select
             id="set_name"
@@ -254,7 +271,8 @@ export default function SellMenu({ card }) {
             ))}
           </select>
           <br />
-          <label>Idioma de la carta: </label>
+          <MuiIdiomas id='lang' sellRegister={sellRegister} />
+          {/* <label>Idioma de la carta: </label>
           <select id="lang" {...sellRegister("lang", { required: true })}>
             <option value="es">Español</option>
             <option value="en">Inglés</option>
@@ -264,10 +282,11 @@ export default function SellMenu({ card }) {
             <option value="zh">Chino</option>
             <option value="ja">Japonés</option>
             <option value="pt">Portugués</option>
-          </select>
+          </select> */}
 
           <br />
-          <label>Estado: </label>
+          <Estado id='status' sellRegister={sellRegister}/>
+          {/* <label>Estado: </label>
           <select id="status" {...sellRegister("status", { required: true })}>
             <option value="new">Nueva</option>
             <option value="almost_new">Casi Nueva</option>
@@ -276,19 +295,40 @@ export default function SellMenu({ card }) {
             <option value="lightly_played">Ligeramente Jugada</option>
             <option value="played">Jugada</option>
             <option value="poor">Pobre</option>
-          </select>
+          </select> */}
 
           <br />
-          <label>Precio: </label>
-          <input
-            type="text"
-            id="price"
+          <TextField
+            id='outlined-basic'
+            label='precio'
+            variant='outlined'
+            type='number'
+            min='0'
+            max='1000000'
+            step='0.01'
+            required
             {...sellRegister("price", { required: true })}
           />
+        
           <br />
-          <input type="file" multiple onChange={(file) => handleFileUpload(file)} />
-          <button id="sellcard" type="submit" disabled={!sellFormState.isValid}>
-            Poner en Venta
+          <Container maxWidth='md' sx={{ mt: 3}}>
+            <Stack direction='row' alignItems='center' spacing={2}>
+              <input
+                id='image-upload'
+                type='file'
+                multiple
+                onChange={(file) => handleFileUpload(file)}
+              />
+             
+            </Stack>
+          </Container>
+          <button id='sellcard' type='submit' disabled={!sellFormState.isValid}>
+            Poner en Venta{" "}
+            <img
+              className='card-detail-symbol-image'
+              src={sellimage}
+              alt='Vender'
+            />
           </button>
           {sellMessage && <p>{sellMessage}</p>}
         </Menu>
@@ -322,7 +362,8 @@ export default function SellMenu({ card }) {
             ))}
           </select>
           <br />
-          <label>Idioma de la carta: </label>
+          <PujarIdiomas id='lang' bidRegister={bidRegister} />
+          {/* <label>Idioma de la carta: </label>
           <select id="lang" {...bidRegister("lang", { required: true })}>
             <option value="es">Español</option>
             <option value="en">Inglés</option>
@@ -332,10 +373,11 @@ export default function SellMenu({ card }) {
             <option value="zh">Chino</option>
             <option value="ja">Japonés</option>
             <option value="pt">Portugués</option>
-          </select>
+          </select> */}
 
           <br />
-          <label>Estado: </label>
+          <PujarEstado id='lang' bidRegister={bidRegister} />
+          {/* <label>Estado: </label>
           <select id="status" {...bidRegister("status", { required: true })}>
             <option value="new">Nueva</option>
             <option value="almost_new">Casi Nueva</option>
@@ -344,16 +386,22 @@ export default function SellMenu({ card }) {
             <option value="lightly_played">Ligeramente Jugada</option>
             <option value="played">Jugada</option>
             <option value="poor">Pobre</option>
-          </select>
+          </select> */}
 
-          <br />
-          <label>Precio inicial: </label>
-          <input
-            type="text"
-            id="price"
-            {...bidRegister("price", { required: true })}
-          />
-          <br />
+<br />
+         
+         <TextField
+           id='outlined-basic'
+           label='precio'
+           variant='outlined'
+           type='number'
+           min='0'
+           max='1000000'
+           step='0.01'
+           required
+           {...bidRegister("price", { required: true })}
+         />
+         <br />
           <Controller
             name="end_of_bid"
             control={bidControl}
@@ -376,8 +424,14 @@ export default function SellMenu({ card }) {
           <br />
           <input type="file" multiple onChange={(file) => handleFileUpload(file)} />
 
-          <button id="bidcard" type="submit" disabled={!bidFormState.isValid}>
-            Poner en Subasta
+         
+          <button id='bidcard' type='submit' disabled={!bidFormState.isValid}>
+          Subastar{" "}
+            <img
+              className='card-detail-symbol-image'
+              src={bidimage}
+              alt='Subastar'
+            />
           </button>
           {bidMessage && <p>{bidMessage}</p>}
         </Menu>

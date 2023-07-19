@@ -7,11 +7,13 @@ import Typography from '@mui/material/Typography';
 import { UserContext } from '../../contexts/UserContext';
 import Divider from '@mui/material/Divider'; 
 import AnnouncementIcon from '@mui/icons-material/Announcement';
+import Badge from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
 
-export default function ConversationCard({ handleSelectConversation, conversation, position }) {
+export default function ConversationCard({ handleSelectConversation, conversation }) {
 
     const { userData, userMessages, unreadConversations, setUnreadConversations } = useContext(UserContext)
-    const [ otherUserData, setOtherUserData] = useState({})
     const [ lastMessage, setLastMessage] = useState({})
     const [ conversationData, setConversationData] = useState({})
 
@@ -41,24 +43,35 @@ export default function ConversationCard({ handleSelectConversation, conversatio
       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
       const dayAndMonth = date.getDate() + " " + months[date.getMonth()].slice(0,3)
       setLastMessage({
-        text: conversation.messages[conversation.messages.length - 1].message,
+        text: conversation.messages[0].message,
         date: dayAndMonth,
       })
 
       setConversationData(conversationInfo)
 
-      if(position === 0) {
-        handleSelectConversation(conversation)
-      }
+      // if(position === 0) {
+      //   handleSelectConversation(conversation)
+      // }
 
     }, [userMessages, unreadConversations])
 
-
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+      '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+        backgroundColor: "#ff2d55"
+      },
+    }));
 
 
     return (  
     <>   
-    <Card className="conversation-card-box" onClick={() => handleSelectConversation(conversation)}>
+    <Card className="conversation-card-box" onClick={() =>  { 
+      console.log("Se ejecuta la función de seleccionar una conver y el id de la seleccionada es", conversation.conversation._id) 
+      handleSelectConversation(conversation.conversation._id)
+      }}>
       <Box sx={{ display: 'flex', flexDirection: 'column', width: "100%"}}>
         <CardContent className='card-content'>
             <div className='header-card-box'>
@@ -68,9 +81,11 @@ export default function ConversationCard({ handleSelectConversation, conversatio
                     {conversationData.username}
                 </Typography>
               </div>
-              <Typography component="div" variant="h8">
+              <Typography className="alertDate-card-box" component="div" variant="h8">
                   {unreadConversations.includes(conversation) && 
-                  <AnnouncementIcon />
+                  <div className='message-alert'>
+                    <AnnouncementIcon sx={{ color: 'white' }} />
+                  </div>
                   }
                   {lastMessage.date}
               </Typography>

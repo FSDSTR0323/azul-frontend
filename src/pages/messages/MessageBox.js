@@ -9,28 +9,39 @@ import { UserContext } from '../../contexts/UserContext';
 import axios from 'axios';
 import { authorizationConfig } from '../../security';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import { socket } from '../../App';
 
-export const MessageBox = ({ selectedConversation }) => {
+export const MessageBox = () => {
 
-  const { userData, userDataMessages, unreadConversations, setUnreadConversations, setUnreadCount, unreadCount, userDataChangeDummy, setUserDataChangeDummy } = useContext(UserContext)
-  const [dummy, setDummy] = useState(true)
+  const { userData, userMessages, unreadConversations, setUnreadConversations, setUnreadCount, unreadCount, selectedConversation, setUserMessagesDataDummy, userMessagesDataDummy } = useContext(UserContext)
   const [ conversationData, setConversationData] = useState({})
 
   useEffect(() => {
-    fetchConversationData(selectedConversation)
-    setMessagesToRead(selectedConversation)
-    if (unreadConversations.includes(selectedConversation)) {
-      setUnreadCount(unreadCount - 1)
-      if (unreadConversations) {
-        const newUnreadConversations = unreadConversations.filter(conver => conver !== selectedConversation)
+    if (userMessages) {
+      const conversationData = userMessages.find(conver => {
+        return conver.conversation._id === selectedConversation.current
+      })
+      fetchConversationData(conversationData)
+    }
+
+    
+
+    if (unreadConversations) {
+      const conversationRead = unreadConversations.find(conver => conver.conversation._id === selectedConversation.current)
+      if(conversationRead){
+        setMessagesAsRead(selectedConversation)
+        console.log("se accede al if que elimina la conver del unread")
+        setUnreadCount(unreadCount - 1)
+        const newUnreadConversations = unreadConversations.filter(conver => conver.conversation._id === selectedConversation)
         setUnreadConversations(newUnreadConversations)
       }
     }
-  }, [userDataMessages, selectedConversation])
+  }, [userMessagesDataDummy, userMessages, unreadConversations])
 
   const fetchConversationData = (selectedConversation) => {
     
-    if(Object.keys(selectedConversation).length !== 0) {
+    // if(Object.keys(selectedConversation).length !== 0) {
+      if(selectedConversation) {
       const conversationInfo = {
         avatar_image: "",
         username: "",
@@ -48,13 +59,20 @@ export const MessageBox = ({ selectedConversation }) => {
       }
   
       conversationInfo.messages = selectedConversation.messages
-
       setConversationData(conversationInfo)
     }
   }
 
-  const setMessagesToRead = async (selectedConversation) => {
-    await axios.put('http://localhost:5000/updateMessages', {conversation_id: selectedConversation.conversation?._id}, authorizationConfig.getHeaders())
+  const setMessagesAsRead = async (selectedConversation) => {
+    console.log("Se accede a la función settMessageToRead y la info de la conver es", selectedConversation)
+    // await axios.put('http://localhost:5000/updateMessages', {conversation_id: selectedConversation.conversation?._id}, authorizationConfig.getHeaders())
+    if (selectedConversation.current) {
+      try {
+        socket.emit('conversationRead', {conversation_id: selectedConversation.current, reader_id: userData?._id})
+      } catch (err) {
+        console.log("error al actualizar los mensajes leídos", err)
+      }
+    }
   }
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -71,10 +89,11 @@ export const MessageBox = ({ selectedConversation }) => {
     let message = document.getElementById("messages-input")
     if (message.value !== "") {
       try {
-          await axios.post('http://localhost:5000/sendmessage', {receiver: conversationData.user_id, message: message.value}, authorizationConfig.getHeaders())
+          // await axios.post('http://localhost:5000/sendmessage', {receiver: conversationData.user_id, message: message.value}, authorizationConfig.getHeaders())
+          socket.emit("message", { sender_id : userData._id, receiver_id : conversationData.user_id, text : message.value})
           message.value = ""
-          setUserDataChangeDummy(!userDataChangeDummy)
-          setDummy(!dummy)
+          // setUserDataChangeDummy(!userDataChangeDummy)
+          // setDummy(!dummy)
       } catch(error) {
           console.log("Error al enviar un mensaje", error)
       }

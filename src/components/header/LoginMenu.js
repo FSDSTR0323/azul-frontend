@@ -109,18 +109,20 @@ export default function BasicMenu() {
               'aria-labelledby': 'basic-button',
             }}
           >
-            <a href="/profile">Mi perfil</a>
-            <Divider variant="middle" />
-            <div className='login-form-box'>
-              <Link to={'/'} style={{ textDecoration:"none" }}>
-                <button 
-                  className="secondary-button"
-                  id="login-form-box-button"
-                  onClick={handleLogOut}
-                >
-                  Log out
-                </button>
-              </Link>
+            <div className='logged-user-menu'>
+              <a href="/profile" className='profile-anchor'>Mi perfil</a>
+              <Divider variant="middle" />
+              <div className='login-form-box'>
+                <Link to={'/'} style={{ textDecoration:"none" }}>
+                  <button 
+                    className="secondary-button"
+                    id="logged-form-box-button"
+                    onClick={handleLogOut}
+                    >
+                    Log out
+                  </button>
+                </Link>
+              </div>    
             </div>
           </Menu>
         </>

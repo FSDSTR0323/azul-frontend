@@ -10,8 +10,9 @@ import { useEffect } from "react";
 
 export const Messages = () => {
 
-    const { userData } = useContext(UserContext)
-    const [ selectedConversation, setSelectedConversation ] = useState({})
+    const { userData, userMessages } = useContext(UserContext)
+
+    
 
     useEffect(() => {
 
@@ -21,8 +22,8 @@ export const Messages = () => {
         <PrivatePageValidator>
             <Header />
             <main className="inbox-wrapper">
-                <ConversationsBox setSelectedConversation={setSelectedConversation}/>
-                <MessageBox selectedConversation={selectedConversation}/>
+                <ConversationsBox />
+                <MessageBox />
             </main>
             <Footer />
         </PrivatePageValidator>
