@@ -5,16 +5,12 @@ import { useEffect } from 'react';
 
 export const ConversationsBox = () => {
 
-    const { userMessages, unreadCount, setUnreadCount, unreadConversations, userDataChangeDummy, setUserDataChangeDummy, selectedConversation, userMessagesDataDummy, setUserMessagesDataDummy } = useContext(UserContext)
+    const { userMessages, selectedConversation, userMessagesDataDummy, setUserMessagesDataDummy } = useContext(UserContext)
     
     useEffect(() => {
     }, [userMessages])
 
     const handleSelectConversation = (conversationIdToShow) => {
-        // const conversationData = userMessages.find(conver => {
-        //     return conver.conversation._id === conversationIdToShow
-        // })
-        // selectedConversation.current = conversationData
         selectedConversation.current = conversationIdToShow
         setUserMessagesDataDummy(!userMessagesDataDummy)
     }
