@@ -335,6 +335,7 @@ const CardsOnSell = ({ card }) => {
           </button>
         </div>
         <div className="grid-content">
+      
           {card.image && card.image.map((imgSrc, index)=>{ 
            console.log('CardsOnSell.js | 303', imgSrc); 
               return <img style={{marginRight:20}} width={20} height={20} key={index} src={imgSrc}/>
