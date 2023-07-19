@@ -33,7 +33,7 @@ const CardsOnSell = ({ card }) => {
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
 
-  const { control: BidControl, register: BidRegister, getValues, handleSubmit: BidHandleSubmit, formState: BidFormState } = useForm();
+  const { control: BidControl, register: BidRegister, handleSubmit: BidHandleSubmit, formState: BidFormState } = useForm();
 
 
   const [cardsOnSell, setCardsOnSell] = useState([]);
@@ -341,12 +341,16 @@ const CardsOnSell = ({ card }) => {
                       open={Boolean(anchorElBid)}
                       onClose={handleCloseBid}
                     >
+                      {console.log("cardpriceeeeeeeeeeee:", card.price)}
                       <input
                           type="number"
                           id="price"
                           {...BidRegister("price", { 
                             required: true,
-                            validate: value => value > (card.price) })}
+                            min: card.price
+                           //validate: value => value > (card.price) 
+                          }
+                            )}
                         />
                       <br></br>
                       <div className="grid-content">Pujas realizadas: {getBidsAmount(card)}</div>

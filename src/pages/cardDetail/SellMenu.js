@@ -170,7 +170,7 @@ export default function SellMenu({ card }) {
         price: formData.price,
         end_of_bid: formData.end_of_bid,
         user: userDataRes.data.userData._id,
-        image: imageUrl
+        image: imageUrls
       };
       await axios.post(
         "http://localhost:5000/cards/sellcard",
