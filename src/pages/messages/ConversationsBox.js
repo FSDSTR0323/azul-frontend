@@ -3,15 +3,20 @@ import { UserContext } from '../../contexts/UserContext';
 import ConversationCard from './ConversationCard';
 import { useEffect } from 'react';
 
-export const ConversationsBox = ({ setSelectedConversation }) => {
+export const ConversationsBox = () => {
 
-    const { userMessages, unreadCount, setUnreadCount, unreadConversations, userDataChangeDummy, setUserDataChangeDummy } = useContext(UserContext)
+    const { userMessages, unreadCount, setUnreadCount, unreadConversations, userDataChangeDummy, setUserDataChangeDummy, selectedConversation, userMessagesDataDummy, setUserMessagesDataDummy } = useContext(UserContext)
     
     useEffect(() => {
     }, [userMessages])
 
-    const handleSelectConversation = (conversationToShow) => {
-        setSelectedConversation(conversationToShow)
+    const handleSelectConversation = (conversationIdToShow) => {
+        // const conversationData = userMessages.find(conver => {
+        //     return conver.conversation._id === conversationIdToShow
+        // })
+        // selectedConversation.current = conversationData
+        selectedConversation.current = conversationIdToShow
+        setUserMessagesDataDummy(!userMessagesDataDummy)
     }
 
     return (
@@ -22,7 +27,7 @@ export const ConversationsBox = ({ setSelectedConversation }) => {
             {userMessages &&
                 userMessages.map((conversation, index) => {
                     return (
-                        <ConversationCard key={conversation.conversation._id} handleSelectConversation={handleSelectConversation} conversation={conversation} position={index}/>
+                        <ConversationCard key={conversation.conversation._id} handleSelectConversation={handleSelectConversation} conversation={conversation} />
                     )
                 })
             }

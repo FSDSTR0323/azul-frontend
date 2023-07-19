@@ -24,6 +24,7 @@ import CardImagesModal from "./CardImagesModal";
 
 
 
+
 const CardsOnSell = ({ card }) => {
 
   const {setUserDataChangeDummy, userDataChangeDummy} = useContext(UserContext)
