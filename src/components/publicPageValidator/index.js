@@ -13,7 +13,7 @@ export const PublicPageValidator = ({ children }) => {
         if (window.localStorage.getItem("token")) {
             (async() => {
                 try{
-                userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+                userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
                 setUserData(userDataRes.data.userData)
                 // setUserMessages(userDataRes.data.userMessagesData)
                 setUserAvatar(userDataRes.data.userData.avatar_image)

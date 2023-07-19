@@ -44,7 +44,7 @@ export default function MessageModal({ receiverUsername, receiverId }) {
         try {
             const message = document.getElementById("text-area").value
             
-            await axios.post('http://localhost:5000/sendmessage', {receiver: receiverId, message}, authorizationConfig.getHeaders())
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/sendmessage`, {receiver: receiverId, message}, authorizationConfig.getHeaders())
             handleClose()
             toast.success(`Mensaje enviado a ${receiverUsername}`, {
                 position: "top-right",

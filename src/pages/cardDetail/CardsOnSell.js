@@ -49,7 +49,7 @@ const CardsOnSell = ({ card }) => {
     const fetchCardsOnSell = async () => {
 
       try {
-        const response = await axios.get(`http://localhost:5000/cards/searchSelled/?name=${card}`);
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/cards/searchSelled/?name=${card}`);
         setCardsOnSell(response.data);
         console.log("Las cartas a la venta son", response.data)
 
@@ -132,14 +132,14 @@ const CardsOnSell = ({ card }) => {
 
   const onClickBuy = async (card) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickbuy')
       let cardBuyedData = {
         _id: card._id,
         buyer: userDataRes.data.userData._id,
       };
       console.log('cardBuyedData es:', cardBuyedData)
-      await axios.post("http://localhost:5000/cards/buycard", cardBuyedData, authorizationConfig.getHeaders())
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/cards/buycard`, cardBuyedData, authorizationConfig.getHeaders())
       
         console.log('Carta comprada:', cardBuyedData)
         setKeyUpdate(keyUpdate + 1); 
@@ -163,13 +163,13 @@ const CardsOnSell = ({ card }) => {
   const onClickCart = async (card) => {
     try {
       console.log("llamamos al token!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", authorizationConfig.getHeaders())
-      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickcart')
       let cardOnCartData = {
         _id: card._id,
         onCart: userDataRes.data.userData._id,
       };
-      await axios.post("http://localhost:5000/cards/oncartcard", cardOnCartData, authorizationConfig.getHeaders())
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/cards/oncartcard`, cardOnCartData, authorizationConfig.getHeaders())
       setKeyUpdate(keyUpdate + 1); 
       setUserDataChangeDummy(!userDataChangeDummy)
     } catch (error){
@@ -190,13 +190,13 @@ const CardsOnSell = ({ card }) => {
 
   const onClickDel = async (card) => {
     try {
-      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
       console.log('estoy en el try de onclickDEL')
       let cardDelData = {
         _id: card._id,
       };
       console.log('cardDelData es:', cardDelData)
-      await axios.post("http://localhost:5000/cards/delcard", cardDelData, authorizationConfig.getHeaders())
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/cards/delcard`, cardDelData, authorizationConfig.getHeaders())
       
         console.log('Carta eliminada:', cardDelData)
         setKeyUpdate(keyUpdate + 1); 
@@ -223,14 +223,14 @@ const CardsOnSell = ({ card }) => {
 
   const BidOnSubmit = async (formData) => {
     try{
-      const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+      const userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
       let cardToBidData = {
         id_card: idCard,
         user: userDataRes.data.userData._id,
         price: formData.price,
       }
       console.log("id_card es:", cardToBidData.id_card)
-      await axios.post('http://localhost:5000/cards/bidupcard', cardToBidData, authorizationConfig.getHeaders());
+      await axios.post(`${process.env.REACT_APP_BASE_URL}/cards/bidupcard`, cardToBidData, authorizationConfig.getHeaders());
       setKeyUpdate(!keyUpdate)
 
     }catch(error){}
