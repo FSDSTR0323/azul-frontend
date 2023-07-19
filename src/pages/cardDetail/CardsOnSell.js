@@ -32,7 +32,7 @@ const CardsOnSell = ({ card }) => {
   const navigate = useNavigate()
   const [keyUpdate, setKeyUpdate] = useState(0);
 
-  const { control: BidControl, register: BidRegister, handleSubmit: BidHandleSubmit, formState: BidFormState } = useForm();
+  const { control: BidControl, register: BidRegister, getValues, handleSubmit: BidHandleSubmit, formState: BidFormState } = useForm();
 
 
   const [cardsOnSell, setCardsOnSell] = useState([]);
@@ -221,7 +221,6 @@ const CardsOnSell = ({ card }) => {
     };
 
   const BidOnSubmit = async (formData) => {
-    console.log("BidsCard es",BidsCard)
     try{
       const userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
       let cardToBidData = {
@@ -238,7 +237,7 @@ const CardsOnSell = ({ card }) => {
 
   const getBidsAmount = (card) => {
       const amount = card.bids.length;
-      console.log ("Amount es:", amount)
+      //console.log ("Amount es:", amount)
       return amount
   }
 
@@ -307,7 +306,7 @@ const CardsOnSell = ({ card }) => {
     {card.user.username === userData.username ? (
       
       <div className="grid-content-colspan" >
-            <button className="buy-button" title="Pujar">
+            <button className="buy-button" title="Eliminar">
                 <img
                   className="buy-symbol-image"
                   onClick={() => onClickDel(card)}
@@ -344,7 +343,9 @@ const CardsOnSell = ({ card }) => {
                       <input
                           type="number"
                           id="price"
-                          {...BidRegister("price", { required: true })}
+                          {...BidRegister("price", { 
+                            required: true,
+                            validate: value => value > (card.price) })}
                         />
                       <br></br>
                       <div className="grid-content">Pujas realizadas: {getBidsAmount(card)}</div>
