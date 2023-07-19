@@ -38,6 +38,56 @@
 } */
 
 /* Estilo tabla CardsOnSell */
+#clases{  margin-right: 20px;}
+  #image-uploads {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #fe9e0d;
+    padding: 10px;
+    margin-bottom: 10px; 
+    border-radius: 5px;
+    
+  }
+  
+#image-upload {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #fe9e0d;
+  padding: 10px;
+  margin-bottom: 10px; 
+  border-radius: 5px;
+  
+}
+#image-upload:hover {
+  border: 1px solid #1976d2;
+}
+
+#sellcard {
+  padding: 0.5rem 0.9rem;
+  background-color: #fe9e0d;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-inline: 10px;
+  
+  
+}
+
+
+#bidcard {
+  padding: 0.5rem 0.9rem;
+  background-color: #fe9e0d;
+  border: none;
+  border-radius: 1rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-inline: 10px;
+  
+  
+}
 
 .card-images-modal {
   display: flex;
