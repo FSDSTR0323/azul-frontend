@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'
 import { Filter } from './filter'
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
 import { CardOnSell } from "./CardOnSell";
 
-
-
-
-
-
-
 const CardsOnSell = ({ card }) => {
 
+  
   const [keyUpdate, setKeyUpdate] = useState(0);
 
   const [cardsOnSell, setCardsOnSell] = useState([]);
@@ -122,7 +116,7 @@ const CardsOnSell = ({ card }) => {
 
   
           {filteredCardsOnSell.map((card) => (
-            <CardOnSell card={card} setKeyUpdate={setKeyUpdate} keyUpdate={keyUpdate} />
+            <CardOnSell key={card._id} card={card} setKeyUpdate={setKeyUpdate} keyUpdate={keyUpdate} />
             ))
           }
         </div>
