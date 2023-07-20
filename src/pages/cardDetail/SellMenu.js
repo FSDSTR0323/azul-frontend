@@ -127,6 +127,7 @@ export default function SellMenu({ card }) {
         cardSelledData,
         authorizationConfig.getHeaders()
       );
+      handleCloseSell()
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log("Carta puesta a la venta:", cardSelledData);
@@ -177,6 +178,7 @@ export default function SellMenu({ card }) {
         cardSelledData,
         authorizationConfig.getHeaders()
       );
+      handleCloseBid()
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log("Carta puesta en subasta:", cardSelledData);
