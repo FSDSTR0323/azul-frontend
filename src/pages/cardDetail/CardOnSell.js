@@ -216,7 +216,7 @@ export const CardOnSell = ({card, setKeyUpdate, keyUpdate}) => {
                 <div className="grid-content">{card.user.username}</div>
                 <MessageModal receiverUsername={card.user.username} receiverId={card.user._id}/>
             </div>
-            {card.user.username === userData.username ? (
+            {card.user.username === userData?.username ? (
                 <div className="grid-content-colspan" >
                         <button className="buy-button" title="Eliminar">
                             <img
