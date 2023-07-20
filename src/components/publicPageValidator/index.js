@@ -15,7 +15,6 @@ export const PublicPageValidator = ({ children }) => {
                 try{
                 userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
                 setUserData(userDataRes.data.userData)
-                // setUserMessages(userDataRes.data.userMessagesData)
                 setUserAvatar(userDataRes.data.userData.avatar_image)
                 
                 socket.connect()

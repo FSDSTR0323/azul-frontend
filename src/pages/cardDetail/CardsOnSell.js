@@ -25,8 +25,8 @@ const CardsOnSell = ({ card }) => {
 
       try {
         const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/cards/searchSelled/?name=${card}`);
-        setCardsOnSell(response.data);
         console.log("Las cartas a la venta son", response.data)
+        setCardsOnSell(response.data);
 
       } catch (error) {
         console.error('Error al obtener las cartas en venta:', error);
@@ -39,13 +39,8 @@ const CardsOnSell = ({ card }) => {
   useEffect(() => {
 
     let filteredCards = cardsOnSell
-
-    console.log("variable de cartas a filtrar", filteredCards)
-
-    console.log("los filtros son", filters)
         
     if(filters.collection.length === 1 && filters.collection[0] === "Todas") {
-      console.log("Se deben mostrar todas las cartas")
     } else if (filters.collection !== undefined) {
       console.log("Las colecciones a filtrar son", filters.collection)
       filteredCards = filteredCards.filter(card => {
@@ -54,7 +49,6 @@ const CardsOnSell = ({ card }) => {
     }
 
     if(filters.language.length === 1 && filters.language[0] === "Todos") {
-      console.log("Se deben mostrar todas las cartas")
     } else if (filters.language !== undefined) {
       console.log("Las colecciones a filtrar son", filters.language)
       filteredCards = filteredCards.filter(card => {
@@ -115,9 +109,11 @@ const CardsOnSell = ({ card }) => {
           {/* <div className="grid-header">Pujar</div> */}
 
   
-          {filteredCardsOnSell.map((card) => (
+          {filteredCardsOnSell.map((card) => {
+            console.log("CARTAA", card)
+            return (
             <CardOnSell key={card._id} card={card} setKeyUpdate={setKeyUpdate} keyUpdate={keyUpdate} />
-            ))
+            )})
           }
         </div>
       </div>

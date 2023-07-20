@@ -200,7 +200,6 @@ export default function SellMenu({ card }) {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/cards/cardcollections?name=${card.name}`
         );
-        console.log("response es: ", response.data);
         setSetNameOptions(response.data);
       } catch (error) {
         console.error(
