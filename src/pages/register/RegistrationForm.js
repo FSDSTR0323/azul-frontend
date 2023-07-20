@@ -19,7 +19,7 @@ export const RegistrationForm = () => {
     const onSubmit = async (formData) =>  {
         setError(false);
         try {
-            const res = await axios.post('http://localhost:5000/register', formData)
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/register`, formData)
             window.localStorage.setItem('token', res.data.token)
             toast.success(`Te has registrado correctamente. ¡Bienvenido a FreakyWorld!`, {
                 position: "top-right",

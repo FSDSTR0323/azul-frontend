@@ -13,9 +13,8 @@ export const PublicPageValidator = ({ children }) => {
         if (window.localStorage.getItem("token")) {
             (async() => {
                 try{
-                userDataRes = await axios.get("http://localhost:5000/getUserData", authorizationConfig.getHeaders())
+                userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders())
                 setUserData(userDataRes.data.userData)
-                // setUserMessages(userDataRes.data.userMessagesData)
                 setUserAvatar(userDataRes.data.userData.avatar_image)
                 
                 socket.connect()
@@ -23,9 +22,9 @@ export const PublicPageValidator = ({ children }) => {
                 socket.on(`inbox_${userDataRes.data.userData._id}`, (res) => {
                     console.log("Los mensajes recibidos son", res)
                     setUserMessages(res.userMessagesData)
-                    if (Object.keys(selectedConversation.current).length === 0) {
+                    if (!selectedConversation.current) {
                         console.log("Se selecciona la primera conversación")
-                        selectedConversation.current = res.userMessagesData[0].conversation._id
+                        selectedConversation.current = res.userMessagesData[0]?.conversation._id
                     }
                     
                     const unreadConversations = []

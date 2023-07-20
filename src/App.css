@@ -142,6 +142,13 @@
   justify-items: center;
 }
 
+.card-grid-home {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  justify-items: center;
+}
+
 .conversations-section{
   width: 25vw;
   max-width: 25vw;
@@ -950,6 +957,7 @@ background-color: #6a6a6a;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  max-width: 600px
 }
 .primary-heading {
   font-size: clamp(2rem, 5vw, 4rem);
@@ -962,6 +970,15 @@ background-color: #6a6a6a;
   max-width: 500px;
   color: #6a6a6a;
   margin: 1.5rem 0rem;
+}
+.small-text {
+  font-size: clamp(1rem, 3vw, 1rem);
+  max-width: 500px;
+  color: #6a6a6a;
+  margin: 1.5rem 0rem;
+}
+.force-flex{
+  display: flex;
 }
 .secondary-button {
   padding: 1rem 2.5rem;

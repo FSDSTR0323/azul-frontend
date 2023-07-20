@@ -52,7 +52,7 @@ const CartMenu = () => {
 
   const handleDeleteCard = async (card_id) => {
     try {
-      await axios.put('http://localhost:5000/cards/deleteCardFromCart', {_id: card_id}, authorizationConfig.getHeaders())
+      await axios.put(`${process.env.REACT_APP_BASE_URL}/cards/deleteCardFromCart`, {_id: card_id}, authorizationConfig.getHeaders())
       setUserDataChangeDummy(!userDataChangeDummy)
       if (userData.on_cart.length === 1) {
         handleClose()
@@ -65,7 +65,7 @@ const CartMenu = () => {
 
   const handleBuyCards = async () => {
     try {
-      await axios.put('http://localhost:5000/cards/buyCardsOnCart', {}, authorizationConfig.getHeaders())
+      await axios.put(`${process.env.REACT_APP_BASE_URL}/cards/buyCardsOnCart`, {}, authorizationConfig.getHeaders())
       setUserDataChangeDummy(!userDataChangeDummy)
       handleClose()
     } catch(err) {

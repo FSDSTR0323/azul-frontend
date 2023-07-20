@@ -21,10 +21,9 @@ export const CardBox = () => {
     console.log(cardId)
 
     // Realizamos una solicitud al backend para obtener los detalles de la carta
-    fetch(`http://localhost:5000/cards/${cardId}`)
+    fetch(`${process.env.REACT_APP_BASE_URL}/cards/${cardId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Est ala info de la carta: ", data)
         setCard(data.selectedCardBack); // carta actual
         setAllCards(data.sameCardsBack) // todas las cartas con ese nombre
       })

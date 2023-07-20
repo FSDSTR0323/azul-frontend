@@ -17,7 +17,7 @@ export default function LoginForm({ handleClose, userData, setUserData, isLogged
     
     const onSubmit = async (formData) =>  {
         try {
-            const res = await axios.post('http://localhost:5000/login', formData)
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, formData)
             window.localStorage.setItem('token', res.data.token)
             setIsLoggedDummy(!isLoggedDummy)
             if(handleClose) {

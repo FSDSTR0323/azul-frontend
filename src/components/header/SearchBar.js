@@ -93,7 +93,7 @@ export default function SearchBar() {
       (async () => {
         try {
           setMatchedCards([])
-          const allMatchedCards = await axios.get(`http://localhost:5000/cards/search?name=${nameInput}`)
+          const allMatchedCards = await axios.get(`${process.env.REACT_APP_BASE_URL}/cards/search?name=${nameInput}`)
 
           //Se seleccionan X número de cartas y posteriormente se filtran para que no haya cartas repetidas
           const firstXCards = allMatchedCards.data.slice(0, 30) //Se seleccionan las primeras X cartas que coinciden con el resultado

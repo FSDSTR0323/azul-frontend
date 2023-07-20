@@ -105,7 +105,7 @@ export default function SellMenu({ card }) {
     console.log('SellMenu.js 119 | sending sell info to backend');
     try {
       const userDataRes = await axios.get(
-        "http://localhost:5000/getUserData",
+        `${process.env.REACT_APP_BASE_URL}/getUserData`,
         authorizationConfig.getHeaders()
       );
       let cardSelledData = {
@@ -123,10 +123,11 @@ export default function SellMenu({ card }) {
       };
       console.log('SellMenu.js 138 | sending card data', cardSelledData);
       await axios.post(
-        "http://localhost:5000/cards/sellcard",
+        `${process.env.REACT_APP_BASE_URL}/cards/sellcard`,
         cardSelledData,
         authorizationConfig.getHeaders()
       );
+      handleCloseSell()
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log("Carta puesta a la venta:", cardSelledData);
@@ -155,7 +156,7 @@ export default function SellMenu({ card }) {
   const bidOnSubmit = async (formData) => {
     try {
       const userDataRes = await axios.get(
-        "http://localhost:5000/getUserData",
+        `${process.env.REACT_APP_BASE_URL}/getUserData`,
         authorizationConfig.getHeaders()
       );
       let cardSelledData = {
@@ -173,10 +174,11 @@ export default function SellMenu({ card }) {
         image: imageUrls
       };
       await axios.post(
-        "http://localhost:5000/cards/sellcard",
+        `${process.env.REACT_APP_BASE_URL}/cards/sellcard`,
         cardSelledData,
         authorizationConfig.getHeaders()
       );
+      handleCloseBid()
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log("Carta puesta en subasta:", cardSelledData);
@@ -198,9 +200,8 @@ export default function SellMenu({ card }) {
     const fetchSetNameOptions = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/cards/cardcollections?name=${card.name}`
+          `${process.env.REACT_APP_BASE_URL}/cards/cardcollections?name=${card.name}`
         );
-        console.log("response es: ", response.data);
         setSetNameOptions(response.data);
       } catch (error) {
         console.error(

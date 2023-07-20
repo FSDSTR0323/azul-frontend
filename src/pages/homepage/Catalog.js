@@ -3,12 +3,12 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 
 
-export const Catalog = () => {
+export const Catalog = ({renderCatalog}) => {
   const [cards, setCards] = useState([]);
 
   const getRandomCards = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/cards/random', {
+        const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/cards/random`, {
             params: {
               count: 5
             }
@@ -21,7 +21,7 @@ export const Catalog = () => {
 
   useEffect(() => {
     getRandomCards();
-  }, []);
+  }, [renderCatalog]);
 
   return (
     <div className="randomcard-section-wrapper">

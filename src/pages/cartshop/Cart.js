@@ -8,7 +8,7 @@ export const Cart = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userDataRes = await axios.get('http://localhost:5000/getUserData', authorizationConfig.getHeaders());
+        const userDataRes = await axios.get(`${process.env.REACT_APP_BASE_URL}/getUserData`, authorizationConfig.getHeaders());
         const cardsOnCartData = userDataRes.data.on_cart;
         setCardsOnCart(cardsOnCartData);
         console.log("cards on cart son: ", cardsOnCartData);
