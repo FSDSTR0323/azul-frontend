@@ -27,7 +27,7 @@ export const PrivatePageValidator = ({ children }) => {
                     setUserMessages(res.userMessagesData)
                     if (Object.keys(selectedConversation.current).length === 0) {
                         console.log("Se selecciona la primera conversación")
-                        selectedConversation.current = res.userMessagesData[0].conversation._id
+                        selectedConversation.current = res.userMessagesData[0]?.conversation._id
                     }
                     
                     const unreadConversations = []
