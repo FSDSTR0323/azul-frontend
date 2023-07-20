@@ -25,7 +25,7 @@ export const PrivatePageValidator = ({ children }) => {
                 socket.on(`inbox_${userDataRes.data.userData._id}`, (res) => {
                     console.log("se ha actualizado la info de los mensajes")
                     setUserMessages(res.userMessagesData)
-                    if (Object.keys(selectedConversation.current).length === 0) {
+                    if (!selectedConversation.current) {
                         console.log("Se selecciona la primera conversación")
                         selectedConversation.current = res.userMessagesData[0]?.conversation._id
                     }
