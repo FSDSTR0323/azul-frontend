@@ -38,6 +38,15 @@
 } */
 
 /* Estilo tabla CardsOnSell */
+
+
+.commander {
+  position: absolute;
+  right: -150px;
+  z-index: -2;
+  transform: scale(0.5);
+}
+
 #clases{  margin-right: 20px;}
   #image-uploads {
     width: 100%;
