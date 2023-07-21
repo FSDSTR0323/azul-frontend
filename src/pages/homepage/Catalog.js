@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 
 
-export const Catalog = () => {
+export const Catalog = ({renderCatalog}) => {
   const [cards, setCards] = useState([]);
 
   const getRandomCards = async () => {
@@ -21,7 +21,7 @@ export const Catalog = () => {
 
   useEffect(() => {
     getRandomCards();
-  }, []);
+  }, [renderCatalog]);
 
   return (
     <div className="randomcard-section-wrapper">

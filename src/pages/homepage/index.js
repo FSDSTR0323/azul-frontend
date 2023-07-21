@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import axios from 'axios';
 // import BannerImage from "../../../assets/home-banner-image.png";
 import { AboutUs } from "./AboutUs";
@@ -12,19 +13,17 @@ import { Header } from "../../components/header"
 import Footer from "../../components/footer"
 import { PublicPageValidator } from "../../components/publicPageValidator";
 
-export const Homepage = () => {
 
+export const Homepage = () => {
+  const [renderCatalog, setRenderCatalog] = useState(false); 
 
   return (
     <div className="home-container">
       <PublicPageValidator>
         <Header />
-        <AboutUs />
-        <Catalog />
+        <AboutUs setRenderCatalog={setRenderCatalog} renderCatalog={renderCatalog} /> 
+        <Catalog renderCatalog={renderCatalog}/>
         <News />
-        <Work />
-        <Testimonial />
-        <Contact />   
         <Footer />  
       </PublicPageValidator> 
     </div>

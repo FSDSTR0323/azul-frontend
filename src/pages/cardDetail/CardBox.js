@@ -24,7 +24,6 @@ export const CardBox = () => {
     fetch(`${process.env.REACT_APP_BASE_URL}/cards/${cardId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Est ala info de la carta: ", data)
         setCard(data.selectedCardBack); // carta actual
         setAllCards(data.sameCardsBack) // todas las cartas con ese nombre
       })
@@ -177,7 +176,7 @@ const cardInCollec = (allCards)=>{
             </tr>
             <tr>
               <td style={getLegalitiesCellStyle(card.legalities.commander)}>Commander</td>
-              <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Commander</td>
+              <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Brawl</td>
             </tr>
           </tbody>
         </table>

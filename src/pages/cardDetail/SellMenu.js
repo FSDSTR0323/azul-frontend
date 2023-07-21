@@ -127,6 +127,7 @@ export default function SellMenu({ card }) {
         cardSelledData,
         authorizationConfig.getHeaders()
       );
+      handleCloseSell()
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log("Carta puesta a la venta:", cardSelledData);
@@ -177,6 +178,7 @@ export default function SellMenu({ card }) {
         cardSelledData,
         authorizationConfig.getHeaders()
       );
+      handleCloseBid()
       setTimeout(() => {
         setUpdateKey(updateKey + 1);
         console.log("Carta puesta en subasta:", cardSelledData);
@@ -200,7 +202,6 @@ export default function SellMenu({ card }) {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/cards/cardcollections?name=${card.name}`
         );
-        console.log("response es: ", response.data);
         setSetNameOptions(response.data);
       } catch (error) {
         console.error(
