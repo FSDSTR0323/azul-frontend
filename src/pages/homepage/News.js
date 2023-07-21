@@ -3,6 +3,7 @@ import AboutBackground from "../../assets/about-background.png";
 // import AboutBackgroundImage from "../../../assets/about-background-image.jpg";
 import { BsFillPlayCircleFill } from "react-icons/bs";
 import comander from "../../assets/comander.png"
+
 const News = () => {
   return (
     <div className="about-section-container">

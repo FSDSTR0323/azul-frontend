@@ -13,11 +13,9 @@ import { Header } from "../../components/header"
 import Footer from "../../components/footer"
 import { PublicPageValidator } from "../../components/publicPageValidator";
 
+
 export const Homepage = () => {
   const [renderCatalog, setRenderCatalog] = useState(false); 
-  const handleCatalogRender = () => {
-     setRenderCatalog(prevState => !prevState);
-}
 
   return (
     <div className="home-container">
@@ -26,7 +24,6 @@ export const Homepage = () => {
         <AboutUs setRenderCatalog={setRenderCatalog} renderCatalog={renderCatalog} /> 
         <Catalog renderCatalog={renderCatalog}/>
         <News />
-
         <Footer />  
       </PublicPageValidator> 
     </div>

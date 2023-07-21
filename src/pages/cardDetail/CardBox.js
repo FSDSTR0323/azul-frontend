@@ -176,7 +176,7 @@ const cardInCollec = (allCards)=>{
             </tr>
             <tr>
               <td style={getLegalitiesCellStyle(card.legalities.commander)}>Commander</td>
-              <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Commander</td>
+              <td style={getLegalitiesCellStyle(card.legalities.brawl)}>Brawl</td>
             </tr>
           </tbody>
         </table>

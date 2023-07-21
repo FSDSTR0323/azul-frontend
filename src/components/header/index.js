@@ -23,9 +23,11 @@ import SearchBar from "./SearchBar";
 import CartMenu from "./CartMenu";
 import { InboxMenu } from "./InboxMenu";
 import { UserContext } from '../../contexts/UserContext';
+import Scroll from 'react-scroll'
 
 export const Header = () => {
 
+  const ScrollLink = Scroll.ScrollLink
   const [openMenu, setOpenMenu] = useState(false);
   const { userData } = useContext(UserContext)
   const menuOptions = [
@@ -68,10 +70,6 @@ export const Header = () => {
             </Link>
           </div>
           <div className="navbar-links-container">
-            <a href="">Sobre nosotros</a>
-            <a href="">Noticias</a>
-            <a href="">Opiniones</a>
-            <a href="">Contacto</a>
             <SearchBar/>
             {window.localStorage.getItem("token") && 
               <a>
