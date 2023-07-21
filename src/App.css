@@ -1282,6 +1282,7 @@ background-color: #6a6a6a;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 .randomcard-section-info {
   width: 200px;
